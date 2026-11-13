@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data4 · Presenter</title><link rel="stylesheet" href="styles.css"><script src="config.js"></script>
+</head>
+<body>
+<div class="topbar"><div class="inner"><div class="logo">Serveo <span>Data4</span></div><div id="phaseLabel" class="phase">LOBBY</div></div></div>
+<main class="stage">
+  <div class="hero">
+    <div><div class="eyebrow">DATA4 REPORTING EXPERIENCE</div><h1 id="title">La audiencia se está conectando</h1><p id="copy" class="lead">Comparte la URL de audience.html. Después iniciaremos una simulación del proceso AS IS.</p></div>
+    <div class="card"><b>Código de sesión</b><div style="font-size:32px;color:var(--orange);font-weight:800;margin-top:6px">D4DEMO</div><small>Realtime entre móviles: siguiente paso con Supabase</small></div>
+  </div>
+  <div id="content">
+    <div class="kpis">
+      <div class="kpi"><strong>88,6 h</strong><small>baseline mensual</small></div>
+      <div class="kpi"><strong>70–80%</strong><small>objetivo de reducción</small></div>
+      <div class="kpi"><strong>≤5 días</strong><small>CTQ de entrega</small></div>
+      <div class="kpi"><strong>DC01·02·03</strong><small>alcance</small></div>
+    </div>
+  </div>
+</main>
+<div class="toolbar">
+<button onclick="setPhase('lobby')">Lobby</button>
+<button onclick="setPhase('asis')">AS IS</button>
+<button class="primary" onclick="setPhase('improve')">Improve</button>
+<button onclick="setPhase('control')">Control</button>
+<button onclick="setPhase('results')">Resultados</button>
+</div>
+<script>
+const bc=('BroadcastChannel'in window)?new BroadcastChannel('data4-demo'):null;
+const states={
+lobby:{label:'LOBBY',title:'La audiencia se está conectando',copy:'Elige un rol desde audience.html. En la versión realtime los móviles seguirán automáticamente la presentación.'},
+asis:{label:'AS IS',title:'Vivir el problema antes de automatizarlo',copy:'Cada rol recibe una tarea manual diferente: identificar datos, registrar lecturas, gestionar incidencias o priorizar riesgos.'},
+improve:{label:'IMPROVE',title:'Ahora repetimos el proceso con las herramientas',copy:'La captura se estructura, los mappings se automatizan y las herramientas generan el Operation Book señalando las excepciones que requieren revisión.'},
+control:{label:'CONTROL',title:'¿La mejora funciona para quienes la utilizan?',copy:'Cada perfil evalúa facilidad de uso, reducción de trabajo repetitivo y confianza en el proceso.'},
+results:{label:'RESULTADOS',title:'De trabajo manual a gestión por excepción',copy:'DC03 pasa de aproximadamente 20 horas de dedicación a 30 minutos de ejecución.'}
+};
+function draw(p){const s=states[p];phaseLabel.textContent=s.label;title.textContent=s.title;copy.textContent=s.copy;
+if(p==='results')content.innerHTML='<div class="resultgrid"><div class="metric"><strong>20 h</strong>Antes · DC03</div><div class="metric"><strong>30 min</strong>Ahora · DC03</div><div class="metric"><strong>97,5%</strong>Mejora real</div><div class="metric"><strong>1 día</strong>Plazo actual</div></div><div class="card success" style="margin-top:18px"><b>La herramienta controla errores y avisa qué elementos deben revisarse antes de entregar.</b></div>';
+else if(p==='improve')content.innerHTML='<div class="kpis"><div class="kpi"><strong>DC03</strong><small>entregado · control</small></div><div class="kpi"><strong>DC02</strong><small>desarrollado · validación</small></div><div class="kpi"><strong>DC01</strong><small>en desarrollo</small></div><div class="kpi"><strong>App Contadores</strong><small>entregada</small></div></div>';
+else content.innerHTML='<div class="kpis"><div class="kpi"><strong>88,6 h</strong><small>baseline mensual</small></div><div class="kpi"><strong>43 h</strong><small>Operation Book</small></div><div class="kpi"><strong>27,4 h</strong><small>extracción</small></div><div class="kpi"><strong>79,5%</strong><small>concentrado en dos bloques</small></div></div>';
+}
+function setPhase(p){localStorage.setItem('data4_phase',p);draw(p);if(bc)bc.postMessage({phase:p});}
+draw(localStorage.getItem('data4_phase')||'lobby');
+</script></body></html>
