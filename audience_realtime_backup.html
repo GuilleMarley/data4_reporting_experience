@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data4 · Audience</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="realtime.js"></script>
+</head>
+<body>
+<div class="topbar"><div class="inner"><div class="logo">Serveo <span>Data4</span></div><div style="display:flex;align-items:center;gap:12px"><small id="syncStatus" style="font-weight:700;color:#667085">Sincronizando…</small><div id="phaseLabel" class="phase">ESPERA</div></div></div></div>
+<main class="shell">
+<div id="roleStep">
+<div class="eyebrow">DATA4 REPORTING EXPERIENCE</div><h1>¿Desde qué rol participas?</h1><p class="lead">Elige uno. La dinámica cambia según tu posición en el proceso.</p>
+<div class="rolegrid">
+<button class="role" onclick="choose('gestor')"><b>Gestor</b><br><small>Impacto, riesgo y negocio</small></button>
+<button class="role" onclick="choose('area')"><b>Area Manager</b><br><small>Entrega, recursos y SLA</small></button>
+<button class="role" onclick="choose('graduate')"><b>Graduate</b><br><small>Datos, preparación y reporting</small></button>
+<button class="role" onclick="choose('tecnico')"><b>Técnico</b><br><small>Captura y calidad del dato</small></button>
+</div></div>
+<div id="activityStep" class="hidden"><div class="eyebrow" id="roleLabel"></div><h1 id="activityTitle"></h1><p class="lead" id="activityCopy"></p><div id="activity" class="activity"></div></div>
+</main>
+<script>
+let role=localStorage.getItem('data4_role');
+let currentPhase='lobby';
+const label={gestor:'GESTOR',area:'AREA MANAGER',graduate:'GRADUATE',tecnico:'TÉCNICO'};
+const phaseNames={lobby:'ESPERA',asis:'ANTES',improve:'DESPUÉS',control:'CONTROL',results:'RESULTADOS'};
+async function choose(r){
+ role=r;localStorage.setItem('data4_role',r);
+ try{await Data4Realtime.register(r)}catch(e){console.error(e)}
+ roleStep.classList.add('hidden');activityStep.classList.remove('hidden');render(currentPhase);
+}
+function option(t){
+ const safe=t.replace(/'/g,"&#39;");
+ return '<button class="option" onclick="answer(this,\''+safe+'\')">'+t+'</button>';
+}
+async function answer(btn,text){
+ const buttons=[...document.querySelectorAll('.option')];
+ buttons.forEach(x=>x.disabled=true);
+ btn.classList.add('success');
+ try{
+   await Data4Realtime.respond(role,currentPhase,text);
+ }catch(e){
+   console.error(e);
+   buttons.forEach(x=>x.disabled=false);
+ }
+}
+const tasks={
+asis:{
+gestor:['Prioriza el problema','¿Dónde atacarías primero para reducir riesgo y horas?', ['Automatizar el Operation Book','Añadir más revisión manual','Ampliar el plazo de entrega']],
+area:['Gestiona una incidencia','Faltan datos y el plazo de entrega se acerca. ¿Qué haces?', ['Revisar manualmente y perseguir datos','Entregar sin validar','Posponer el informe']],
+graduate:['Encuentra el dato correcto','Debes localizar manualmente qué señal alimenta una celda del Operation Book.', ['Buscar en los exports BMS','Inventar el valor','Mantener el dato del mes anterior']],
+tecnico:['Registra una lectura','Tienes una lectura de contador: 18.742 kWh. ¿Qué haces?', ['Identificar edificio y contador, registrar y confirmar','Anotarlo en papel','Enviarlo por chat']]
+},
+improve:{
+gestor:['Evalúa el impacto','DC03 se genera ahora en 30 min frente a ~20 h anteriores.', ['Priorizar escalado a otros edificios','Volver al proceso anterior']],
+area:['Revisa por excepción','El Operation Book está generado: 3 avisos, 0 fallos críticos.', ['Revisar los 3 avisos y aprobar','Revisar manualmente las 40+ pestañas']],
+graduate:['Genera el Operation Book','La herramienta detecta señales, aplica mappings y valida el resultado.', ['Generar y revisar únicamente avisos','Copiar los datos manualmente']],
+tecnico:['Usa App Contadores','Selecciona edificio, contador y registra 18.742 kWh.', ['Guardar y sincronizar','Crear una hoja Excel nueva']]
+},
+control:{
+gestor:['Control','¿La solución te parece escalable a otros procesos?', ['1','2','3','4','5']],
+area:['Control','¿Te da confianza para cumplir el SLA?', ['1','2','3','4','5']],
+graduate:['Control','¿Reduce trabajo repetitivo?', ['1','2','3','4','5']],
+tecnico:['Control','¿La nueva captura de contadores es más sencilla?', ['1','2','3','4','5']]
+}};
+function applyPhase(p,source='sync'){
+  if(!p) return;
+  if(p!==currentPhase){
+    currentPhase=p;
+    render(p);
+  }else{
+    phaseLabel.textContent=phaseNames[p]||p.toUpperCase();
+  }
+  const s=document.getElementById('syncStatus');
+  if(s){
+    const now=new Date();
+    s.textContent=(source==='realtime'?'Realtime':'Sincronizado')+' · '+now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+    s.style.color='#16a34a';
+  }
+}
+
+function render(p){
+ currentPhase=p;phaseLabel.textContent=phaseNames[p]||p.toUpperCase();if(!role)return;roleLabel.textContent=label[role];
+ if(p==='lobby'){activityTitle.textContent='Esperando al presentador';activityCopy.textContent='Tu rol está asignado. Cuando empiece la dinámica, esta pantalla cambiará automáticamente.';activity.innerHTML='<div class="card"><b>Conectado a la sesión D4DEMO</b><br><small>No necesitas refrescar la página.</small></div>';return}
+ if(p==='results'){activityTitle.textContent='Resultado real DC03';activityCopy.textContent='~20 h → 30 min · 97,5% de mejora · entrega en 1 día';activity.innerHTML='<div class="card success"><b>El proceso pasa de trabajo manual intensivo a generación automática con revisión por excepción.</b></div>';return}
+ const t=tasks[p]&&tasks[p][role];if(!t)return;activityTitle.textContent=t[0];activityCopy.textContent=t[1];activity.innerHTML='<div class="options">'+t[2].map(option).join('')+'</div>';
+}
+let phasePollTimer=null;
+
+async function refreshPhase(source='poll'){
+  try{
+    const p=await Data4Realtime.getPhase();
+    applyPhase(p,source);
+  }catch(e){
+    console.error('Phase sync error',e);
+    const s=document.getElementById('syncStatus');
+    if(s){s.textContent='Reconectando…';s.style.color='#dc2626';}
+  }
+}
+
+(async()=>{
+ try{
+  currentPhase=await Data4Realtime.getPhase();
+  if(role){
+    roleStep.classList.add('hidden');
+    activityStep.classList.remove('hidden');
+    await Data4Realtime.register(role);
+  }
+  render(currentPhase);
+
+  // Primary channel: Supabase Realtime
+  Data4Realtime.subscribePhase(p=>applyPhase(p,'realtime'));
+
+  // Fallback: REST polling. Keeps audience in sync even if WebSocket is blocked/dropped.
+  phasePollTimer=setInterval(()=>refreshPhase('poll'),1500);
+
+  // Refresh immediately when user returns to the tab/mobile browser.
+  window.addEventListener('focus',()=>refreshPhase('focus'));
+  document.addEventListener('visibilitychange',()=>{
+    if(!document.hidden) refreshPhase('focus');
+  });
+
+  const s=document.getElementById('syncStatus');
+  if(s){s.textContent='Conectado';s.style.color='#16a34a';}
+ }catch(e){
+  console.error(e);
+  render('lobby');
+  const s=document.getElementById('syncStatus');
+  if(s){s.textContent='Error de conexión';s.style.color='#dc2626';}
+ }
+})();
+</script></body></html>
