@@ -73,8 +73,8 @@ create or replace function public.set_demo_phase(
 ) returns boolean
 language plpgsql
 security definer
-set search_path = public
-as $$
+set search_path = public, extensions
+as $
 begin
   if p_phase not in ('lobby','asis','improve','control','results') then
     raise exception 'Invalid phase';
@@ -84,7 +84,7 @@ begin
      set phase = p_phase, updated_at = now()
    where code = p_code
      and active = true
-     and presenter_pin_hash = crypt(p_pin, presenter_pin_hash);
+     and presenter_pin_hash = extensions.crypt(p_pin, presenter_pin_hash);
 
   return found;
 end;
