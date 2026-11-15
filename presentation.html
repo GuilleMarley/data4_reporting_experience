@@ -3082,6 +3082,29 @@
 };
 
 
+
+  <style>
+    .improve-metrics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 12px}
+    .improve-metric{background:#fff;border:1px solid var(--border);border-top:4px solid var(--orange);padding:13px 14px;min-height:118px}
+    .improve-metric .label{font-size:10px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:var(--muted)}
+    .improve-metric .big{font-size:26px;font-weight:900;color:var(--orange);line-height:1.05;margin:7px 0}
+    .improve-metric .sub{font-size:10px;line-height:1.35;color:#667085}
+    .improve-metric.green{border-top-color:var(--green)}
+    .improve-metric.green .big{color:var(--green)}
+    .transition-note{background:rgba(255,102,0,.08);border:1px solid rgba(255,102,0,.35);padding:10px 14px;font-size:11px;line-height:1.4;margin-top:8px}
+    .transition-note strong{color:var(--orange)}
+    .control-now-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+    .control-now-card{background:#fff;border:1px solid var(--border);padding:14px;min-height:116px}
+    .control-now-card h4{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+    .control-now-card p,.control-now-card li{font-size:10px;line-height:1.45;color:#667085}
+    .control-now-card ul{padding-left:16px;margin:0}
+    .december-banner{margin-top:10px;background:#111827;color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .december-banner b{font-size:12px;letter-spacing:1px;text-transform:uppercase}
+    .december-banner span{font-size:10px;color:#d0d5dd}
+    .provisional-badge{display:inline-block;background:#fff3e8;border:1px solid #ffb47a;color:#c44b00;font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:4px 7px;margin-top:7px}
+    @media(max-width:1000px){.improve-metrics-grid,.control-now-grid{grid-template-columns:1fr}}
+  </style>
+
   const phaseVisuals = {
     define: `
       <div class="visual-title"><span>Define · Proyecto completo</span><span>SIPOC + alcance</span></div>
@@ -3139,58 +3162,92 @@
         <div class="bone bottom b6"><h4>Control</h4><p>Errores detectados tarde; retrabajo y poca trazabilidad automática.</p></div>
       </div>`,
     improve: `
-      <div class="visual-title"><span>Improve · Solución, implantación y resultado real</span><span>TO BE real</span></div>
-      <div class="improve-visual">
+      <div class="visual-title"><span>Improve · Mejora conseguida y cambio de trabajo</span><span>Resultado provisional</span></div>
+      <div class="improve-metrics-grid">
+        <div class="improve-metric">
+          <div class="label">Extracción de datos</div>
+          <div class="big">27,05 h → 2,42 h</div>
+          <div class="sub">Reducción mensual del <b>91,1%</b>. La descarga masiva sustituye gran parte de la extracción manual.</div>
+        </div>
+        <div class="improve-metric">
+          <div class="label">Compilar Operation Book</div>
+          <div class="big">52,00 h → 0,67 h</div>
+          <div class="sub">Reducción mensual del <b>98,7%</b>. La herramienta genera y actualiza el OB automáticamente.</div>
+        </div>
+        <div class="improve-metric green">
+          <div class="label">Dedicación total actual</div>
+          <div class="big">89,05 h → 37,83 h</div>
+          <div class="sub"><b>−57,5%</b> ya conseguido, todavía durante la fase de estabilización.</div>
+          <span class="provisional-badge">Resultado provisional</span>
+        </div>
+      </div>
+      <div class="transition-note">
+        <strong>Qué ha cambiado:</strong> antes el esfuerzo estaba en extraer datos y construir el informe. Ahora esas tareas están prácticamente automatizadas y el tiempo se concentra temporalmente en <b>revisar fallos, ajustar mappings y estabilizar las herramientas</b>.
+      </div>
+      <div class="improve-visual" style="margin-top:10px">
         <div class="architecture-flow">
           <div class="arch-row">
-            <div class="arch-box"><b>BMS</b><span>exportación masiva mensual</span></div>
+            <div class="arch-box"><b>BMS</b><span>descarga masiva mensual</span></div>
             <div class="arch-box"><b>Iberdrola</b><span>PDF / datos de facturación</span></div>
-            <div class="arch-box"><b>App contadores</b><span>captura operativa + SharePoint</span></div>
+            <div class="arch-box"><b>App contadores</b><span>captura estructurada</span></div>
           </div>
           <div class="arch-arrow">▼</div>
           <div class="arch-band">Automatización · ingesta + transformación + mapping</div>
           <div class="arch-arrow">▼</div>
-          <div class="arch-band dark">Validaciones + escritura segura en Operation Book</div>
+          <div class="arch-band dark">Validaciones + generación del Operation Book</div>
           <div class="phase-action-minimal improve-actions">
             <button class="slide-link-btn" type="button" onclick="goTo(2)">Ver resultados DC03</button>
             <button class="slide-link-btn secondary" type="button" onclick="goTo(3)">Ver proceso TO BE</button>
           </div>
         </div>
         <div class="status-stack">
-          <div class="mini-section-title">Estado de implantación · pulsa para ver</div>
-          <div class="status-item done clickable" onclick="goTo(5)"><div class="status-pill">DC03</div><div class="status-copy"><b>Entregado</b><span>generación en 30 min · en control</span></div></div>
-          <div class="status-item progress clickable" onclick="goTo(5)"><div class="status-pill">DC02</div><div class="status-copy"><b>Desarrollado / validación</b><span>mismo front de referencia que DC03</span></div></div>
-          <div class="status-item progress clickable" onclick="goTo(4)"><div class="status-pill">DC01</div><div class="status-copy"><b>En desarrollo</b><span>una herramienta para DC01.1–DC01.4</span></div></div>
-          <div class="status-item stable clickable" onclick="goTo(6)"><div class="status-pill">APP</div><div class="status-copy"><b>Contadores entregados</b><span>implementada, en uso y controlada</span></div></div>
+          <div class="mini-section-title">Cambio de naturaleza del trabajo</div>
+          <div class="status-item done"><div class="status-pill">ANTES</div><div class="status-copy"><b>Producción manual</b><span>extraer · copiar · compilar · perseguir datos</span></div></div>
+          <div class="status-item progress"><div class="status-pill">AHORA</div><div class="status-copy"><b>Revisión por excepción</b><span>validar avisos · corregir mappings · estabilizar</span></div></div>
+          <div class="status-item stable"><div class="status-pill">OBJ.</div><div class="status-copy"><b>Steady-state</b><span>reducir también el tiempo de revisión tras la estabilización</span></div></div>
         </div>
       </div>
-      <div class="improve-focus-strip">Resultado real separado en pestaña propia: DC03 pasa de ~20 h a 30 min, con control de errores y avisos de revisión.</div>`,
+      <div class="improve-focus-strip">Esfuerzo actual de revisión: <b>34,5 h/mes</b>. No se considera todavía el estado final del proceso.</div>`,
     control: `
-      <div class="visual-title"><span>Control · Seguimiento operativo</span><span>DC03 en control</span></div>
-      <div class="control-visual">
-        <div class="control-loop">
-          <div class="control-step"><b>Ejecución mensual DC03</b>Generación del Operation Book con la herramienta entregada.</div>
-          <div class="control-arrow">▼</div>
-          <div class="control-step"><b>Validación</b>Revisión de datos cargados, incidencias y ajustes necesarios.</div>
-          <div class="control-arrow">▼</div>
-          <div class="control-step"><b>Registro de control</b>Tiempo de ejecución, intervención manual, errores y cumplimiento de plazo.</div>
-          <div class="control-arrow">▼</div>
-          <div class="control-step"><b>Mejora continua</b>Correcciones incorporadas a la herramienta y extensión a DC01/DC02.</div>
+      <div class="visual-title"><span>Control · Estabilización y medición</span><span>EN CURSO</span></div>
+      <div class="control-now-grid">
+        <div class="control-now-card">
+          <h4>Qué estamos controlando ahora</h4>
+          <ul>
+            <li>Horas dedicadas a revisión y corrección.</li>
+            <li>Errores e incidencias por ejecución.</li>
+            <li>Mappings y ajustes pendientes por edificio/fase.</li>
+            <li>Intervenciones manuales y retrabajo.</li>
+            <li>First Time Right y cumplimiento del SLA ≤5 días.</li>
+          </ul>
         </div>
-        <div>
-          <div class="mini-section-title">KPIs de control</div>
-          <div class="control-kpi-grid">
-            <div class="control-kpi-card"><b>Tiempo de ejecución</b><span>Horas reales mensuales frente al baseline.</span></div>
-            <div class="control-kpi-card"><b>First-time-right</b><span>Ejecuciones correctas sin retrabajo relevante.</span></div>
-            <div class="control-kpi-card"><b>Incidencias</b><span>Número y severidad de errores detectados.</span></div>
-            <div class="control-kpi-card"><b>Intervención manual</b><span>Pasos que todavía requieren revisión o ajuste.</span></div>
-            <div class="control-kpi-card"><b>SLA ≤5 días</b><span>Cumplimiento del plazo contractual de entrega.</span></div>
-            <div class="control-kpi-card"><b>App contadores</b><span>Implementada, operativa y estable.</span></div>
-            <div class="survey-card"><b>Encuesta de satisfacción interna preparada</b><span>Se ha lanzado/preparado una encuesta para que, cuando todos los Operation Books estén en funcionamiento, los usuarios internos valoren facilidad de uso, fiabilidad, tiempo ahorrado y satisfacción global.</span></div>
-          </div>
-          <div class="control-status-strip">Estado actual: DC03 entregado y en seguimiento; app de contadores estable; control ejecutándose en paralelo al despliegue de DC01/DC02.</div>
+        <div class="control-now-card">
+          <h4>Por qué la revisión ha aumentado</h4>
+          <p>La revisión pasa de <b>9,75 h</b> a <b>34,50 h/mes</b> porque noviembre incluye validación intensiva, detección de fallos y estabilización de DC01/DC02/DC03.</p>
+          <p style="margin-top:7px"><b>Estas 34,5 h no representan el proceso definitivo.</b></p>
         </div>
-      </div>`
+        <div class="control-now-card">
+          <h4>Resultado actual</h4>
+          <p><b>89,05 h → 37,83 h/mes</b></p>
+          <p>Reducción provisional: <b>57,5%</b>.</p>
+          <p style="margin-top:7px">Extracción: <b>−91,1%</b><br>Compilación OB: <b>−98,7%</b></p>
+        </div>
+        <div class="control-now-card">
+          <h4>Qué mediremos en steady-state</h4>
+          <ul>
+            <li>Dedicación total mensual real.</li>
+            <li>Tiempo de revisión estabilizado.</li>
+            <li>First Time Right.</li>
+            <li>Incidencias y severidad.</li>
+            <li>Ahorro económico anual.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="december-banner">
+        <div><b>Diciembre · primera medición estable</b><br><span>Primer ciclo completo tras cerrar errores y mappings de la fase de implantación.</span></div>
+        <div style="text-align:right"><b>Objetivo</b><br><span>Validar el ahorro definitivo y convertirlo a € / año.</span></div>
+      </div>
+      <div class="control-status-strip" style="margin-top:10px">Estado actual: Improve y Control avanzan en paralelo. Noviembre = estabilización · Diciembre = medición del proceso steady-state.</div>`
   };
 
   function setDmaicPhase(phaseKey) {
