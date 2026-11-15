@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data4 · Diagnóstico Supabase</title>
+<link rel="stylesheet" href="styles.css">
+<script src="config.js"></script>
+</head>
+<body>
+<main class="shell">
+  <div class="eyebrow">DATA4 REPORTING EXPERIENCE</div>
+  <h1>Diagnóstico de conexión</h1>
+  <p class="lead">Comprueba si GitHub Pages puede llegar a Supabase.</p>
+  <div class="card">
+    <p><b>Project URL configurada</b><br><code id="url"></code></p>
+    <p><b>Navegador online</b><br><span id="online"></span></p>
+    <button class="primary" onclick="runTest()">Probar conexión</button>
+  </div>
+  <div id="out" class="card" style="margin-top:18px;white-space:pre-wrap;font-family:monospace">Esperando prueba…</div>
+</main>
+<script>
+const cfg=window.DATA4_CONFIG||{};
+url.textContent=cfg.SUPABASE_URL||'(vacía)';
+online.textContent=navigator.onLine?'Sí':'No';
+
+async function runTest(){
+  const out=document.getElementById('out');
+  out.textContent='1/3 Probando dominio Supabase…\n';
+  try{
+    const base=cfg.SUPABASE_URL;
+    const key=cfg.SUPABASE_PUBLISHABLE_KEY;
+    if(!base||!key) throw new Error('Falta SUPABASE_URL o publishable key en config.js');
+
+    const endpoint=base.replace(/\/$/,'')+'/rest/v1/demo_sessions?select=code,phase&limit=1';
+    out.textContent+='Endpoint: '+endpoint+'\n\n2/3 Enviando petición REST…\n';
+
+    const r=await fetch(endpoint,{
+      method:'GET',
+      headers:{
+        'apikey':key,
+        'Authorization':'Bearer '+key,
+        'Accept':'application/json'
+      },
+      mode:'cors',
+      cache:'no-store'
+    });
+
+    const body=await r.text();
+    out.textContent+='HTTP '+r.status+' '+r.statusText+'\n';
+    out.textContent+='Respuesta: '+body+'\n\n';
+
+    if(r.ok){
+      out.textContent+='3/3 OK: GitHub Pages llega a Supabase y puede leer demo_sessions.';
+    }else{
+      out.textContent+='3/3 La red funciona, pero Supabase rechazó la petición. Revisa clave/RLS/Data API.';
+    }
+  }catch(e){
+    out.textContent+='ERROR DE RED: '+(e?.name||'Error')+': '+(e?.message||String(e))+'\n\n';
+    out.textContent+='Si ves NetworkError/Failed to fetch, prueba a abrir la Project URL directamente en otra pestaña y desactivar temporalmente VPN, adblock o DNS privado.';
+  }
+}
+</script>
+</body></html>
