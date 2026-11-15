@@ -49,7 +49,7 @@ async function changePhase(p){
    const ok=await Data4Realtime.setPhase(p,pin);
    if(!ok){sessionStorage.removeItem('data4_presenter_pin');alert('PIN incorrecto.');return;}
    draw(p);
- }catch(e){console.error(e);alert('No se pudo cambiar la fase. Revisa la conexión con Supabase.');}
+ }catch(e){console.error(e);alert('No se pudo cambiar la fase. Supabase: '+(e?.message||JSON.stringify(e)));}
 }
 async function refreshStats(){
  const box=document.getElementById('liveStats'); if(!box)return;
