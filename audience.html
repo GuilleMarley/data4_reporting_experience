@@ -2,7 +2,11 @@
 <html lang="es">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Data4 · Audience</title><link rel="stylesheet" href="styles.css"><script src="config.js"></script>
+<title>Data4 · Audience</title>
+<link rel="stylesheet" href="styles.css">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="realtime.js"></script>
 </head>
 <body>
 <div class="topbar"><div class="inner"><div class="logo">Serveo <span>Data4</span></div><div id="phaseLabel" class="phase">LOBBY</div></div></div>
@@ -18,10 +22,23 @@
 <div id="activityStep" class="hidden"><div class="eyebrow" id="roleLabel"></div><h1 id="activityTitle"></h1><p class="lead" id="activityCopy"></p><div id="activity" class="activity"></div></div>
 </main>
 <script>
-let role=localStorage.getItem('data4_role'); const bc=('BroadcastChannel'in window)?new BroadcastChannel('data4-demo'):null;
+let role=localStorage.getItem('data4_role');
+let currentPhase='lobby';
 const label={gestor:'GESTOR',area:'AREA MANAGER',graduate:'GRADUATE',tecnico:'TÉCNICO'};
-function choose(r){role=r;localStorage.setItem('data4_role',r);roleStep.classList.add('hidden');activityStep.classList.remove('hidden');render(localStorage.getItem('data4_phase')||'lobby')}
-function option(t){return '<button class="option" onclick="this.classList.add(\'success\')">'+t+'</button>'}
+async function choose(r){
+ role=r;localStorage.setItem('data4_role',r);
+ try{await Data4Realtime.register(r)}catch(e){console.error(e)}
+ roleStep.classList.add('hidden');activityStep.classList.remove('hidden');render(currentPhase);
+}
+function option(t){
+ const safe=t.replace(/'/g,"&#39;");
+ return '<button class="option" onclick="answer(this,\''+safe+'\')">'+t+'</button>';
+}
+async function answer(btn,text){
+ document.querySelectorAll('.option').forEach(x=>x.disabled=true);
+ btn.classList.add('success');
+ try{await Data4Realtime.respond(role,currentPhase,text)}catch(e){console.error(e)}
+}
 const tasks={
 asis:{
 gestor:['Prioriza el problema','¿Dónde atacarías primero para reducir riesgo y horas?', ['Automatizar el Operation Book','Añadir más revisión manual','Ampliar el plazo de entrega']],
@@ -41,12 +58,18 @@ area:['Control','¿Te da confianza para cumplir el SLA?', ['1','2','3','4','5']]
 graduate:['Control','¿Reduce trabajo repetitivo?', ['1','2','3','4','5']],
 tecnico:['Control','¿La nueva captura de contadores es más sencilla?', ['1','2','3','4','5']]
 }};
-function render(p){phaseLabel.textContent=p.toUpperCase(); if(!role)return; roleLabel.textContent=label[role];
-if(p==='lobby'){activityTitle.textContent='Esperando al presentador';activityCopy.textContent='Tu rol está asignado. La actividad aparecerá aquí.';activity.innerHTML='';return}
-if(p==='results'){activityTitle.textContent='Resultado real DC03';activityCopy.textContent='~20 h → 30 min · 97,5% de mejora · entrega en 1 día';activity.innerHTML='<div class="card success"><b>El proceso pasa de trabajo manual intensivo a generación automática con revisión por excepción.</b></div>';return}
-const t=tasks[p]&&tasks[p][role];if(!t)return;activityTitle.textContent=t[0];activityCopy.textContent=t[1];activity.innerHTML='<div class="options">'+t[2].map(option).join('')+'</div>';
+function render(p){
+ currentPhase=p;phaseLabel.textContent=p.toUpperCase();if(!role)return;roleLabel.textContent=label[role];
+ if(p==='lobby'){activityTitle.textContent='Esperando al presentador';activityCopy.textContent='Tu rol está asignado. La actividad aparecerá aquí.';activity.innerHTML='';return}
+ if(p==='results'){activityTitle.textContent='Resultado real DC03';activityCopy.textContent='~20 h → 30 min · 97,5% de mejora · entrega en 1 día';activity.innerHTML='<div class="card success"><b>El proceso pasa de trabajo manual intensivo a generación automática con revisión por excepción.</b></div>';return}
+ const t=tasks[p]&&tasks[p][role];if(!t)return;activityTitle.textContent=t[0];activityCopy.textContent=t[1];activity.innerHTML='<div class="options">'+t[2].map(option).join('')+'</div>';
 }
-if(role){roleStep.classList.add('hidden');activityStep.classList.remove('hidden')} render(localStorage.getItem('data4_phase')||'lobby');
-if(bc)bc.onmessage=e=>{if(e.data&&e.data.phase){localStorage.setItem('data4_phase',e.data.phase);render(e.data.phase)}};
-window.addEventListener('storage',e=>{if(e.key==='data4_phase')render(e.newValue||'lobby')});
+(async()=>{
+ try{
+  currentPhase=await Data4Realtime.getPhase();
+  if(role){roleStep.classList.add('hidden');activityStep.classList.remove('hidden');await Data4Realtime.register(role)}
+  render(currentPhase);
+  Data4Realtime.subscribePhase(render);
+ }catch(e){console.error(e);render('lobby')}
+})();
 </script></body></html>
