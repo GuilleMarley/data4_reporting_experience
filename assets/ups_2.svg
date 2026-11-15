@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="520" height="320" viewBox="0 0 520 320">
+    <rect width="520" height="320" rx="24" fill="#f7f7f8"/>
+    <rect x="56" y="34" width="408" height="252" rx="20" fill="#111827"/>
+    <text x="260" y="74" text-anchor="middle" font-family="Arial" font-size="24" font-weight="700" fill="#ffffff">UPS B</text>
+    <rect x="84" y="98" width="352" height="54" rx="12" fill="#0b1220" stroke="#7c3aed" stroke-width="3"/>
+    <text x="260" y="132" text-anchor="middle" font-family="Arial" font-size="22" font-weight="700" fill="#e5e7eb">Input 401V</text>
+    <rect x="84" y="164" width="166" height="74" rx="12" fill="#0b1220"/>
+    <rect x="270" y="164" width="166" height="74" rx="12" fill="#0b1220"/>
+    <text x="167" y="206" text-anchor="middle" font-family="Arial" font-size="20" fill="#93c5fd">Output 231V</text>
+    <text x="353" y="206" text-anchor="middle" font-family="Arial" font-size="20" fill="#c4b5fd">Load 58%</text>
+    <text x="84" y="270" font-family="Arial" font-size="16" fill="#9ca3af">Simulación BMS</text>
+    </svg>
