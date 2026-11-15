@@ -1,134 +1,86 @@
 <!doctype html>
 <html lang="es">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Data4 · Audience</title>
-<link rel="stylesheet" href="styles.css">
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="config.js"></script>
-<script src="realtime.js"></script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Data4 · Audience Prototype</title>
+<style>
+:root{--orange:#ff6600;--ink:#27324a;--muted:#667085;--line:#d7dbe3;--soft:#f5f6f8;--bg:#f3f4f6;--green:#1f9d55}
+*{box-sizing:border-box} html,body{margin:0;padding:0;background:var(--bg);font-family:Arial,Helvetica,sans-serif;color:var(--ink)}
+body{min-height:100vh}
+.topbar{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line)}
+.topbar .inner{max-width:1160px;margin:0 auto;padding:16px 22px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:32px;font-weight:800}.logo span{color:var(--orange)} .phase{font-size:14px;font-weight:800;letter-spacing:.12em;color:var(--orange)}
+.wrap{max-width:1160px;margin:0 auto;padding:28px 22px 80px}
+.kicker{color:var(--orange);font-size:15px;font-weight:800;letter-spacing:.16em;text-transform:uppercase}
+.title{font-size:58px;line-height:1.02;margin:10px 0 18px;font-weight:800;letter-spacing:-.04em}
+.sub{font-size:22px;color:#50586a;max-width:900px;line-height:1.35}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:0 8px 30px rgba(16,24,40,.05)}
+.role-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:28px}
+.role-btn{border:2px solid transparent;background:#fff;border-radius:18px;padding:22px;text-align:left;cursor:pointer;transition:.18s ease}.role-btn:hover{border-color:#ffb27d;transform:translateY(-2px)}
+.role-btn h3{margin:0 0 8px;font-size:26px}.role-btn p{margin:0;color:var(--muted);font-size:17px;line-height:1.35}.role-tag{display:inline-block;font-size:12px;font-weight:800;color:var(--orange);letter-spacing:.12em;margin-bottom:12px}
+.hero-quote{font-size:36px;line-height:1.15;font-weight:800;max-width:900px;margin:14px 0 8px}.hero-detail{font-size:20px;color:#596172;max-width:900px;line-height:1.5}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:24px}.btn{border:none;border-radius:999px;padding:14px 22px;font-size:16px;font-weight:800;cursor:pointer}.btn.primary{background:var(--orange);color:#fff}.btn.secondary{background:#fff;color:var(--ink);border:1px solid var(--line)}
+.layout-two{display:grid;grid-template-columns:1.1fr .9fr;gap:20px;margin-top:26px}
+.panel-title{font-size:22px;font-weight:800;margin-bottom:8px}.panel-copy{font-size:17px;color:var(--muted);line-height:1.45;margin-bottom:18px}
+.device-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}.device-card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}.device-card h4{margin:0 0 10px;font-size:18px}.device-card img{width:100%;border-radius:14px;border:1px solid #e5e7eb;background:#fafafa}.caption{margin-top:8px;font-size:14px;color:var(--muted)}
+.spreadsheet{overflow:auto;border:1px solid var(--line);border-radius:16px;background:#fff}
+.sheet-tabs{display:flex;background:#eef1f5;border-bottom:1px solid var(--line)}.sheet-tab{padding:12px 16px;font-size:14px;font-weight:800;color:#4b5563;border-right:1px solid var(--line)}.sheet-tab.active{background:#fff;color:var(--orange)}
+.sheet-table{width:100%;border-collapse:collapse;font-size:15px}.sheet-table th,.sheet-table td{border:1px solid #e5e7eb;padding:10px 12px;text-align:left}.sheet-table th{background:#f8fafc;font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:#6b7280}.sheet-table td.input{background:#fff9db;color:#9a6700;font-weight:700;min-width:140px}
+.bms-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.bms-device{background:#fff;border:1px solid var(--line);border-radius:18px;padding:14px}.bms-device img{width:100%;border-radius:14px;border:1px solid #e5e7eb}
+.mini{font-size:13px;color:var(--muted)}
+.process-list{display:grid;gap:12px}.process-step{display:flex;gap:12px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line);border-radius:14px;background:#fff}.step-num{width:28px;height:28px;border-radius:50%;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;flex:0 0 auto}
+.badge{display:inline-block;padding:6px 10px;border-radius:999px;background:#fff1e8;color:#cc4d00;font-size:12px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}
+.footer-note{margin-top:18px;font-size:13px;color:#667085}
+.hidden{display:none!important}
+@media (max-width:900px){.title{font-size:40px}.sub,.hero-detail{font-size:18px}.layout-two,.role-grid,.device-grid,.bms-grid{grid-template-columns:1fr}.topbar .inner{padding:14px 16px}.wrap{padding:22px 16px 60px}.logo{font-size:26px}.hero-quote{font-size:28px}}
+</style>
 </head>
 <body>
-<div class="topbar"><div class="inner"><div class="logo">Serveo <span>Data4</span></div><div style="display:flex;align-items:center;gap:12px"><small id="syncStatus" style="font-weight:700;color:#667085">Sincronizando…</small><div id="phaseLabel" class="phase">ESPERA</div></div></div></div>
-<main class="shell">
-<div id="roleStep">
-<div class="eyebrow">DATA4 REPORTING EXPERIENCE</div><h1>¿Desde qué rol participas?</h1><p class="lead">Elige uno. La dinámica cambia según tu posición en el proceso.</p>
-<div class="rolegrid">
-<button class="role" onclick="choose('gestor')"><b>Gestor</b><br><small>Impacto, riesgo y negocio</small></button>
-<button class="role" onclick="choose('area')"><b>Area Manager</b><br><small>Entrega, recursos y SLA</small></button>
-<button class="role" onclick="choose('graduate')"><b>Graduate</b><br><small>Datos, preparación y reporting</small></button>
-<button class="role" onclick="choose('tecnico')"><b>Técnico</b><br><small>Captura y calidad del dato</small></button>
-</div></div>
-<div id="activityStep" class="hidden"><div class="eyebrow" id="roleLabel"></div><h1 id="activityTitle"></h1><p class="lead" id="activityCopy"></p><div id="activity" class="activity"></div></div>
-</main>
+<div class="topbar"><div class="inner"><div class="logo">Serveo <span>Data4</span></div><div class="phase" id="phaseLabel">SELECCIÓN DE ROL</div></div></div>
+<div class="wrap">
+  <div id="roleView">
+    <div class="kicker">DATA4 REPORTING EXPERIENCE</div>
+    <div class="title">Elige tu rol</div>
+    <div class="sub">Queremos que cada participante viva el proceso como si estuviera dentro del reporting operativo. Selecciona tu perfil para ver cómo era el trabajo antes de la mejora.</div>
+    <div class="role-grid">
+      <button class="role-btn" onclick="selectRole('tecnico')"><span class="role-tag">OPERACIÓN</span><h3>Técnico</h3><p>Captura manual de lecturas de contadores y paso posterior a Excel.</p></button>
+      <button class="role-btn" onclick="selectRole('graduate')"><span class="role-tag">DATOS</span><h3>Graduate</h3><p>Extracción manual desde el BMS y preparación del dato para reporting.</p></button>
+      <button class="role-btn" onclick="selectRole('gestor')"><span class="role-tag">REPORTING</span><h3>Gestor</h3><p>Consolidación del Operation Book y seguimiento del cierre mensual.</p></button>
+      <button class="role-btn" onclick="selectRole('area')"><span class="role-tag">SUPERVISIÓN</span><h3>Area Manager</h3><p>Apoyo operativo para desbloquear y cerrar el Operation Book.</p></button>
+    </div>
+  </div>
+
+  <div id="hookView" class="hidden"></div>
+  <div id="asisView" class="hidden"></div>
+</div>
 <script>
-let role=localStorage.getItem('data4_role');
-let currentPhase='lobby';
-const label={gestor:'GESTOR',area:'AREA MANAGER',graduate:'GRADUATE',tecnico:'TÉCNICO'};
-const phaseNames={lobby:'ESPERA',asis:'ANTES',improve:'DESPUÉS',control:'CONTROL',results:'RESULTADOS'};
-async function choose(r){
- role=r;localStorage.setItem('data4_role',r);
- try{await Data4Realtime.register(r)}catch(e){console.error(e)}
- roleStep.classList.add('hidden');activityStep.classList.remove('hidden');render(currentPhase);
+const ROLE_CONTENT={
+  tecnico:{label:'TÉCNICO', quote:'¿Te imaginas tener que registrar 3 veces el mismo contador cada día?', detail:'Primero lees la medición en el equipo, luego la apuntas en papel y después vuelves a pasarla a un Excel manual para que alguien más la use en el reporting.', asisTitle:'AS IS · Captura manual de contadores', asisIntro:'Toma las lecturas de los tres contadores y transpórtalas a una hoja Excel manual.'},
+  graduate:{label:'GRADUATE', quote:'¿Te imaginas estar descargando datos durante 27 horas cada mes?', detail:'Cada mes hay que lanzar muchos exports del BMS, buscar las señales útiles y copiarlas a un Excel para preparar el Operation Book.', asisTitle:'AS IS · Extracción manual desde BMS', asisIntro:'Lee los datos del BMS simulado y pásalos a una hoja de captura manual.'},
+  gestor:{label:'GESTOR', quote:'¿Te imaginas estar rellenando hojas del Operation Book durante 50 horas cada mes?', detail:'Una gran parte del trabajo consistía en consolidar información de varias fuentes y completar manualmente diferentes pestañas del Operation Book.', asisTitle:'AS IS · Consolidación manual del Operation Book', asisIntro:'Recibe los datos de contadores, UPS y PDUs, y consolídalos en un libro con varias pestañas.'},
+  area:{label:'AREA MANAGER', quote:'¿Te imaginas tener que intervenir continuamente para desbloquear el reporting?', detail:'Cuando había problemas con la extracción, los datos o el montaje del informe, el Area Manager tenía que apoyar al equipo para llegar a la entrega.', asisTitle:'AS IS · Apoyo operativo al cierre', asisIntro:'Visualiza el tipo de seguimiento y apoyo que exigía el proceso antiguo.'}
+};
+let role=localStorage.getItem('data4_mock_role')||'';
+let stage='hook';
+function setPhaseLabel(txt){document.getElementById('phaseLabel').textContent=txt;}
+function selectRole(r){role=r;localStorage.setItem('data4_mock_role',r);renderHook();}
+function backToRoles(){role='';localStorage.removeItem('data4_mock_role');document.getElementById('hookView').classList.add('hidden');document.getElementById('asisView').classList.add('hidden');document.getElementById('roleView').classList.remove('hidden');setPhaseLabel('SELECCIÓN DE ROL');}
+function showAsIs(){renderAsIs();}
+function renderHook(){const c=ROLE_CONTENT[role]; if(!c)return; document.getElementById('roleView').classList.add('hidden');document.getElementById('asisView').classList.add('hidden'); const v=document.getElementById('hookView'); v.classList.remove('hidden'); setPhaseLabel('ANTES · CONTEXTO'); v.innerHTML=`<div class="kicker">${c.label}</div><div class="hero-quote">${c.quote}</div><div class="hero-detail">${c.detail}</div><div class="actions"><button class="btn primary" onclick="showAsIs()">Ver prueba AS IS</button><button class="btn secondary" onclick="backToRoles()">Cambiar rol</button></div><div class="footer-note">En la presentación principal, esta pantalla sirve para poner a cada participante en contexto antes de empezar la dinámica.</div>`;}
+function renderAsIs(){const c=ROLE_CONTENT[role]; if(!c)return; document.getElementById('hookView').classList.add('hidden'); const v=document.getElementById('asisView'); v.classList.remove('hidden'); setPhaseLabel('ANTES · AS IS');
+if(role==='tecnico'){
+  v.innerHTML=`<div class="kicker">${c.label}</div><div class="title" style="font-size:44px">${c.asisTitle}</div><div class="sub">${c.asisIntro}</div><div class="layout-two"><div class="card"><div class="panel-title">Contadores del día</div><div class="panel-copy">Lee la información de cada contador y rellena la hoja manual.</div><div class="device-grid"><div class="device-card"><h4>Contador 1</h4><img src="assets/contador_1.svg" alt="Contador 1"><div class="caption">Apuntar en papel → pasar a Excel</div></div><div class="device-card"><h4>Contador 2</h4><img src="assets/contador_2.svg" alt="Contador 2"><div class="caption">Lectura energética</div></div><div class="device-card"><h4>Contador 3</h4><img src="assets/contador_3.svg" alt="Contador 3"><div class="caption">Lectura de agua / servicio</div></div></div></div><div class="card"><div class="panel-title">Excel manual</div><div class="panel-copy">Estas celdas vacías representan el trabajo manual de transcripción.</div><div class="spreadsheet"><table class="sheet-table"><thead><tr><th>Fecha</th><th>Activo</th><th>Lectura</th><th>Unidad</th></tr></thead><tbody><tr><td>Hoy</td><td>Contador 1</td><td class="input">Escribe 18.742</td><td>kWh</td></tr><tr><td>Hoy</td><td>Contador 2</td><td class="input">Escribe 11.386</td><td>kWh</td></tr><tr><td>Hoy</td><td>Contador 3</td><td class="input">Escribe 7.954</td><td>m³</td></tr></tbody></table></div><div class="footer-note">Mensaje clave: el técnico hace la misma captura varias veces y aumenta el riesgo de error de transcripción.</div></div></div><div class="actions"><button class="btn secondary" onclick="renderHook()">Volver al contexto</button></div>`;
+} else if(role==='graduate'){
+  v.innerHTML=`<div class="kicker">${c.label}</div><div class="title" style="font-size:44px">${c.asisTitle}</div><div class="sub">${c.asisIntro}</div><div class="layout-two"><div class="card"><div class="panel-title">BMS simulado</div><div class="panel-copy">Extrae manualmente los datos de 2 UPS y 2 PDUs.</div><div class="bms-grid"><div class="bms-device"><div class="mini"><b>UPS A</b></div><img src="assets/ups_1.svg" alt="UPS A"></div><div class="bms-device"><div class="mini"><b>UPS B</b></div><img src="assets/ups_2.svg" alt="UPS B"></div><div class="bms-device"><div class="mini"><b>PDU 1</b></div><img src="assets/pdu_1.svg" alt="PDU 1"></div><div class="bms-device"><div class="mini"><b>PDU 2</b></div><img src="assets/pdu_2.svg" alt="PDU 2"></div></div></div><div class="card"><div class="panel-title">Hoja de captura</div><div class="panel-copy">El graduate tiene que leer la pantalla, localizar la señal útil y escribirla a mano.</div><div class="spreadsheet"><table class="sheet-table"><thead><tr><th>Equipo</th><th>Dato 1</th><th>Dato 2</th><th>Dato 3</th></tr></thead><tbody><tr><td>UPS A</td><td class="input">Input 398V</td><td class="input">Output 230V</td><td class="input">Load 63%</td></tr><tr><td>UPS B</td><td class="input">Input 401V</td><td class="input">Output 231V</td><td class="input">Load 58%</td></tr><tr><td>PDU 1</td><td class="input">A 148 kW</td><td class="input">B 151 kW</td><td>—</td></tr><tr><td>PDU 2</td><td class="input">A 132 kW</td><td class="input">B 129 kW</td><td>—</td></tr></tbody></table></div><div class="footer-note">Mensaje clave: el valor está visible, pero obtenerlo sigue siendo lento porque hay que navegar, leer y transcribir manualmente.</div></div></div><div class="actions"><button class="btn secondary" onclick="renderHook()">Volver al contexto</button></div>`;
+} else if(role==='gestor'){
+  v.innerHTML=`<div class="kicker">${c.label}</div><div class="title" style="font-size:44px">${c.asisTitle}</div><div class="sub">${c.asisIntro}</div><div class="layout-two"><div class="card"><div class="panel-title">Operation Book manual</div><div class="panel-copy">El gestor consolida la información en varias pestañas del libro.</div><div class="spreadsheet"><div class="sheet-tabs"><div class="sheet-tab active">Contadores</div><div class="sheet-tab">UPS</div><div class="sheet-tab">PDUs</div></div><table class="sheet-table"><thead><tr><th>Activo</th><th>Valor</th><th>Unidad</th><th>Estado</th></tr></thead><tbody><tr><td>Contador 1</td><td>18.742</td><td>kWh</td><td>Copiado manualmente</td></tr><tr><td>Contador 2</td><td>11.386</td><td>kWh</td><td>Copiado manualmente</td></tr><tr><td>Contador 3</td><td>7.954</td><td>m³</td><td>Copiado manualmente</td></tr></tbody></table></div><div class="footer-note">En la práctica, el mismo libro requería seguir alimentando más pestañas y validar que todo estaba alineado.</div></div><div class="card"><div class="panel-title">Trabajo del gestor</div><div class="process-list"><div class="process-step"><div class="step-num">1</div><div><b>Recibir datos de varias fuentes</b><div class="mini">Contadores, BMS, Iberdrola, históricos.</div></div></div><div class="process-step"><div class="step-num">2</div><div><b>Rellenar pestañas del OB</b><div class="mini">Contadores, UPS, PDUs y más bloques operativos.</div></div></div><div class="process-step"><div class="step-num">3</div><div><b>Revisar y perseguir faltantes</b><div class="mini">Corregir, completar y cerrar el informe a tiempo.</div></div></div></div><div class="footer-note">Mensaje clave: gran parte del tiempo del gestor se iba en consolidar y perseguir el cierre del informe.</div></div></div><div class="actions"><button class="btn secondary" onclick="renderHook()">Volver al contexto</button></div>`;
+} else if(role==='area'){
+  v.innerHTML=`<div class="kicker">${c.label}</div><div class="title" style="font-size:44px">${c.asisTitle}</div><div class="sub">${c.asisIntro}</div><div class="layout-two"><div class="card"><div class="panel-title">Situación del proceso antiguo</div><div class="process-list"><div class="process-step"><div class="step-num">1</div><div><b>Faltan datos de contadores</b><div class="mini">El técnico aún no los ha pasado al Excel.</div></div></div><div class="process-step"><div class="step-num">2</div><div><b>El graduate sigue extrayendo BMS</b><div class="mini">Todavía faltan varias señales por localizar.</div></div></div><div class="process-step"><div class="step-num">3</div><div><b>El Operation Book no está cerrado</b><div class="mini">El gestor necesita apoyo para llegar al plazo.</div></div></div></div></div><div class="card"><div class="panel-title">Papel del Area Manager</div><div class="panel-copy">En el proceso antiguo, el Area Manager tenía que desbloquear, reasignar esfuerzos y apoyar el cierre del reporting.</div><div class="badge">Apoyo operativo + seguimiento + escalado</div><div class="footer-note">Mensaje clave: cuando el proceso es manual, la supervisión termina absorbiendo trabajo operativo para llegar a la entrega.</div></div></div><div class="actions"><button class="btn secondary" onclick="renderHook()">Volver al contexto</button></div>`;
 }
-function option(t){
- const safe=t.replace(/'/g,"&#39;");
- return '<button class="option" onclick="answer(this,\''+safe+'\')">'+t+'</button>';
 }
-async function answer(btn,text){
- const buttons=[...document.querySelectorAll('.option')];
- buttons.forEach(x=>x.disabled=true);
- btn.classList.add('success');
- try{
-   await Data4Realtime.respond(role,currentPhase,text);
- }catch(e){
-   console.error(e);
-   buttons.forEach(x=>x.disabled=false);
- }
-}
-const tasks={
-asis:{
-gestor:['Prioriza el problema','¿Dónde atacarías primero para reducir riesgo y horas?', ['Automatizar el Operation Book','Añadir más revisión manual','Ampliar el plazo de entrega']],
-area:['Gestiona una incidencia','Faltan datos y el plazo de entrega se acerca. ¿Qué haces?', ['Revisar manualmente y perseguir datos','Entregar sin validar','Posponer el informe']],
-graduate:['Encuentra el dato correcto','Debes localizar manualmente qué señal alimenta una celda del Operation Book.', ['Buscar en los exports BMS','Inventar el valor','Mantener el dato del mes anterior']],
-tecnico:['Registra una lectura','Tienes una lectura de contador: 18.742 kWh. ¿Qué haces?', ['Identificar edificio y contador, registrar y confirmar','Anotarlo en papel','Enviarlo por chat']]
-},
-improve:{
-gestor:['Evalúa el impacto','DC03 se genera ahora en 30 min frente a ~20 h anteriores.', ['Priorizar escalado a otros edificios','Volver al proceso anterior']],
-area:['Revisa por excepción','El Operation Book está generado: 3 avisos, 0 fallos críticos.', ['Revisar los 3 avisos y aprobar','Revisar manualmente las 40+ pestañas']],
-graduate:['Genera el Operation Book','La herramienta detecta señales, aplica mappings y valida el resultado.', ['Generar y revisar únicamente avisos','Copiar los datos manualmente']],
-tecnico:['Usa App Contadores','Selecciona edificio, contador y registra 18.742 kWh.', ['Guardar y sincronizar','Crear una hoja Excel nueva']]
-},
-control:{
-gestor:['Control','¿La solución te parece escalable a otros procesos?', ['1','2','3','4','5']],
-area:['Control','¿Te da confianza para cumplir el SLA?', ['1','2','3','4','5']],
-graduate:['Control','¿Reduce trabajo repetitivo?', ['1','2','3','4','5']],
-tecnico:['Control','¿La nueva captura de contadores es más sencilla?', ['1','2','3','4','5']]
-}};
-function applyPhase(p,source='sync'){
-  if(!p) return;
-  if(p!==currentPhase){
-    currentPhase=p;
-    render(p);
-  }else{
-    phaseLabel.textContent=phaseNames[p]||p.toUpperCase();
-  }
-  const s=document.getElementById('syncStatus');
-  if(s){
-    const now=new Date();
-    s.textContent=(source==='realtime'?'Realtime':'Sincronizado')+' · '+now.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
-    s.style.color='#16a34a';
-  }
-}
-
-function render(p){
- currentPhase=p;phaseLabel.textContent=phaseNames[p]||p.toUpperCase();if(!role)return;roleLabel.textContent=label[role];
- if(p==='lobby'){activityTitle.textContent='Esperando al presentador';activityCopy.textContent='Tu rol está asignado. Cuando empiece la dinámica, esta pantalla cambiará automáticamente.';activity.innerHTML='<div class="card"><b>Conectado a la sesión D4DEMO</b><br><small>No necesitas refrescar la página.</small></div>';return}
- if(p==='results'){activityTitle.textContent='Resultado real DC03';activityCopy.textContent='~20 h → 30 min · 97,5% de mejora · entrega en 1 día';activity.innerHTML='<div class="card success"><b>El proceso pasa de trabajo manual intensivo a generación automática con revisión por excepción.</b></div>';return}
- const t=tasks[p]&&tasks[p][role];if(!t)return;activityTitle.textContent=t[0];activityCopy.textContent=t[1];activity.innerHTML='<div class="options">'+t[2].map(option).join('')+'</div>';
-}
-let phasePollTimer=null;
-
-async function refreshPhase(source='poll'){
-  try{
-    const p=await Data4Realtime.getPhase();
-    applyPhase(p,source);
-  }catch(e){
-    console.error('Phase sync error',e);
-    const s=document.getElementById('syncStatus');
-    if(s){s.textContent='Reconectando…';s.style.color='#dc2626';}
-  }
-}
-
-(async()=>{
- try{
-  currentPhase=await Data4Realtime.getPhase();
-  if(role){
-    roleStep.classList.add('hidden');
-    activityStep.classList.remove('hidden');
-    await Data4Realtime.register(role);
-  }
-  render(currentPhase);
-
-  // Primary channel: Supabase Realtime
-  Data4Realtime.subscribePhase(p=>applyPhase(p,'realtime'));
-
-  // Fallback: REST polling. Keeps audience in sync even if WebSocket is blocked/dropped.
-  phasePollTimer=setInterval(()=>refreshPhase('poll'),1500);
-
-  // Refresh immediately when user returns to the tab/mobile browser.
-  window.addEventListener('focus',()=>refreshPhase('focus'));
-  document.addEventListener('visibilitychange',()=>{
-    if(!document.hidden) refreshPhase('focus');
-  });
-
-  const s=document.getElementById('syncStatus');
-  if(s){s.textContent='Conectado';s.style.color='#16a34a';}
- }catch(e){
-  console.error(e);
-  render('lobby');
-  const s=document.getElementById('syncStatus');
-  if(s){s.textContent='Error de conexión';s.style.color='#dc2626';}
- }
-})();
-</script></body></html>
+if(role){renderHook();}
+</script>
+</body>
+</html>
