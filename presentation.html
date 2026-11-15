@@ -2916,6 +2916,7 @@
     current = idx;
     slides[idx].scrollIntoView({ behavior:'smooth' });
     dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+    if (typeof syncAudienceForSlide === 'function') syncAudienceForSlide(idx);
   }
 
   const io = new IntersectionObserver(entries => {
@@ -3284,12 +3285,17 @@
     if (visual) visual.innerHTML = phaseVisuals[phaseKey] || phaseVisuals.improve;
   }
 
+  async function handleDmaicSelection(phaseKey) {
+    setDmaicPhase(phaseKey);
+    if (typeof syncAudienceForDmaic === 'function') await syncAudienceForDmaic(phaseKey);
+  }
+
   document.querySelectorAll('.dmaic-phase').forEach(row => {
-    row.addEventListener('click', () => setDmaicPhase(row.dataset.phase));
+    row.addEventListener('click', () => handleDmaicSelection(row.dataset.phase));
     row.addEventListener('keydown', e => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        setDmaicPhase(row.dataset.phase);
+        handleDmaicSelection(row.dataset.phase);
       }
     });
   });
@@ -3299,13 +3305,51 @@
 
 
 <script>
+  let autoAudienceSync = true;
+  let lastAudiencePhaseRequested = null;
+
+  const slideAudienceMap = {
+    1:'asis',
+    2:'results',
+    3:'improve',
+    4:'improve',
+    5:'improve',
+    6:'improve'
+  };
+  const dmaicAudienceMap = {
+    measure:'asis',
+    improve:'improve',
+    control:'control'
+  };
+
+  function toggleAutoAudienceSync(enabled){
+    autoAudienceSync = !!enabled;
+    const label=document.getElementById('autoSyncState');
+    if(label) label.textContent=autoAudienceSync?'ON':'OFF';
+  }
+
+  async function syncAudienceForSlide(idx){
+    if(!autoAudienceSync) return;
+    const phase=slideAudienceMap[idx];
+    if(!phase || phase===lastAudiencePhaseRequested) return;
+    await setAudiencePhase(phase, true);
+  }
+
+  async function syncAudienceForDmaic(phaseKey){
+    if(!autoAudienceSync) return;
+    const phase=dmaicAudienceMap[phaseKey];
+    if(!phase || phase===lastAudiencePhaseRequested) return;
+    await setAudiencePhase(phase, true);
+  }
+
   function toggleLivePanel(){ document.getElementById('livePanel').classList.toggle('open'); }
-  async function setAudiencePhase(phase){
+  async function setAudiencePhase(phase, automatic=false){
     let pin=sessionStorage.getItem('data4_presenter_pin');
     if(!pin){ pin=prompt('PIN del presentador'); if(!pin) return; sessionStorage.setItem('data4_presenter_pin',pin); }
     try{
       const ok=await Data4Realtime.setPhase(phase,pin);
-      if(!ok){ sessionStorage.removeItem('data4_presenter_pin'); alert('PIN incorrecto.'); return; }
+      if(!ok){ sessionStorage.removeItem('data4_presenter_pin'); lastAudiencePhaseRequested=null; alert('PIN incorrecto.'); return; }
+      lastAudiencePhaseRequested=phase;
       await refreshLiveStats();
     }catch(e){ console.error(e); alert('Supabase: '+(e?.message||String(e))); }
   }
@@ -3319,7 +3363,11 @@
       s.participants.forEach(x=>counts[x.role]=(counts[x.role]||0)+1);
       const ctl=s.responses.filter(x=>x.phase==='control').map(x=>Number(x.answer)).filter(Number.isFinite);
       const avg=ctl.length?(ctl.reduce((a,b)=>a+b,0)/ctl.length).toFixed(1):'—';
-      box.innerHTML='<b>Fase audiencia:</b> '+String(phase).toUpperCase()+
+      lastAudiencePhaseRequested=phase;
+      const phaseNames={lobby:'ESPERA',asis:'ANTES',improve:'DESPUÉS',control:'CONTROL',results:'RESULTADOS'};
+      const launcher=document.getElementById('liveLauncher');
+      if(launcher) launcher.textContent='LIVE · '+(phaseNames[phase]||String(phase).toUpperCase());
+      box.innerHTML='<b>Fase audiencia:</b> '+(phaseNames[phase]||String(phase).toUpperCase())+
         '<br><b>Participantes:</b> '+s.participants.length+
         ' · G '+counts.gestor+' · AM '+counts.area+' · Gr '+counts.graduate+' · T '+counts.tecnico+
         '<br><b>Respuestas:</b> '+s.responses.length+' · <b>Control:</b> '+avg+'/5';
@@ -3337,6 +3385,10 @@
 <div id="livePanel" class="live-panel" aria-live="polite">
   <h4>Participación en directo</h4>
   <div class="live-sub">Sesión <b>D4DEMO</b> · controla lo que ve la audiencia</div>
+  <label style="display:flex;align-items:center;gap:8px;margin:9px 0 10px;font-size:11px;font-weight:700">
+    <input type="checkbox" checked onchange="toggleAutoAudienceSync(this.checked)">
+    Sincronización automática <span id="autoSyncState" style="color:#ff6600">ON</span>
+  </label>
   <div class="live-grid">
     <button class="live-btn" onclick="setAudiencePhase('lobby')">Lobby</button>
     <button class="live-btn" onclick="setAudiencePhase('asis')">AS IS</button>
