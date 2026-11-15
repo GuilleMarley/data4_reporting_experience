@@ -9,7 +9,7 @@
 <script src="realtime.js"></script>
 </head>
 <body>
-<div class="topbar"><div class="inner"><div class="logo">Serveo <span>Data4</span></div><div id="phaseLabel" class="phase">LOBBY</div></div></div>
+<div class="topbar"><div class="inner"><div class="logo">Serveo <span>Data4</span></div><div id="phaseLabel" class="phase">ESPERA</div></div></div>
 <main class="shell">
 <div id="roleStep">
 <div class="eyebrow">DATA4 REPORTING EXPERIENCE</div><h1>¿Desde qué rol participas?</h1><p class="lead">Elige uno. La dinámica cambia según tu posición en el proceso.</p>
@@ -25,6 +25,7 @@
 let role=localStorage.getItem('data4_role');
 let currentPhase='lobby';
 const label={gestor:'GESTOR',area:'AREA MANAGER',graduate:'GRADUATE',tecnico:'TÉCNICO'};
+const phaseNames={lobby:'ESPERA',asis:'ANTES',improve:'DESPUÉS',control:'CONTROL',results:'RESULTADOS'};
 async function choose(r){
  role=r;localStorage.setItem('data4_role',r);
  try{await Data4Realtime.register(r)}catch(e){console.error(e)}
@@ -59,8 +60,8 @@ graduate:['Control','¿Reduce trabajo repetitivo?', ['1','2','3','4','5']],
 tecnico:['Control','¿La nueva captura de contadores es más sencilla?', ['1','2','3','4','5']]
 }};
 function render(p){
- currentPhase=p;phaseLabel.textContent=p.toUpperCase();if(!role)return;roleLabel.textContent=label[role];
- if(p==='lobby'){activityTitle.textContent='Esperando al presentador';activityCopy.textContent='Tu rol está asignado. La actividad aparecerá aquí.';activity.innerHTML='';return}
+ currentPhase=p;phaseLabel.textContent=phaseNames[p]||p.toUpperCase();if(!role)return;roleLabel.textContent=label[role];
+ if(p==='lobby'){activityTitle.textContent='Esperando al presentador';activityCopy.textContent='Tu rol está asignado. Cuando empiece la dinámica, esta pantalla cambiará automáticamente.';activity.innerHTML='<div class="card"><b>Conectado a la sesión D4DEMO</b><br><small>No necesitas refrescar la página.</small></div>';return}
  if(p==='results'){activityTitle.textContent='Resultado real DC03';activityCopy.textContent='~20 h → 30 min · 97,5% de mejora · entrega en 1 día';activity.innerHTML='<div class="card success"><b>El proceso pasa de trabajo manual intensivo a generación automática con revisión por excepción.</b></div>';return}
  const t=tasks[p]&&tasks[p][role];if(!t)return;activityTitle.textContent=t[0];activityCopy.textContent=t[1];activity.innerHTML='<div class="options">'+t[2].map(option).join('')+'</div>';
 }
