@@ -176,10 +176,10 @@ button,input{font:inherit}
   <section id="asisView" class="stage" hidden>
     <div class="kicker">AS IS · EXPERIENCIA INTERACTIVA</div>
     <h1 class="title">Así se registraban las lecturas.</h1>
-    <p class="intro">Observa los <b>tres contadores de agua</b> de la presentación. Primero apunta sus valores con el dedo y después vuelve a escribirlos en el Excel simulado. Todas las lecturas están en <b>m³</b>.</p>
+    <p class="intro">Observa los <b>tres contadores de agua</b> de la presentación. Primero apunta sus valores con el dedo y espera instrucciones para el Excel. Todas las lecturas están en <b>m³</b>.</p>
     <div class="flow-strip" aria-label="Etapas de la actividad">
       <span class="flow-chip active">1 · Leer y anotar</span><span class="flow-arrow">→</span>
-      <span class="flow-chip active">2 · Transcribir a Excel</span><span class="flow-arrow">→</span>
+      <span class="flow-chip">2 · Esperar el Excel</span><span class="flow-arrow">→</span>
       <span class="flow-chip">Operation Book</span>
     </div>
 
@@ -204,6 +204,18 @@ button,input{font:inherit}
         <canvas class="hand-pad" data-index="3" aria-label="Zona para escribir con el dedo la lectura del contador de agua 3">Tu navegador no permite dibujar.</canvas>
         <div class="note-tip">Escribe aquí la lectura en m³.</div>
       </article>
+    </div>
+
+  </section>
+
+  <section id="excelView" class="stage" hidden>
+    <div class="kicker">AS IS · TRANSCRIPCIÓN MANUAL</div>
+    <h1 class="title">Ahora pásalo a Excel.</h1>
+    <p class="intro">Observa las <b>tres anotaciones manuscritas</b> que se muestran en la presentación y copia sus valores en las celdas de esta hoja. Es el segundo registro manual del proceso.</p>
+    <div class="flow-strip" aria-label="Etapas de la actividad">
+      <span class="flow-chip">1 · Lectura en campo</span><span class="flow-arrow">→</span>
+      <span class="flow-chip active">2 · Transcribir a Excel</span><span class="flow-arrow">→</span>
+      <span class="flow-chip">Operation Book</span>
     </div>
 
     <div class="section-head">
@@ -488,9 +500,9 @@ button,input{font:inherit}
     asis:document.getElementById('asisView'),
     improve:document.getElementById('improveView'),
     control:document.getElementById('endView'),
-    results:document.getElementById('endView')
+    results:document.getElementById('excelView')
   };
-  var labels={lobby:'EN ESPERA',asis:'AS IS · MANUAL',improve:'IMPROVE',control:'CONTROL',results:'RESULTADOS'};
+  var labels={lobby:'EN ESPERA',asis:'AS IS · MANUAL',improve:'IMPROVE',control:'CONTROL',results:'AS IS · EXCEL'};
   function applyPhase(p){
     var next=views[p]?p:'lobby';
     if(next===stage)return;
@@ -501,7 +513,7 @@ button,input{font:inherit}
     document.getElementById('phaseLabel').textContent=labels[next];
     if(next==='asis'){requestAnimationFrame(initCanvases);}
     if(next==='improve'){obSetup();}
-    window.scrollTo({top:0,behavior:'instant'});
+    window.scrollTo({top:0,behavior:'auto'});
   }
   async function pollPhase(){
     if(!remote || !remote.enabled){document.getElementById('syncDot').classList.add('offline');document.getElementById('syncText').textContent='Modo sin conexión';return;}
