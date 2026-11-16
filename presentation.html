@@ -2920,6 +2920,11 @@
 .meter-notes-footnote{font-size:11px;color:#8794A5}
 @media(max-width:850px){.meter-story-body{padding:20px 22px 45px}.meter-story-grid{gap:8px}.meter-story-card{padding:10px}.meter-story-card img{height:clamp(90px,15vh,170px)}.meter-story-card span{font-size:10px}.meter-story-instruction{padding:12px}.meter-story-instruction span{font-size:12px}}
 @media(max-width:600px){.meter-story-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.meter-story-card img{height:95px}.meter-story-card span{font-size:9px}.meter-story-card div{font-size:9px}.meter-story-instruction{flex-wrap:wrap}.meter-story-instruction strong{margin-left:auto}}
+
+/* Presenter-controlled Excel reveal in the AS IS / Measure sequence */
+.meter-notes-activate{border:1px solid #ff9f5c;background:#ff6600;color:#fff;border-radius:9px;padding:12px 17px;font-family:inherit;font-size:13px;font-weight:900;letter-spacing:.01em;cursor:pointer;white-space:nowrap;box-shadow:0 5px 15px rgba(255,102,0,.18)}
+.meter-notes-activate:hover{background:#e65c00}.meter-notes-activate:focus-visible{outline:3px solid #ffae70;outline-offset:3px}
+@media(max-width:780px){.meter-notes-activate{width:100%;white-space:normal}.meter-notes-slide .meter-story-instruction{flex-wrap:wrap}}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -3154,12 +3159,9 @@
       <div class="hdr-bar"></div>
       <span class="hdr-title">AS IS — Proceso Actual (Manual)</span>
     </div>
-    <div class="hdr-badge">IMPROVE</div>
+    <div class="hdr-badge">MEASURE</div>
   </header>
-
-  <button class="return-dmaic-btn" type="button" onclick="goTo(2)">← Volver a Measure</button>
-
-  <div class="s3-body">
+<div class="s3-body">
     <div class="asis-wrap">
 
       <!-- FLUJO IZQUIERDA — PASO A PASO -->
@@ -3339,7 +3341,7 @@
 </section>
 
 <section class="slide meter-story-slide" id="slide-asis-meters">
-  <header class="slide-header"><div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — LECTURA MANUAL DE CONTADORES</span></div><div class="hdr-badge">AS IS · 1/2</div></header>
+  <header class="slide-header"><div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — LECTURA MANUAL DE CONTADORES</span></div><div class="hdr-badge">MEASURE · AS IS</div></header>
   <div class="meter-story-body">
     <div class="meter-story-kicker">PRIMER PASO · CAPTURA EN CAMPO</div>
     <h2>Lo primero era <em>leer y apuntar.</em></h2>
@@ -3355,13 +3357,13 @@
 </section>
 
 <section class="slide meter-story-slide meter-notes-slide" id="slide-asis-notes">
-  <header class="slide-header"><div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — TRANSCRIPCIÓN MANUAL AL EXCEL</span></div><div class="hdr-badge">AS IS · 2/2</div></header>
+  <header class="slide-header"><div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — TRANSCRIPCIÓN MANUAL AL EXCEL</span></div><div class="hdr-badge">MEASURE · AS IS</div></header>
   <div class="meter-story-body">
     <div class="meter-story-kicker">SEGUNDO PASO · DOBLE REGISTRO</div>
     <h2>Y después, <em>volver a escribirlo.</em></h2>
     <p>Una vez recogidas en papel, las anotaciones manuales tenían que pasarse de nuevo a una hoja Excel. <b>Repite la operación en tu móvil</b>, ahora usando el teclado.</p>
     <div class="meter-notes-illustration"><img src="assets/lecturas_manuscritas.svg" alt="Tres anotaciones manuscritas aportadas como ejemplo de toma de lecturas de los contadores de agua"></div>
-    <div class="meter-story-instruction"><b>ACTIVIDAD EN EL MÓVIL</b><span>Ahora transcribe los tres apuntes manuscritos a la tabla Excel.</span><strong>02 / 02</strong></div>
+    <div class="meter-story-instruction"><b>ACTIVIDAD EN EL MÓVIL</b><span>Enseña primero estos apuntes difíciles de leer. Cuando indiques que comiencen, activa el Excel en los móviles.</span><button class="meter-notes-activate" type="button" onclick="setAudiencePhase('results')" title="Enviar la tabla Excel a los móviles de los participantes">Mostrar Excel en móviles</button></div>
     <div class="meter-notes-footnote">Ejemplo visual de anotaciones manuscritas · no corresponde a una captura en tiempo real del BMS.</div>
   </div>
   <div class="slide-footer"></div><span class="slide-num">06 / 15</span>
@@ -4387,12 +4389,12 @@
 
   const slideAudienceMap = {
     0:'lobby',1:'lobby',2:'lobby',3:'lobby',
-    4:'asis',5:'results',6:'lobby',
+    4:'asis',5:'asis',6:null,
     7:'improve',8:'improve',9:'improve',10:'improve',11:'improve',12:'improve',
     13:'control',14:'control'
   };
   const dmaicAudienceMap = {
-    measure:'asis',
+    measure:'lobby',
     improve:'improve',
     control:'control'
   };
