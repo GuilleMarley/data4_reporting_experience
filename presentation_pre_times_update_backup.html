@@ -1,0 +1,4449 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reducir el tiempo de Reporting Operativo Data4</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --orange:  #FF6600;
+    --orange2: #CC4400;
+    --orangebg: rgba(255,102,0,0.09);
+    --black:   #0D0D0D;
+    --dg:      #1A1A1A;
+    --mg:      #242424;
+    --lg:      #313131;
+    --border:  #3A3A3A;
+    --muted:   #888;
+    --dim:     #555;
+    --white:   #FFFFFF;
+    --green:   #22C55E;
+    --greenbg: rgba(34,197,94,0.09);
+    --red:     #EF4444;
+  }
+
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  html { scroll-behavior:smooth; scroll-snap-type: y mandatory; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: 'Outfit', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NAV DOTS ───────────────────────────────── */
+  .nav-dots {
+    position:fixed;
+    left:18px;
+    right:auto;
+    top:auto;
+    bottom:18px;
+    transform:none;
+    z-index:9997;
+    display:flex;
+    flex-direction:row;
+    gap:9px;
+    align-items:center;
+    padding:8px 10px;
+    background:rgba(255,255,255,.94);
+    border:1px solid #D0D5DD;
+    border-radius:999px;
+    box-shadow:0 8px 22px rgba(16,24,40,.12);
+    backdrop-filter:blur(8px);
+  }
+  .nav-dot {
+    width:9px; height:9px; border-radius:50%;
+    background:var(--border); cursor:pointer;
+    border:2px solid transparent;
+    transition:all .25s;
+  }
+  .nav-dot.active { background:var(--orange); border-color:var(--orange); transform:scale(1.35); }
+
+  /* ── SLIDE ──────────────────────────────────── */
+  .slide {
+    width:100vw; height:100vh;
+    display:flex; flex-direction:column;
+    position:relative; overflow:hidden;
+    scroll-snap-align: start;
+  }
+
+  /* ── HEADER ─────────────────────────────────── */
+  .slide-header {
+    display:flex; align-items:center;
+    justify-content:space-between;
+    height:54px; flex-shrink:0;
+    background:var(--dg);
+    border-bottom:1px solid var(--lg);
+  }
+  .hdr-left { display:flex; align-items:center; height:100%; }
+  .hdr-bar  { width:5px; height:100%; background:var(--orange); }
+  .hdr-title {
+    font-family:'Outfit', sans-serif;
+    font-size:16px; font-weight:700;
+    letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--white); padding-left:16px;
+  }
+  .hdr-badge {
+    display:flex; align-items:center; gap:6px;
+    background:var(--orange); color:var(--white);
+    font-family:'Outfit', sans-serif;
+    font-size:12px; font-weight:800; letter-spacing:2px;
+    padding:5px 20px 5px 26px;
+    clip-path:polygon(10px 0%,100% 0%,calc(100% - 0px) 100%,0% 100%);
+    margin-right:0;
+  }
+  .hdr-badge::before { content:"▶"; font-size:9px; }
+
+  /* ── FOOTER LINE ────────────────────────────── */
+  .slide-footer { height:4px; background:var(--orange); flex-shrink:0; }
+
+  /* ── SLIDE NUMBER ───────────────────────────── */
+  .slide-num {
+    position:absolute; bottom:10px; left:28px;
+    font-family:'Outfit', sans-serif;
+    font-size:10px; font-weight:600;
+    letter-spacing:2px; color:var(--dim);
+  }
+
+  /* ══════════════════════════════════════════════
+     SLIDE 1 — DMAIC + SIPOC + KPIs
+  ══════════════════════════════════════════════ */
+  .s1-body {
+    flex:1; display:grid;
+    grid-template-columns:.78fr 3px 1.22fr;
+    padding:20px 28px; gap:0; min-height:0;
+  }
+  .vdivider { background:var(--orange); opacity:.4; }
+
+  /* DMAIC */
+  .dmaic-col { padding-right:26px; display:flex; flex-direction:column; gap:7px; }
+
+  .dmaic-qr-card {
+    flex:1;
+    margin-bottom:92px;
+    min-height:0;
+    margin-top:10px;
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    border-top:4px solid var(--orange);
+    border-radius:12px;
+    padding:14px 16px 12px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    box-shadow:0 10px 26px rgba(16,24,40,.06);
+    overflow:hidden;
+  }
+  .dmaic-qr-title {
+    color:var(--orange);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:1.3px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .dmaic-qr-card img {
+    display:block;
+    width:min(92%,330px);
+    height:auto;
+    max-height:calc(100% - 68px);
+    object-fit:contain;
+    background:#fff;
+  }
+  .dmaic-qr-copy {
+    margin-top:7px;
+    color:#344054;
+    font-size:10px;
+    font-weight:700;
+    line-height:1.25;
+  }
+  .dmaic-qr-url {
+    margin-top:3px;
+    color:#98A2B3;
+    font-size:7.5px;
+    line-height:1.1;
+    word-break:break-all;
+  }
+
+  .d-row {
+    display:flex; align-items:flex-start; gap:12px;
+    padding:9px 12px; border-radius:3px;
+    border:1px solid transparent; position:relative; overflow:hidden;
+    transition:all .2s;
+  }
+  .d-row.active  { background:var(--orangebg); border-color:var(--orange); }
+  .d-row.active::before { content:''; position:absolute; left:0;top:0;bottom:0; width:3px; background:var(--orange); }
+  .d-row.inactive { opacity:.5; }
+  .d-letter {
+    width:36px; height:36px; flex-shrink:0;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Outfit', sans-serif;
+    font-size:20px; font-weight:900; color:var(--white);
+  }
+  .active  .d-letter { background:var(--orange); }
+  .inactive .d-letter { background:var(--lg); }
+  .d-info  { flex:1; }
+  .d-name  {
+    font-family:'Outfit', sans-serif;
+    font-size:10px; font-weight:700; letter-spacing:2px;
+    text-transform:uppercase; margin-bottom:2px;
+  }
+  .active  .d-name { color:var(--orange); }
+  .inactive .d-name { color:var(--muted); }
+  .d-desc  { font-size:11px; line-height:1.4; color:#aaa; }
+  .active  .d-desc { color:var(--white); font-weight:500; }
+  .tag-curso {
+    font-family:'Outfit', sans-serif;
+    font-size:8.5px; font-weight:800; letter-spacing:1.5px;
+    background:var(--orange); color:var(--white);
+    padding:2px 7px; margin-left:auto; align-self:center; flex-shrink:0;
+  }
+
+  /* SIPOC + KPIs */
+  .right-col { padding-left:26px; display:flex; flex-direction:column; gap:10px; }
+  .sec-label {
+    font-family:'Outfit', sans-serif;
+    font-size:11px; font-weight:700; letter-spacing:3px;
+    text-transform:uppercase; color:var(--orange);
+    padding:6px 12px; background:var(--dg); text-align:center;
+  }
+  .sipoc-tbl { width:100%; border-collapse:collapse; }
+  .sipoc-tbl th {
+    font-family:'Outfit', sans-serif;
+    font-size:9px; font-weight:700; letter-spacing:2px;
+    color:var(--orange); background:var(--mg);
+    padding:5px 3px; text-align:center;
+    border:1px solid var(--border);
+  }
+  .sipoc-tbl td {
+    font-size:10px; color:#bbb;
+    padding:5px 3px; text-align:center;
+    border:1px solid var(--border); background:var(--dg);
+    line-height:1.3;
+  }
+  .sipoc-tbl tr:nth-child(even) td { background:#1d1d1d; }
+
+  .kpis-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:7px; }
+  .kpi-card { background:var(--mg); border:1px solid var(--orange); padding:10px 6px; text-align:center; }
+  .kpi-val {
+    font-family:'Outfit', sans-serif;
+    font-size:28px; font-weight:900; color:var(--orange); line-height:1;
+  }
+  .kpi-val.green { color:var(--green); }
+  .kpi-lbl { font-size:9.5px; color:var(--muted); margin-top:4px; line-height:1.3; }
+
+  /* ══════════════════════════════════════════════
+     SLIDE 3 — TO BE (diagrama HTML)
+  ══════════════════════════════════════════════ */
+  .s2-body {
+    flex:1; display:flex; flex-direction:column;
+    padding:18px 40px 14px; gap:0; min-height:0;
+    align-items:center;
+  }
+
+  .flow-wrap {
+    width:100%; max-width:960px;
+    flex:1; display:flex; flex-direction:column;
+    gap:0; justify-content:space-between;
+  }
+
+  /* section header */
+  .flow-sec-hdr {
+    font-family:'Outfit', sans-serif;
+    font-size:12px; font-weight:800; letter-spacing:3px;
+    text-transform:uppercase; text-align:center;
+    color:var(--orange); padding:6px 0 10px;
+  }
+
+  /* ROW layouts */
+  .flow-row { display:flex; justify-content:center; gap:8px; }
+  .flow-row.wide { gap:6px; }
+
+  /* node types */
+  .fn-source {
+    flex:1; max-width:180px;
+    background:var(--mg); border:1px solid var(--border);
+    padding:8px 10px; text-align:center;
+    font-family:'Outfit', sans-serif;
+    font-size:12px; font-weight:700; color:var(--white);
+    letter-spacing:.5px; line-height:1.25;
+  }
+  .fn-source small { display:block; font-size:9px; font-weight:400; color:var(--muted); margin-top:2px; font-family:'Outfit', sans-serif; }
+
+  .fn-band {
+    width:100%; padding:11px 14px; text-align:center;
+    font-family:'Outfit', sans-serif;
+    font-size:14px; font-weight:800; letter-spacing:1.5px; text-transform:uppercase;
+  }
+  .fn-band.orange { background:var(--orange); color:var(--white); }
+  .fn-band.dark   { background:var(--mg); border:1px solid var(--orange); color:var(--orange); }
+  .fn-band.green  { background:var(--greenbg); border:1px solid var(--green); color:var(--green); }
+
+  .fn-out {
+    flex:1; max-width:180px;
+    background:var(--orange); border:1px solid var(--orange2);
+    padding:9px 8px; text-align:center;
+    font-family:'Outfit', sans-serif;
+    font-size:12px; font-weight:700; color:var(--white);
+    letter-spacing:.4px; line-height:1.25;
+  }
+  .fn-out small { display:block; font-size:9px; font-weight:400; color:rgba(255,255,255,.7); margin-top:2px; font-family:'Outfit', sans-serif; }
+
+  /* arrows */
+  .flow-arrows-row {
+    display:flex; justify-content:center;
+    gap:0; padding:3px 0;
+  }
+  .flow-arrows-row.spread { justify-content:space-around; padding:3px 9%; }
+  .arr-down { color:var(--orange); font-size:12px; line-height:1; }
+
+  .arr-single { text-align:center; color:var(--orange); font-size:14px; padding:2px 0; }
+
+  /* benefit strip */
+  .benefit-strip {
+    width:100%; max-width:960px;
+    background:var(--orangebg); border:1px solid var(--orange);
+    padding:9px 20px; text-align:center;
+    font-family:'Outfit', sans-serif;
+    font-size:14px; font-weight:700; letter-spacing:1px; color:var(--white);
+    margin-top:10px; flex-shrink:0;
+  }
+  .benefit-strip span { color:var(--orange); }
+
+  /* ── AS IS — flujo paso a paso + detalle lateral ── */
+  .s3-body {
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    padding:14px 28px 10px;
+    gap:10px;
+    min-height:0;
+    overflow:hidden;
+  }
+
+  .asis-wrap {
+    flex:1;
+    min-height:0;
+    display:grid;
+    grid-template-columns:minmax(0, 1fr) 360px;
+    gap:16px;
+  }
+
+  .asis-flow-panel,
+  .asis-detail {
+    min-width:0;
+    min-height:0;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+
+  .asis-flow-title,
+  .detail-hdr {
+    flex-shrink:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:34px;
+    padding:7px 10px;
+    background:var(--mg);
+    border:1px solid var(--border);
+    font-family:'Outfit', sans-serif;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    text-align:center;
+  }
+  .asis-flow-title { color:var(--orange); }
+  .detail-hdr { color:var(--red); }
+
+  .asis-flow-canvas {
+    flex:1;
+    min-height:0;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 14% 12%, rgba(255,102,0,.11), transparent 28%),
+      linear-gradient(180deg, #141414 0%, #101010 100%);
+    border:1px solid var(--border);
+    padding:12px;
+  }
+
+  .process-map {
+    height:100%;
+    min-height:0;
+    display:grid;
+    grid-template-columns:32px minmax(250px,.92fr) 22px minmax(270px,1.05fr);
+    grid-template-rows:48px 14px 96px 14px 48px 14px 48px 14px 66px 14px 48px 14px 60px 14px 44px;
+    column-gap:10px;
+    align-items:stretch;
+  }
+
+  .step-card {
+    grid-column:2;
+    position:relative;
+    display:grid;
+    grid-template-columns:32px minmax(0,1fr);
+    gap:8px;
+    align-items:center;
+    min-width:0;
+    padding:7px 9px;
+    background:rgba(36,36,36,.96);
+    border:1px solid var(--border);
+    border-left:4px solid var(--orange);
+    box-shadow:0 8px 20px rgba(0,0,0,.22);
+  }
+
+  .step-card.start {
+    background:var(--orangebg);
+    border-color:var(--orange);
+  }
+
+  .step-card.decision {
+    border-left-color:var(--red);
+  }
+
+  .step-card.final {
+    background:var(--orange);
+    border-color:var(--orange2);
+    color:#fff;
+  }
+
+  .step-num {
+    width:30px;
+    height:30px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--orange);
+    color:#fff;
+    font-family:'Outfit', sans-serif;
+    font-size:15px;
+    font-weight:900;
+    line-height:1;
+  }
+
+  .step-card.decision .step-num { background:var(--red); }
+  .step-card.final .step-num { background:#fff; color:var(--orange); }
+
+  .step-title {
+    font-family:'Outfit', sans-serif;
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:1px;
+    line-height:1.05;
+    text-transform:uppercase;
+    color:#fff;
+  }
+
+  .step-card.start .step-title { color:var(--orange); }
+  .step-card.final .step-title { color:#fff; }
+
+  .step-desc {
+    margin-top:2px;
+    font-size:8.5px;
+    line-height:1.25;
+    color:#8f8f8f;
+  }
+  .step-card.final .step-desc { color:rgba(255,255,255,.78); }
+
+  .flow-down {
+    grid-column:2;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:var(--orange);
+    font-size:12px;
+    line-height:1;
+  }
+  .flow-down::before { content:'▼'; }
+
+  .source-branch {
+    grid-column:4;
+    grid-row:3;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+    min-height:0;
+  }
+
+  .source-card {
+    min-width:0;
+    display:grid;
+    grid-template-columns:20px minmax(0,1fr);
+    gap:6px;
+    align-items:center;
+    background:#1b1b1b;
+    border:1px solid #333;
+    border-left:3px solid var(--orange);
+    padding:6px;
+  }
+
+  .source-card .src-n {
+    width:18px;
+    height:18px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--orange);
+    color:#fff;
+    font-family:'Outfit', sans-serif;
+    font-size:10px;
+    font-weight:900;
+  }
+
+  .source-card b {
+    display:block;
+    font-family:'Outfit', sans-serif;
+    font-size:10px;
+    font-weight:800;
+    line-height:1.05;
+    color:#eee;
+  }
+  .source-card span {
+    display:block;
+    margin-top:1px;
+    font-size:7.8px;
+    line-height:1.15;
+    color:#777;
+  }
+
+  .side-panel {
+    grid-column:4;
+    grid-row:5 / 16;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    min-height:0;
+  }
+
+  .side-block {
+    background:#1a1a1a;
+    border:1px solid var(--border);
+    padding:8px 9px;
+    min-height:0;
+  }
+
+  .side-block h4 {
+    font-family:'Outfit', sans-serif;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:5px;
+  }
+
+  .mini-lines {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:5px;
+  }
+
+  .mini-line {
+    padding:5px 6px;
+    background:#222;
+    border-left:3px solid #555;
+    font-size:8.5px;
+    line-height:1.2;
+    color:#aaa;
+  }
+  .mini-line.copy { border-left-color:#22C55E; }
+  .mini-line.manual { border-left-color:var(--red); }
+  .mini-line.out { border-left-color:#60A5FA; }
+  .mini-line b {
+    display:block;
+    font-family:'Outfit', sans-serif;
+    font-size:9.5px;
+    font-weight:900;
+    color:#fff;
+    margin-bottom:1px;
+  }
+
+  .loop-box {
+    border-color:rgba(239,68,68,.7);
+    background:rgba(239,68,68,.08);
+  }
+  .loop-box h4 { color:var(--red); }
+
+  .loop-copy {
+    font-family:'Outfit', sans-serif;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.8px;
+    line-height:1.25;
+    color:#fff;
+  }
+  .loop-copy strong { color:var(--red); }
+
+  .stat-row {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    flex-shrink:0;
+  }
+
+  .stat-box {
+    min-height:84px;
+    background:var(--mg);
+    border:1px solid var(--border);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:10px 8px;
+  }
+  .stat-box .val {
+    font-family:'Outfit', sans-serif;
+    font-size:31px;
+    font-weight:900;
+    line-height:1;
+    color:var(--red);
+  }
+  .stat-box .lbl {
+    margin-top:7px;
+    font-size:10px;
+    line-height:1.35;
+    color:var(--muted);
+  }
+
+  .pain-list {
+    min-height:0;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+  }
+
+  .pain-item {
+    display:grid;
+    grid-template-columns:36px minmax(0,1fr);
+    gap:10px;
+    align-items:start;
+    background:var(--dg);
+    border:1px solid var(--border);
+    border-left:3px solid var(--orange);
+    padding:11px 12px 10px 11px;
+    min-height:72px;
+  }
+
+  .pain-icon-box {
+    width:34px;
+    height:34px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--orange);
+    color:#fff;
+    font-size:16px;
+    line-height:1;
+  }
+
+  .pain-item-title {
+    font-family:'Outfit', sans-serif;
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:.4px;
+    color:var(--white);
+    margin-bottom:3px;
+  }
+
+  .pain-item-desc {
+    font-size:10px;
+    line-height:1.32;
+    color:#aaa;
+  }
+
+  .pain-strip {
+    min-height:40px;
+    background:var(--red);
+    padding:8px 16px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+    flex-shrink:0;
+  }
+  .pain-strip .icon { font-size:13px; flex-shrink:0; }
+  .pain-strip p { font-size:10px; line-height:1.35; color:var(--white); }
+  .pain-strip strong { font-weight:800; }
+
+  @media (max-width: 1100px) {
+    .s3-body { padding:12px 18px 10px; }
+    .asis-wrap { grid-template-columns:1fr; grid-template-rows:minmax(0,1fr) auto; gap:10px; }
+    .asis-detail { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+    .pain-list { grid-column:1 / -1; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); }
+  }
+
+
+
+  /* ── LIGHT THEME + OUTFIT ───────────────────── */
+  :root {
+    --orange:  #FF6600;
+    --orange2: #CC4400;
+    --orangebg: rgba(255,102,0,0.10);
+    --black:   #FFFFFF;
+    --dg:      #FFFFFF;
+    --mg:      #F8FAFC;
+    --lg:      #EEF2F6;
+    --border:  #D8DDE6;
+    --muted:   #667085;
+    --dim:     #98A2B3;
+    --white:   #111827;
+    --green:   #16A34A;
+    --greenbg: rgba(22,163,74,0.10);
+    --red:     #DC2626;
+  }
+
+  body,
+  body * {
+    font-family:'Outfit', sans-serif !important;
+  }
+
+  body,
+  .slide {
+    background:#FFFFFF;
+    color:#111827;
+  }
+
+  .slide-header {
+    background:#FFFFFF;
+    border-bottom:1px solid var(--border);
+    box-shadow:0 2px 14px rgba(16,24,40,.04);
+  }
+
+  .hdr-title,
+  .slide-num,
+  .d-desc,
+  .sipoc-tbl td,
+  .kpi-lbl,
+  .fn-source,
+  .step-title,
+  .pain-item-title,
+  .benefit-strip {
+    color:#111827;
+  }
+
+  .hdr-badge,
+  .hdr-badge::before,
+  .fn-band.orange,
+  .fn-out,
+  .fn-out small,
+  .active .d-letter,
+  .step-num,
+  .step-card.final,
+  .step-card.final .step-title,
+  .step-card.final .step-desc,
+  .pain-icon-box,
+  .pain-strip,
+  .pain-strip p {
+    color:#FFFFFF;
+  }
+
+  .inactive .d-letter {
+    color:#111827;
+  }
+
+  .d-row,
+  .sipoc-tbl th,
+  .sipoc-tbl td,
+  .kpi-card,
+  .fn-source,
+  .fn-band.dark,
+  .asis-flow-title,
+  .detail-hdr,
+  .stat-box,
+  .pain-item,
+  .side-block,
+  .source-card,
+  .step-card,
+  .mini-line {
+    background:#FFFFFF;
+    border-color:var(--border);
+  }
+
+  .d-row.inactive {
+    opacity:.68;
+  }
+
+  .sipoc-tbl tr:nth-child(even) td,
+  .source-card,
+  .mini-line,
+  .side-block,
+  .stat-box,
+  .pain-item,
+  .step-card {
+    background:#F8FAFC;
+  }
+
+  .asis-flow-canvas {
+    background:
+      radial-gradient(circle at 14% 12%, rgba(255,102,0,.10), transparent 28%),
+      linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    border-color:var(--border);
+  }
+
+  .step-card {
+    background:#FFFFFF;
+    box-shadow:0 8px 20px rgba(16,24,40,.08);
+  }
+
+  .source-card b,
+  .mini-line b,
+  .loop-copy,
+  .pain-item-title {
+    color:#111827;
+  }
+
+  .source-card span,
+  .mini-line,
+  .step-desc,
+  .stat-box .lbl,
+  .pain-item-desc,
+  .fn-source small {
+    color:#667085;
+  }
+
+  .loop-box {
+    background:rgba(220,38,38,.06);
+    border-color:rgba(220,38,38,.35);
+  }
+
+  .fn-band.dark {
+    background:#FFFFFF;
+  }
+
+  .fn-band.green {
+    background:rgba(22,163,74,.08);
+  }
+
+  .benefit-strip {
+    background:rgba(255,102,0,.08);
+  }
+
+
+
+  /* ── DMAIC INTERACTIVO ──────────────────────── */
+  .dmaic-phase {
+    cursor:pointer;
+    user-select:none;
+    border-color:var(--border);
+  }
+  .dmaic-phase:hover {
+    border-color:rgba(255,102,0,.45);
+    transform:translateX(3px);
+    box-shadow:0 10px 24px rgba(16,24,40,.08);
+  }
+  .dmaic-phase:focus-visible {
+    outline:3px solid rgba(255,102,0,.28);
+    outline-offset:2px;
+  }
+  .dmaic-phase.active {
+    opacity:1;
+    box-shadow:0 12px 28px rgba(255,102,0,.15);
+  }
+
+  .dmaic-progress-row { cursor:default; }
+  .dmaic-progress-row:hover { transform:none; box-shadow:none; }
+  .dmaic-progress-row.done {
+    opacity:1;
+    background:rgba(22,163,74,.055);
+    border-color:rgba(22,163,74,.22);
+  }
+  .dmaic-progress-row.done .d-letter { background:#16A34A; color:#fff; }
+  .dmaic-progress-row.done .d-name { color:#15803D; }
+  .dmaic-progress-row.future { opacity:.48; }
+  .dmaic-progress-mark {
+    margin-left:auto;
+    align-self:center;
+    color:#16A34A;
+    font-size:15px;
+    font-weight:900;
+  }
+  .dmaic-progress-mark.current {
+    color:var(--orange);
+    background:rgba(255,102,0,.09);
+    border:1px solid rgba(255,102,0,.25);
+    padding:3px 6px;
+    font-size:7.5px;
+    letter-spacing:.8px;
+  }
+
+
+  .dmaic-panel {
+    gap:12px;
+  }
+  .phase-hero {
+    display:grid;
+    grid-template-columns:78px minmax(0,1fr);
+    gap:16px;
+    align-items:center;
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    border-left:5px solid var(--orange);
+    padding:16px 18px;
+    box-shadow:0 10px 26px rgba(16,24,40,.06);
+  }
+  .phase-letter-big {
+    width:70px;
+    height:70px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:var(--orange);
+    color:#FFFFFF;
+    font-size:40px;
+    font-weight:900;
+    line-height:1;
+  }
+  .phase-eyebrow {
+    display:inline-flex;
+    align-items:center;
+    width:max-content;
+    max-width:100%;
+    padding:4px 10px;
+    background:rgba(255,102,0,.10);
+    color:var(--orange);
+    border:1px solid rgba(255,102,0,.22);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+    margin-bottom:7px;
+  }
+  .phase-title {
+    font-size:25px;
+    font-weight:900;
+    line-height:1.05;
+    letter-spacing:.2px;
+    color:#111827;
+  }
+  .phase-summary {
+    margin-top:6px;
+    font-size:13px;
+    line-height:1.35;
+    color:#667085;
+  }
+  .phase-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .phase-card {
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    padding:12px 13px;
+    min-height:86px;
+  }
+  .phase-card-label {
+    color:var(--orange);
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    margin-bottom:7px;
+  }
+  .phase-card p {
+    font-size:13px;
+    line-height:1.35;
+    color:#111827;
+  }
+  .phase-full {
+    min-height:116px;
+  }
+  .phase-list {
+    list-style:none;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:7px 10px;
+  }
+  .phase-list li {
+    position:relative;
+    padding-left:18px;
+    font-size:12px;
+    line-height:1.35;
+    color:#344054;
+  }
+  .phase-list li::before {
+    content:'›';
+    position:absolute;
+    left:0;
+    top:-1px;
+    color:var(--orange);
+    font-weight:900;
+    font-size:18px;
+    line-height:1;
+  }
+  .phase-kpis {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:8px;
+  }
+  .phase-kpi {
+    background:#F8FAFC;
+    border:1px solid var(--border);
+    border-top:3px solid var(--orange);
+    padding:10px 8px;
+    text-align:center;
+    min-height:74px;
+  }
+  .phase-kpi .phase-kpi-val {
+    font-size:24px;
+    font-weight:900;
+    line-height:1;
+    color:var(--orange);
+  }
+  .phase-kpi .phase-kpi-lbl {
+    margin-top:6px;
+    font-size:10px;
+    line-height:1.22;
+    color:#667085;
+  }
+  .phase-nav-hint {
+    margin-top:auto;
+    background:rgba(255,102,0,.08);
+    border:1px solid rgba(255,102,0,.22);
+    color:#344054;
+    padding:9px 12px;
+    font-size:12px;
+    line-height:1.35;
+  }
+  .phase-nav-hint strong { color:var(--orange); }
+
+  .phase-visual {
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    padding:10px;
+    box-shadow:0 8px 22px rgba(16,24,40,.05);
+  }
+  .visual-title {
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    margin-bottom:8px;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--orange);
+  }
+  .visual-title span:last-child {
+    color:#667085;
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.8px;
+  }
+
+  .mini-asis-map {
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    gap:7px;
+    align-items:stretch;
+  }
+  .mini-asis-step {
+    position:relative;
+    min-height:58px;
+    background:#F8FAFC;
+    border:1px solid var(--border);
+    border-left:3px solid var(--orange);
+    padding:7px 7px 7px 9px;
+  }
+  .mini-asis-step::after {
+    content:'›';
+    position:absolute;
+    right:-10px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--orange);
+    font-size:24px;
+    font-weight:900;
+    line-height:1;
+    z-index:3;
+  }
+  .mini-asis-step:nth-child(4)::after,
+  .mini-asis-step:last-child::after { content:''; }
+  .mini-asis-step.loop { border-left-color:var(--red); background:rgba(239,68,68,.06); }
+  .mini-asis-step.done { background:var(--orange); border-color:var(--orange2); color:#fff; }
+  .mini-step-n {
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    width:18px;
+    height:18px;
+    margin-bottom:5px;
+    background:var(--orange);
+    color:#fff;
+    font-size:10px;
+    font-weight:900;
+  }
+  .mini-asis-step.loop .mini-step-n { background:var(--red); }
+  .mini-asis-step.done .mini-step-n { background:#fff; color:var(--orange); }
+  .mini-step-title {
+    font-size:11px;
+    font-weight:900;
+    line-height:1.05;
+    text-transform:uppercase;
+    color:#111827;
+  }
+  .mini-asis-step.done .mini-step-title { color:#fff; }
+  .mini-step-copy {
+    margin-top:4px;
+    font-size:9px;
+    line-height:1.18;
+    color:#667085;
+  }
+  .mini-asis-step.done .mini-step-copy { color:rgba(255,255,255,.82); }
+  .mini-asis-loop {
+    grid-column:2 / 4;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    padding:7px 9px;
+    background:rgba(239,68,68,.06);
+    border:1px dashed rgba(239,68,68,.55);
+    color:#344054;
+    font-size:10px;
+    font-weight:700;
+  }
+  .mini-asis-loop strong { color:var(--red); }
+
+  .mini-sipoc {
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+  }
+  .mini-sipoc th {
+    background:#FFF4ED;
+    color:var(--orange);
+    border:1px solid rgba(255,102,0,.25);
+    padding:6px 4px;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.8px;
+    text-align:center;
+  }
+  .mini-sipoc td {
+    border:1px solid var(--border);
+    background:#FFFFFF;
+    color:#344054;
+    padding:6px 4px;
+    font-size:9px;
+    line-height:1.18;
+    text-align:center;
+    vertical-align:middle;
+  }
+  .mini-sipoc tr:nth-child(even) td { background:#F8FAFC; }
+
+  .mini-tobe-map {
+    display:grid;
+    grid-template-columns:repeat(5,minmax(0,1fr));
+    gap:7px;
+    align-items:center;
+  }
+  .mini-tobe-source,
+  .mini-tobe-band,
+  .mini-tobe-out {
+    min-height:54px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:7px;
+    border:1px solid var(--border);
+    font-size:10px;
+    font-weight:900;
+    line-height:1.12;
+  }
+  .mini-tobe-source { background:#F8FAFC; color:#111827; }
+  .mini-tobe-band {
+    grid-column:1 / -1;
+    min-height:34px;
+    background:var(--orange);
+    color:#fff;
+    letter-spacing:.7px;
+    text-transform:uppercase;
+  }
+  .mini-tobe-hub {
+    grid-column:1 / -1;
+    background:#FFFFFF;
+    border-color:var(--orange);
+    color:var(--orange);
+  }
+  .mini-tobe-valid {
+    grid-column:1 / -1;
+    background:rgba(34,197,94,.08);
+    border-color:var(--green);
+    color:#15803D;
+  }
+  .mini-tobe-out { background:#FFF4ED; border-color:rgba(255,102,0,.35); color:#111827; }
+  .mini-tobe-arrow {
+    grid-column:1 / -1;
+    text-align:center;
+    color:var(--orange);
+    font-size:13px;
+    font-weight:900;
+    line-height:1;
+  }
+  .mini-empty {
+    display:grid;
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+  .mini-empty-card {
+    background:#F8FAFC;
+    border:1px solid var(--border);
+    border-left:3px solid var(--orange);
+    padding:9px 10px;
+    font-size:11px;
+    line-height:1.3;
+    color:#344054;
+  }
+  .mini-empty-card strong {
+    display:block;
+    margin-bottom:3px;
+    color:#111827;
+    font-size:12px;
+    font-weight:900;
+  }
+
+
+
+  /* ── AJUSTE: BOTONES DMAIC MÁS DISCRETOS ───── */
+  .s1-body {
+    grid-template-columns:.46fr 2px 1.54fr;
+    padding:18px 26px;
+  }
+  .dmaic-col {
+    padding-right:16px;
+    gap:6px;
+  }
+  .dmaic-phase {
+    min-height:0;
+    gap:8px;
+    padding:6px 8px;
+    border-radius:8px;
+    background:#F8FAFC;
+  }
+  .dmaic-phase:hover {
+    transform:translateX(2px);
+    box-shadow:0 6px 16px rgba(16,24,40,.06);
+  }
+  .dmaic-phase.active {
+    box-shadow:0 8px 18px rgba(255,102,0,.12);
+  }
+  .dmaic-phase .d-letter {
+    width:26px;
+    height:26px;
+    font-size:14px;
+    border-radius:5px;
+  }
+  .dmaic-phase .d-name {
+    font-size:9px;
+    letter-spacing:1.2px;
+    margin-bottom:1px;
+  }
+  .dmaic-phase .d-desc {
+    font-size:9px;
+    line-height:1.22;
+  }
+  .dmaic-phase .tag-curso {
+    font-size:7px;
+    letter-spacing:.9px;
+    padding:2px 5px;
+  }
+
+  /* ── VISUALES DMAIC ESPECÍFICOS ────────────── */
+  .define-layout {
+    display:grid;
+    grid-template-columns:1.25fr .75fr;
+    gap:10px;
+    align-items:start;
+  }
+  .define-scope-grid {
+    display:grid;
+    gap:7px;
+  }
+  .scope-pill {
+    background:#F8FAFC;
+    border:1px solid var(--border);
+    border-left:3px solid var(--orange);
+    padding:8px 9px;
+    font-size:10px;
+    line-height:1.25;
+    color:#344054;
+  }
+  .scope-pill strong {
+    display:block;
+    color:#111827;
+    font-size:11px;
+    font-weight:900;
+    margin-bottom:2px;
+  }
+
+  .measure-summary {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+  .measure-table {
+    width:100%;
+    border-collapse:collapse;
+    table-layout:fixed;
+  }
+  .measure-table th {
+    background:#FFF4ED;
+    color:var(--orange);
+    border:1px solid rgba(255,102,0,.24);
+    padding:6px 5px;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.7px;
+    text-align:left;
+    text-transform:uppercase;
+  }
+  .measure-table td {
+    border:1px solid var(--border);
+    padding:6px 5px;
+    font-size:10px;
+    line-height:1.15;
+    color:#344054;
+    background:#fff;
+  }
+  .measure-table tr:nth-child(even) td { background:#F8FAFC; }
+  .metric-bars {
+    display:grid;
+    gap:7px;
+  }
+  .bar-row {
+    display:grid;
+    grid-template-columns:80px minmax(0,1fr) 48px;
+    gap:8px;
+    align-items:center;
+    font-size:10px;
+    color:#344054;
+  }
+  .bar-track {
+    height:8px;
+    background:#EEF2F6;
+    border-radius:999px;
+    overflow:hidden;
+  }
+  .bar-fill {
+    height:100%;
+    background:var(--orange);
+    border-radius:999px;
+  }
+  .bar-val {
+    text-align:right;
+    font-weight:800;
+    color:#111827;
+  }
+
+  .fishbone {
+    position:relative;
+    min-height:210px;
+    background:#F8FAFC;
+    border:1px solid var(--border);
+    overflow:hidden;
+    padding:14px;
+  }
+  .fishbone-line {
+    position:absolute;
+    left:9%;
+    right:18%;
+    top:50%;
+    border-top:3px solid var(--orange);
+  }
+  .fishbone-head {
+    position:absolute;
+    right:3%;
+    top:50%;
+    transform:translateY(-50%);
+    width:15%;
+    min-height:58px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:#FFFFFF;
+    border:2px solid var(--orange);
+    color:#111827;
+    font-size:11px;
+    font-weight:900;
+    line-height:1.15;
+    padding:8px;
+  }
+  .bone {
+    position:absolute;
+    width:25%;
+    min-height:58px;
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    border-left:3px solid var(--orange);
+    padding:7px 8px;
+    box-shadow:0 6px 14px rgba(16,24,40,.05);
+  }
+  .bone::after {
+    content:'';
+    position:absolute;
+    width:44px;
+    border-top:2px solid var(--orange);
+    opacity:.8;
+  }
+  .bone.top::after { transform:rotate(34deg); bottom:-16px; right:-30px; }
+  .bone.bottom::after { transform:rotate(-34deg); top:-16px; right:-30px; }
+  .bone h4 {
+    margin-bottom:3px;
+    color:var(--orange);
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+  }
+  .bone p {
+    color:#344054;
+    font-size:9px;
+    line-height:1.22;
+  }
+  .bone.b1 { left:5%; top:8%; }
+  .bone.b2 { left:37%; top:8%; }
+  .bone.b3 { left:5%; bottom:8%; }
+  .bone.b4 { left:37%; bottom:8%; }
+  .bone.b5 { left:68%; top:8%; width:18%; }
+  .bone.b6 { left:68%; bottom:8%; width:18%; }
+
+  .blank-control-box {
+    min-height:220px;
+    border:1px dashed var(--border);
+    background:#F8FAFC;
+  }
+
+
+  /* ── BOTONES DE NAVEGACIÓN ENTRE PESTAÑAS ─── */
+  .phase-action-block {
+    min-height:180px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    text-align:center;
+    background:linear-gradient(180deg,#FFFFFF 0%,#F8FAFC 100%);
+    border:1px solid var(--border);
+    border-left:4px solid var(--orange);
+    padding:22px 24px;
+  }
+  .phase-action-kicker {
+    color:var(--orange);
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:1.4px;
+    text-transform:uppercase;
+  }
+  .phase-action-title {
+    color:#111827;
+    font-size:22px;
+    font-weight:900;
+    line-height:1.08;
+  }
+  .phase-action-copy {
+    max-width:540px;
+    color:#667085;
+    font-size:12px;
+    line-height:1.35;
+  }
+
+  .phase-action-minimal {
+    min-height:72px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:8px 0 2px;
+  }
+  .phase-action-minimal .slide-link-btn {
+    margin-top:0;
+  }
+  .slide-link-btn,
+  .return-dmaic-btn {
+    appearance:none;
+    border:0;
+    cursor:pointer;
+    font-family:'Outfit', sans-serif !important;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:1px;
+    transition:transform .18s ease, box-shadow .18s ease, background .18s ease;
+  }
+  .slide-link-btn {
+    margin-top:4px;
+    background:var(--orange);
+    color:#FFFFFF;
+    padding:8px 14px;
+    border-radius:999px;
+    font-size:10px;
+    box-shadow:0 7px 16px rgba(255,102,0,.14);
+  }
+  .slide-link-btn:hover,
+  .return-dmaic-btn:hover {
+    transform:translateY(-1px);
+    box-shadow:0 12px 26px rgba(255,102,0,.22);
+  }
+  .slide-link-btn:focus-visible,
+  .return-dmaic-btn:focus-visible {
+    outline:3px solid rgba(255,102,0,.28);
+    outline-offset:2px;
+  }
+  .return-dmaic-btn {
+    position:absolute;
+    top:10px;
+    right:150px;
+    z-index:30;
+    background:#FFFFFF;
+    color:var(--orange);
+    border:1px solid rgba(255,102,0,.35);
+    padding:6px 11px;
+    border-radius:999px;
+    font-size:9px;
+    box-shadow:0 6px 14px rgba(16,24,40,.08);
+  }
+  .dmaic-panel.is-blank-control .phase-grid,
+  .dmaic-panel.is-blank-control .phase-full,
+  .dmaic-panel.is-blank-control .phase-kpis,
+  .dmaic-panel.is-blank-control .phase-visual {
+    display:none;
+  }
+
+  @media (max-width: 1100px) {
+    .phase-hero { grid-template-columns:60px minmax(0,1fr); gap:12px; padding:12px; }
+    .phase-letter-big { width:56px; height:56px; font-size:32px; }
+    .phase-title { font-size:22px; }
+    .phase-grid, .phase-list { grid-template-columns:1fr; }
+    .phase-kpis { grid-template-columns:repeat(2,1fr); }
+  }
+
+
+  /* ── VISUALES ACTUALIZADOS DMAIC / TO BE ───── */
+  .define-dashboard {
+    display:grid;
+    grid-template-columns:1.05fr .95fr;
+    gap:10px;
+    align-items:stretch;
+  }
+  .define-left-stack,
+  .define-right-stack {
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    min-width:0;
+  }
+  .mini-section-title {
+    color:var(--orange);
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    margin-bottom:5px;
+  }
+  .participant-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:6px;
+  }
+  .participant-card {
+    background:#F8FAFC;
+    border:1px solid var(--border);
+    border-left:3px solid var(--orange);
+    padding:7px 8px;
+    min-height:46px;
+  }
+  .participant-card b {
+    display:block;
+    font-size:9px;
+    color:var(--orange);
+    letter-spacing:.7px;
+    text-transform:uppercase;
+    margin-bottom:2px;
+  }
+  .participant-card span {
+    display:block;
+    font-size:10px;
+    line-height:1.14;
+    color:#111827;
+    font-weight:800;
+  }
+  .scope-io-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .io-card {
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    padding:8px 9px;
+    min-height:84px;
+  }
+  .io-card.in { border-top:3px solid var(--green); }
+  .io-card.out { border-top:3px solid var(--red); }
+  .io-card b {
+    display:block;
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    margin-bottom:5px;
+  }
+  .io-card.in b { color:var(--green); }
+  .io-card.out b { color:var(--red); }
+  .io-card p {
+    font-size:10px;
+    line-height:1.25;
+    color:#344054;
+  }
+  .mini-sipoc.compact th,
+  .mini-sipoc.compact td {
+    padding:5px 3px;
+    font-size:8.7px;
+  }
+  .mini-pareto {
+    display:grid;
+    gap:7px;
+  }
+  .pareto-row {
+    display:grid;
+    grid-template-columns:102px minmax(0,1fr) 50px 40px;
+    gap:8px;
+    align-items:center;
+    font-size:10px;
+    color:#344054;
+  }
+  .pareto-label { font-weight:800; color:#111827; }
+  .pareto-track {
+    height:12px;
+    background:#EEF2F6;
+    border-radius:999px;
+    overflow:hidden;
+    position:relative;
+  }
+  .pareto-fill {
+    height:100%;
+    background:var(--orange);
+    border-radius:999px;
+  }
+  .pareto-hours,
+  .pareto-cum {
+    text-align:right;
+    font-weight:900;
+    color:#111827;
+  }
+  .pareto-cum { color:var(--orange); font-size:9px; }
+  .pareto-note {
+    margin-top:3px;
+    background:rgba(255,102,0,.08);
+    border:1px solid rgba(255,102,0,.24);
+    padding:8px 10px;
+    font-size:11px;
+    line-height:1.25;
+    color:#344054;
+    font-weight:700;
+  }
+  .pareto-note strong { color:var(--orange); }
+
+  .improve-visual {
+    display:grid;
+    grid-template-columns:1.2fr .8fr;
+    gap:10px;
+    align-items:stretch;
+  }
+  .architecture-flow {
+    display:flex;
+    flex-direction:column;
+    gap:6px;
+    min-width:0;
+  }
+  .arch-row {
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;
+  }
+  .arch-box {
+    min-height:48px;
+    background:#F8FAFC;
+    border:1px solid var(--border);
+    border-left:3px solid var(--orange);
+    padding:7px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    text-align:center;
+  }
+  .arch-box b {
+    display:block;
+    font-size:10px;
+    font-weight:900;
+    color:#111827;
+    line-height:1.05;
+  }
+  .arch-box span {
+    display:block;
+    margin-top:2px;
+    font-size:8.8px;
+    color:#667085;
+    line-height:1.12;
+  }
+  .arch-band {
+    background:var(--orange);
+    color:#fff;
+    text-align:center;
+    padding:8px 10px;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:.9px;
+    text-transform:uppercase;
+  }
+  .arch-band.dark {
+    background:#FFFFFF;
+    color:var(--orange);
+    border:1px solid var(--orange);
+  }
+  .arch-arrow {
+    text-align:center;
+    color:var(--orange);
+    font-weight:900;
+    line-height:1;
+  }
+  .status-stack {
+    display:flex;
+    flex-direction:column;
+    gap:7px;
+  }
+  .status-item {
+    display:grid;
+    grid-template-columns:72px minmax(0,1fr);
+    gap:8px;
+    align-items:center;
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    padding:7px 8px;
+  }
+  .status-pill {
+    text-align:center;
+    background:#F8FAFC;
+    border:1px solid var(--border);
+    padding:5px 6px;
+    font-size:9px;
+    font-weight:900;
+    color:#111827;
+  }
+  .status-copy b {
+    display:block;
+    font-size:10px;
+    color:#111827;
+    line-height:1.1;
+  }
+  .status-copy span {
+    display:block;
+    margin-top:2px;
+    font-size:9px;
+    color:#667085;
+    line-height:1.15;
+  }
+  .status-item.done { border-left:4px solid var(--green); }
+  .status-item.progress { border-left:4px solid var(--orange); }
+  .status-item.stable { border-left:4px solid #2563EB; }
+
+  .control-visual {
+    display:grid;
+    grid-template-columns:.92fr 1.08fr;
+    gap:10px;
+    align-items:stretch;
+  }
+  .control-loop {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    gap:6px;
+  }
+  .control-step {
+    background:#F8FAFC;
+    border:1px solid var(--border);
+    border-left:3px solid var(--orange);
+    padding:7px 9px;
+    font-size:10px;
+    line-height:1.15;
+    color:#344054;
+    font-weight:700;
+  }
+  .control-step b {
+    display:block;
+    font-size:10px;
+    color:#111827;
+    text-transform:uppercase;
+    letter-spacing:.6px;
+    margin-bottom:2px;
+  }
+  .control-arrow { text-align:center; color:var(--orange); font-weight:900; line-height:1; }
+  .control-kpi-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+  .control-kpi-card {
+    min-height:65px;
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    border-top:3px solid var(--orange);
+    padding:8px;
+  }
+  .control-kpi-card b {
+    display:block;
+    font-size:10px;
+    color:#111827;
+    line-height:1.15;
+    margin-bottom:4px;
+  }
+  .control-kpi-card span {
+    display:block;
+    font-size:9px;
+    color:#667085;
+    line-height:1.18;
+  }
+  .control-status-strip {
+    margin-top:8px;
+    background:rgba(22,163,74,.08);
+    border:1px solid rgba(22,163,74,.30);
+    color:#166534;
+    padding:8px 10px;
+    font-size:11px;
+    line-height:1.25;
+    font-weight:800;
+  }
+
+  .tobe-v2-body {
+    flex:1;
+    display:grid;
+    grid-template-rows:auto 1fr auto;
+    gap:12px;
+    padding:18px 40px 14px;
+    min-height:0;
+  }
+  .tobe-v2-title {
+    text-align:center;
+    color:var(--orange);
+    font-size:13px;
+    font-weight:900;
+    letter-spacing:3px;
+    text-transform:uppercase;
+  }
+  .tobe-v2-grid {
+    min-height:0;
+    display:grid;
+    grid-template-columns:1fr 54px 1fr 54px 1fr;
+    align-items:center;
+    gap:8px;
+  }
+  .tobe-col {
+    min-height:0;
+    height:100%;
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    justify-content:center;
+  }
+  .tobe-col-title {
+    text-align:center;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:2px;
+  }
+  .tobe-card {
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    border-left:4px solid var(--orange);
+    padding:11px 12px;
+    box-shadow:0 8px 20px rgba(16,24,40,.06);
+  }
+  .tobe-card b {
+    display:block;
+    color:#111827;
+    font-size:14px;
+    font-weight:900;
+    line-height:1.08;
+    margin-bottom:3px;
+  }
+  .tobe-card span {
+    display:block;
+    color:#667085;
+    font-size:11px;
+    line-height:1.22;
+  }
+  .tobe-engine {
+    background:linear-gradient(180deg,#FF6600 0%,#E45A00 100%);
+    color:#fff;
+    border:0;
+    text-align:center;
+    min-height:118px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    padding:18px 14px;
+    box-shadow:0 14px 32px rgba(255,102,0,.18);
+  }
+  .tobe-engine b {
+    color:#fff;
+    font-size:20px;
+    letter-spacing:.5px;
+  }
+  .tobe-engine span {
+    color:rgba(255,255,255,.88);
+    font-size:12px;
+    margin-top:5px;
+  }
+  .tobe-arrow-big {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:var(--orange);
+    font-size:32px;
+    font-weight:900;
+  }
+  .tobe-building-grid {
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:7px;
+  }
+  .tobe-building {
+    background:#F8FAFC;
+    border:1px solid var(--border);
+    border-top:3px solid var(--orange);
+    padding:9px 8px;
+    text-align:center;
+    min-height:78px;
+  }
+  .tobe-building b {
+    font-size:13px;
+  }
+  .tobe-building span {
+    font-size:10px;
+  }
+  .tobe-output {
+    border-left-color:var(--green);
+  }
+  .tobe-benefits {
+    background:rgba(255,102,0,.08);
+    border:1px solid rgba(255,102,0,.25);
+    padding:10px 18px;
+    display:flex;
+    justify-content:center;
+    gap:22px;
+    flex-wrap:wrap;
+    color:#111827;
+    font-size:13px;
+    font-weight:800;
+  }
+  .tobe-benefits span { color:var(--orange); }
+
+  @media (max-width: 1100px) {
+    .define-dashboard, .improve-visual, .control-visual { grid-template-columns:1fr; }
+    .tobe-v2-grid { grid-template-columns:1fr; }
+    .tobe-arrow-big { transform:rotate(90deg); }
+  }
+
+
+
+  /* ── IMPROVE: RESULTADOS REALES + NAVEGACIÓN ── */
+  .improve-results {
+    margin-top:10px;
+    border:1px solid var(--border);
+    background:#FFFFFF;
+    overflow:hidden;
+  }
+  .results-head {
+    display:grid;
+    grid-template-columns:1.35fr .8fr .8fr .85fr;
+    background:#FFF4ED;
+    border-bottom:1px solid rgba(255,102,0,.25);
+  }
+  .results-head div {
+    padding:7px 9px;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.65px;
+    text-transform:uppercase;
+    color:var(--orange);
+    border-right:1px solid rgba(255,102,0,.18);
+  }
+  .results-row {
+    display:grid;
+    grid-template-columns:1.35fr .8fr .8fr .85fr;
+    border-bottom:1px solid var(--border);
+  }
+  .results-row:last-child { border-bottom:0; }
+  .results-row > div {
+    padding:7px 9px;
+    font-size:10px;
+    line-height:1.2;
+    color:#344054;
+    border-right:1px solid var(--border);
+  }
+  .results-row > div:last-child,
+  .results-head > div:last-child { border-right:0; }
+  .results-row .metric-name { font-weight:900; color:#111827; }
+  .results-row .after { color:#15803D; font-weight:900; }
+  .results-row .improvement { color:#15803D; font-weight:900; }
+  .results-row.pending .after,
+  .results-row.pending .improvement { color:#98A2B3; font-weight:700; }
+  .real-result-strip {
+    margin-top:7px;
+    background:rgba(22,163,74,.08);
+    border:1px solid rgba(22,163,74,.28);
+    padding:7px 10px;
+    font-size:10px;
+    font-weight:800;
+    color:#166534;
+  }
+  .status-item.clickable { cursor:pointer; transition:.16s ease; }
+  .status-item.clickable:hover { transform:translateY(-1px); box-shadow:0 8px 20px rgba(16,24,40,.08); border-color:rgba(255,102,0,.45); }
+  .status-item.clickable .status-pill::after { content:' ↗'; color:var(--orange); }
+
+
+  /* ── IMPROVE: COMPACTO PARA VER TODO AL 100% ── */
+  .dmaic-panel.is-improve { gap:7px; }
+  .dmaic-panel.is-improve .phase-hero {
+    grid-template-columns:58px minmax(0,1fr);
+    gap:10px;
+    padding:8px 11px;
+  }
+  .dmaic-panel.is-improve .phase-letter-big {
+    width:52px; height:52px; font-size:31px;
+  }
+  .dmaic-panel.is-improve .phase-eyebrow {
+    padding:3px 8px; margin-bottom:4px; font-size:9px;
+  }
+  .dmaic-panel.is-improve .phase-title { font-size:21px; }
+  .dmaic-panel.is-improve .phase-summary { margin-top:3px; font-size:11px; line-height:1.22; }
+  .dmaic-panel.is-improve .phase-grid { gap:7px; }
+  .dmaic-panel.is-improve .phase-card {
+    min-height:0; padding:7px 9px;
+  }
+  .dmaic-panel.is-improve .phase-card-label {
+    font-size:9px; margin-bottom:4px;
+  }
+  .dmaic-panel.is-improve .phase-card p {
+    font-size:11px; line-height:1.23;
+  }
+  .dmaic-panel.is-improve .phase-full { min-height:0; }
+  .dmaic-panel.is-improve .phase-list { gap:4px 9px; }
+  .dmaic-panel.is-improve .phase-list li {
+    padding-left:15px; font-size:10px; line-height:1.2;
+  }
+  .dmaic-panel.is-improve .phase-list li::before { font-size:15px; }
+  .dmaic-panel.is-improve .phase-kpis { gap:6px; }
+  .dmaic-panel.is-improve .phase-kpi {
+    min-height:52px; padding:6px 6px;
+  }
+  .dmaic-panel.is-improve .phase-kpi .phase-kpi-val { font-size:20px; }
+  .dmaic-panel.is-improve .phase-kpi .phase-kpi-lbl { margin-top:3px; font-size:8.5px; }
+  .dmaic-panel.is-improve .phase-visual { padding:6px 8px; }
+  .dmaic-panel.is-improve .visual-title { margin-bottom:5px; font-size:9px; }
+  .dmaic-panel.is-improve .improve-visual { gap:7px; }
+  .dmaic-panel.is-improve .architecture-flow { gap:4px; }
+  .dmaic-panel.is-improve .arch-row { gap:4px; }
+  .dmaic-panel.is-improve .arch-box { min-height:40px; padding:5px; }
+  .dmaic-panel.is-improve .arch-box b { font-size:9px; }
+  .dmaic-panel.is-improve .arch-box span { font-size:7.8px; }
+  .dmaic-panel.is-improve .arch-band { padding:6px 8px; font-size:9px; }
+  .dmaic-panel.is-improve .phase-action-minimal { min-height:38px; padding:4px 0 0; }
+  .dmaic-panel.is-improve .slide-link-btn { padding:6px 11px; font-size:8px; }
+  .dmaic-panel.is-improve .status-stack { gap:4px; }
+  .dmaic-panel.is-improve .mini-section-title { font-size:8.5px; }
+  .dmaic-panel.is-improve .status-item { padding:5px 6px; gap:6px; grid-template-columns:64px minmax(0,1fr); }
+  .dmaic-panel.is-improve .status-pill { padding:4px 5px; font-size:8px; }
+  .dmaic-panel.is-improve .status-copy b { font-size:9px; }
+  .dmaic-panel.is-improve .status-copy span { font-size:7.8px; margin-top:1px; line-height:1.12; }
+  .dmaic-panel.is-improve .improve-results { margin-top:6px; }
+  .dmaic-panel.is-improve .results-head div { padding:5px 7px; font-size:8px; }
+  .dmaic-panel.is-improve .results-row > div { padding:5px 7px; font-size:8.8px; line-height:1.13; }
+  .dmaic-panel.is-improve .real-result-strip { margin-top:4px; padding:5px 8px; font-size:8.8px; }
+
+  /* ── CONTROL: ENCUESTA ─────────────────────── */
+  .survey-card {
+    grid-column:1 / -1;
+    min-height:58px;
+    background:rgba(37,99,235,.06);
+    border:1px solid rgba(37,99,235,.24);
+    border-top:3px solid #2563EB;
+    padding:8px 10px;
+  }
+  .survey-card b { display:block; font-size:10px; color:#1D4ED8; margin-bottom:4px; }
+  .survey-card span { display:block; font-size:9px; color:#475467; line-height:1.22; }
+
+  /* ── TO BE: RESULTADO DC03 ─────────────────── */
+  .dc03-proof {
+    margin-top:8px;
+    display:grid;
+    grid-template-columns:1fr 1fr 1.2fr;
+    gap:7px;
+  }
+  .proof-card {
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    border-top:3px solid var(--orange);
+    padding:8px 9px;
+    text-align:center;
+  }
+  .proof-card .pv { font-size:20px; font-weight:900; color:var(--orange); line-height:1; }
+  .proof-card .pl { margin-top:4px; font-size:9px; color:#667085; line-height:1.15; }
+  .proof-card.success { border-top-color:var(--green); }
+  .proof-card.success .pv { color:var(--green); }
+  .cost-note {
+    margin-top:7px;
+    background:#F8FAFC;
+    border:1px dashed var(--border);
+    padding:7px 9px;
+    font-size:9.5px;
+    color:#667085;
+    line-height:1.2;
+  }
+  .cost-note strong { color:#111827; }
+  .app-tabs {
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    margin-top:8px;
+  }
+  .app-tab-btn {
+    appearance:none;
+    border:1px solid rgba(255,102,0,.35);
+    background:#FFFFFF;
+    color:var(--orange);
+    border-radius:999px;
+    padding:7px 12px;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.7px;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .app-tab-btn:hover { background:#FFF4ED; }
+
+  /* ── SLIDES DE DEMO DE HERRAMIENTAS ───────── */
+  .tool-slide-body {
+    flex:1;
+    min-height:0;
+    padding:12px 26px 12px;
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+  }
+  .tool-tabs {
+    display:flex;
+    justify-content:center;
+    gap:8px;
+    flex-shrink:0;
+  }
+  .tool-tab {
+    border:1px solid var(--border);
+    background:#FFFFFF;
+    color:#667085;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.7px;
+    text-transform:uppercase;
+    cursor:pointer;
+  }
+  .tool-tab.active { background:var(--orange); border-color:var(--orange); color:#FFFFFF; }
+  .tool-frame-wrap {
+    flex:1;
+    min-height:0;
+    border:1px solid var(--border);
+    background:#F8FAFC;
+    box-shadow:0 8px 24px rgba(16,24,40,.06);
+    overflow:hidden;
+  }
+  .tool-frame { width:100%; height:100%; border:0; background:#FFFFFF; }
+  .tool-note {
+    flex-shrink:0;
+    background:#FFF4ED;
+    border:1px solid rgba(255,102,0,.24);
+    padding:7px 10px;
+    color:#7A2E0E;
+    font-size:9.5px;
+    line-height:1.2;
+    text-align:center;
+  }
+  .counter-gallery {
+    flex:1;
+    min-height:0;
+    display:grid;
+    grid-template-columns:1fr .72fr;
+    gap:14px;
+    align-items:center;
+    justify-content:center;
+    padding:4px 4%;
+  }
+  .counter-shot {
+    height:100%;
+    min-height:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:#F8FAFC;
+    border:1px solid var(--border);
+    padding:10px;
+    overflow:hidden;
+  }
+  .counter-shot img { max-width:100%; max-height:100%; object-fit:contain; display:block; }
+  .counter-caption {
+    margin-top:4px;
+    text-align:center;
+    font-size:9px;
+    color:#667085;
+    font-weight:700;
+  }
+
+  /* ── ANIM ───────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(14px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  .slide > * { animation:fadeUp .45s ease both; }
+
+  ::-webkit-scrollbar { width:3px; }
+  ::-webkit-scrollbar-thumb { background:var(--orange); }
+
+
+  /* ── RESULTADOS REALES DC03 — SLIDE PROPIA ── */
+  .results-slide-body {
+    flex:1;
+    display:grid;
+    grid-template-rows:auto 1fr auto;
+    gap:16px;
+    padding:22px 42px 16px;
+    min-height:0;
+  }
+  .results-hero {
+    display:grid;
+    grid-template-columns:1.25fr .75fr;
+    gap:18px;
+    align-items:center;
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    border-left:6px solid var(--orange);
+    padding:18px 22px;
+    box-shadow:0 12px 28px rgba(16,24,40,.06);
+  }
+  .results-kicker {
+    color:var(--orange);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:1.8px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .results-hero h2 {
+    margin:0;
+    font-size:32px;
+    line-height:1.05;
+    letter-spacing:-.02em;
+    color:#111827;
+  }
+  .results-hero p {
+    margin-top:9px;
+    font-size:14px;
+    line-height:1.35;
+    color:#667085;
+  }
+  .results-big-kpis {
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+  }
+  .results-big-kpis div {
+    min-height:92px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    background:#FFF4ED;
+    border:1px solid rgba(255,102,0,.28);
+    border-top:4px solid var(--orange);
+    text-align:center;
+    padding:10px;
+  }
+  .results-big-kpis b {
+    color:var(--orange);
+    font-size:27px;
+    font-weight:900;
+    line-height:1;
+  }
+  .results-big-kpis span {
+    margin-top:7px;
+    color:#667085;
+    font-size:10px;
+    font-weight:800;
+    line-height:1.2;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+  }
+  .results-large-table {
+    min-height:0;
+    display:grid;
+    grid-template-rows:auto repeat(5,1fr);
+    border:1px solid var(--border);
+    background:#FFFFFF;
+    overflow:hidden;
+    box-shadow:0 10px 24px rgba(16,24,40,.05);
+  }
+  .results-large-head,
+  .results-large-row {
+    display:grid;
+    grid-template-columns:1.35fr .82fr .92fr .95fr;
+  }
+  .results-large-head {
+    background:#FFF4ED;
+    border-bottom:1px solid rgba(255,102,0,.28);
+  }
+  .results-large-head div {
+    padding:12px 14px;
+    font-size:11px;
+    font-weight:900;
+    color:var(--orange);
+    letter-spacing:.8px;
+    text-transform:uppercase;
+    border-right:1px solid rgba(255,102,0,.2);
+  }
+  .results-large-row {
+    border-bottom:1px solid var(--border);
+  }
+  .results-large-row:last-child { border-bottom:0; }
+  .results-large-row > div {
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    padding:12px 14px;
+    border-right:1px solid var(--border);
+    color:#344054;
+    font-size:14px;
+    line-height:1.25;
+  }
+  .results-large-row > div:last-child,
+  .results-large-head > div:last-child { border-right:0; }
+  .results-large-row b {
+    display:block;
+    color:#111827;
+    font-size:14px;
+    font-weight:900;
+    margin-bottom:4px;
+  }
+  .results-large-row span {
+    color:#667085;
+    font-size:11px;
+    line-height:1.22;
+  }
+  .results-large-row .after,
+  .results-large-row .improvement {
+    color:#15803D;
+    font-weight:900;
+    font-size:15px;
+  }
+  .results-large-row.pending .after,
+  .results-large-row.pending .improvement {
+    color:#667085;
+    font-weight:800;
+  }
+  .results-slide-actions {
+    display:flex;
+    justify-content:center;
+    gap:10px;
+  }
+  .slide-link-btn.secondary {
+    background:#FFFFFF;
+    color:var(--orange);
+    border:1px solid rgba(255,102,0,.35);
+  }
+  .improve-actions { gap:9px; }
+  .improve-focus-strip {
+    margin-top:10px;
+    background:rgba(22,163,74,.08);
+    border:1px solid rgba(22,163,74,.28);
+    padding:10px 12px;
+    font-size:12px;
+    font-weight:800;
+    color:#166534;
+    text-align:center;
+  }
+
+  /* ── IMPROVE: MÁS AIRE AL SACAR TABLA ── */
+  .dmaic-panel.is-improve { gap:10px; }
+  .dmaic-panel.is-improve .phase-hero {
+    grid-template-columns:72px minmax(0,1fr);
+    gap:14px;
+    padding:13px 16px;
+  }
+  .dmaic-panel.is-improve .phase-letter-big { width:64px; height:64px; font-size:38px; }
+  .dmaic-panel.is-improve .phase-eyebrow { padding:4px 10px; margin-bottom:6px; font-size:10px; }
+  .dmaic-panel.is-improve .phase-title { font-size:25px; }
+  .dmaic-panel.is-improve .phase-summary { margin-top:5px; font-size:13px; line-height:1.3; }
+  .dmaic-panel.is-improve .phase-grid { gap:10px; }
+  .dmaic-panel.is-improve .phase-card { padding:11px 13px; }
+  .dmaic-panel.is-improve .phase-card-label { font-size:10px; margin-bottom:6px; }
+  .dmaic-panel.is-improve .phase-card p { font-size:13px; line-height:1.32; }
+  .dmaic-panel.is-improve .phase-list { gap:7px 12px; }
+  .dmaic-panel.is-improve .phase-list li { padding-left:18px; font-size:12px; line-height:1.32; }
+  .dmaic-panel.is-improve .phase-kpis { gap:9px; }
+  .dmaic-panel.is-improve .phase-kpi { min-height:74px; padding:10px 8px; }
+  .dmaic-panel.is-improve .phase-kpi .phase-kpi-val { font-size:24px; }
+  .dmaic-panel.is-improve .phase-kpi .phase-kpi-lbl { margin-top:6px; font-size:10px; }
+  .dmaic-panel.is-improve .phase-visual { padding:12px; }
+  .dmaic-panel.is-improve .visual-title { margin-bottom:10px; font-size:10.5px; }
+  .dmaic-panel.is-improve .improve-visual { gap:12px; }
+  .dmaic-panel.is-improve .architecture-flow { gap:8px; }
+  .dmaic-panel.is-improve .arch-row { gap:8px; }
+  .dmaic-panel.is-improve .arch-box { min-height:58px; padding:8px; }
+  .dmaic-panel.is-improve .arch-box b { font-size:11px; }
+  .dmaic-panel.is-improve .arch-box span { font-size:9.2px; }
+  .dmaic-panel.is-improve .arch-band { padding:10px 12px; font-size:11px; }
+  .dmaic-panel.is-improve .phase-action-minimal { min-height:50px; padding:8px 0 0; }
+  .dmaic-panel.is-improve .slide-link-btn { padding:8px 14px; font-size:9px; }
+  .dmaic-panel.is-improve .status-stack { gap:7px; }
+  .dmaic-panel.is-improve .mini-section-title { font-size:10px; }
+  .dmaic-panel.is-improve .status-item { padding:8px 9px; gap:8px; grid-template-columns:74px minmax(0,1fr); }
+  .dmaic-panel.is-improve .status-pill { padding:6px 7px; font-size:9px; }
+  .dmaic-panel.is-improve .status-copy b { font-size:10.5px; }
+  .dmaic-panel.is-improve .status-copy span { font-size:9px; margin-top:2px; line-height:1.16; }
+
+  /* ── IMPROVE: FIT 100% ZOOM / ONE VIEWPORT ── */
+  .dmaic-panel.is-improve .phase-visual {
+    padding:8px 10px 7px;
+  }
+  .dmaic-panel.is-improve .visual-title {
+    margin-bottom:5px;
+    line-height:1.1;
+  }
+  .dmaic-panel.is-improve .improve-metrics-grid {
+    gap:8px;
+    margin:5px 0 6px;
+  }
+  .dmaic-panel.is-improve .improve-metric {
+    min-height:86px;
+    padding:8px 10px;
+    border-top-width:3px;
+  }
+  .dmaic-panel.is-improve .improve-metric .label {
+    font-size:8.5px;
+    line-height:1.1;
+  }
+  .dmaic-panel.is-improve .improve-metric .big {
+    font-size:22px;
+    margin:4px 0 3px;
+  }
+  .dmaic-panel.is-improve .improve-metric .sub {
+    font-size:8.6px;
+    line-height:1.2;
+  }
+  .dmaic-panel.is-improve .provisional-badge {
+    font-size:7.5px;
+    padding:3px 6px;
+    margin-top:4px;
+  }
+  .dmaic-panel.is-improve .transition-note {
+    margin-top:4px;
+    padding:6px 9px;
+    font-size:9px;
+    line-height:1.22;
+  }
+  .dmaic-panel.is-improve .improve-visual {
+    margin-top:6px !important;
+    gap:10px;
+    grid-template-columns:1.22fr .78fr;
+  }
+  .dmaic-panel.is-improve .architecture-flow {
+    gap:3px;
+  }
+  .dmaic-panel.is-improve .arch-row {
+    gap:6px;
+  }
+  .dmaic-panel.is-improve .arch-box {
+    min-height:38px;
+    padding:4px 6px;
+  }
+  .dmaic-panel.is-improve .arch-box b {
+    font-size:9.5px;
+  }
+  .dmaic-panel.is-improve .arch-box span {
+    font-size:7.6px;
+    line-height:1.05;
+    margin-top:1px;
+  }
+  .dmaic-panel.is-improve .arch-band {
+    padding:6px 8px;
+    font-size:9.5px;
+    line-height:1.05;
+  }
+  .dmaic-panel.is-improve .arch-arrow {
+    font-size:10px;
+    height:10px;
+    line-height:10px;
+  }
+  .dmaic-panel.is-improve .status-stack {
+    gap:4px;
+  }
+  .dmaic-panel.is-improve .mini-section-title {
+    font-size:8.5px;
+    margin-bottom:1px;
+  }
+  .dmaic-panel.is-improve .status-item {
+    padding:5px 7px;
+    gap:6px;
+    grid-template-columns:66px minmax(0,1fr);
+    min-height:38px;
+  }
+  .dmaic-panel.is-improve .status-pill {
+    padding:4px 5px;
+    font-size:8px;
+  }
+  .dmaic-panel.is-improve .status-copy b {
+    font-size:9.2px;
+    line-height:1.05;
+  }
+  .dmaic-panel.is-improve .status-copy span {
+    font-size:7.8px;
+    line-height:1.08;
+    margin-top:1px;
+  }
+  .dmaic-panel.is-improve .phase-action-minimal {
+    min-height:30px;
+    padding:3px 0 0;
+  }
+  .dmaic-panel.is-improve .slide-link-btn {
+    padding:6px 11px;
+    font-size:8px;
+  }
+  .dmaic-panel.is-improve .improve-focus-strip {
+    margin-top:5px;
+    padding:6px 9px;
+    font-size:9.5px;
+    line-height:1.15;
+  }
+
+
+
+  /* ── LIVE AUDIENCE CONTROL ───────────────────── */
+  .live-launcher{
+    position:fixed;
+    left:18px;
+    right:auto;
+    bottom:62px;
+    z-index:9999;
+    border:0;
+    border-radius:999px;
+    padding:10px 14px;
+    background:#111827;
+    color:#fff;
+    font-family:'Outfit',sans-serif;
+    font-weight:900;
+    letter-spacing:.8px;
+    cursor:pointer;
+    box-shadow:0 10px 28px rgba(0,0,0,.22);
+  }
+  .live-launcher::before{content:'●';color:#22C55E;margin-right:7px}
+  .live-panel{
+    position:fixed;
+    left:150px;
+    right:auto;
+    bottom:62px;
+    z-index:9999;
+    width:min(360px,calc(100vw - 180px));
+    background:#fff;
+    color:#111827;
+    border:1px solid #D0D5DD;
+    border-radius:16px;
+    padding:14px;
+    box-shadow:0 20px 50px rgba(0,0,0,.24);
+    display:none;
+    font-family:'Outfit',sans-serif;
+  }
+  .live-panel.open{display:block}
+  .live-panel h4{margin:0 0 3px;font-size:14px;font-weight:900;color:#111827}
+  .live-panel .live-sub{font-size:10px;color:#667085;margin-bottom:10px}
+  .live-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin:10px 0}
+  .live-btn{border:1px solid #D0D5DD;background:#F8FAFC;color:#111827;padding:8px 5px;font-size:9px;font-weight:800;cursor:pointer;border-radius:8px}
+  .live-btn:hover{border-color:#FF6600;color:#FF6600}
+  .live-btn.primary{background:#FF6600;color:#fff;border-color:#FF6600}
+  .live-status{font-size:10px;line-height:1.35;background:#F8FAFC;border:1px solid #EAECF0;padding:8px;border-radius:8px}
+  .live-status b{color:#111827}
+  .live-url{font-size:9px;word-break:break-all;color:#667085;margin-top:7px}
+
+
+
+
+
+  .improve-metrics-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0 12px}
+  .improve-metric{background:#fff;border:1px solid var(--border);border-top:4px solid var(--orange);padding:13px 14px;min-height:118px}
+  .improve-metric .label{font-size:10px;font-weight:800;letter-spacing:1.1px;text-transform:uppercase;color:var(--muted)}
+  .improve-metric .big{font-size:26px;font-weight:900;color:var(--orange);line-height:1.05;margin:7px 0}
+  .improve-metric .sub{font-size:10px;line-height:1.35;color:#667085}
+  .improve-metric.green{border-top-color:var(--green)}
+  .improve-metric.green .big{color:var(--green)}
+  .transition-note{background:rgba(255,102,0,.08);border:1px solid rgba(255,102,0,.35);padding:10px 14px;font-size:11px;line-height:1.4;margin-top:8px}
+  .transition-note strong{color:var(--orange)}
+  .control-building-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:5px 0 9px}
+  .control-building-card{background:#fff;border:1px solid var(--border);border-top:4px solid var(--orange);padding:10px;min-height:142px}
+  .control-building-card.dc03{border-top-color:#16a34a}
+  .control-building-card.app{border-top-color:#2563eb}
+  .control-building-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px}
+  .control-building-head b{font-size:16px;color:#111827}
+  .control-building-head span{font-size:8px;color:#667085;text-transform:uppercase;font-weight:800;letter-spacing:.7px}
+  .control-building-status{font-size:8px;font-weight:900;color:var(--orange);letter-spacing:.6px;margin-bottom:7px}
+  .control-building-card.dc03 .control-building-status{color:#15803d}
+  .control-building-card.app .control-building-status{color:#1d4ed8}
+  .control-building-card ul{margin:0;padding-left:15px;color:#667085}
+  .control-building-card li{font-size:8.5px;line-height:1.32;margin:3px 0}
+  .control-common-wrap{background:#f8fafc;border:1px solid var(--border);padding:8px 10px;margin-bottom:9px}
+  .control-common-title{font-size:9px;font-weight:900;color:var(--orange);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px}
+  .control-common-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+  .control-common-kpi{background:#fff;border:1px solid var(--border);padding:7px;text-align:center}
+  .control-common-kpi b{display:block;font-size:15px;color:#111827;line-height:1}
+  .control-common-kpi span{display:block;font-size:7.5px;color:#667085;margin-top:4px;line-height:1.15}
+  .control-bottom-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px}
+  .control-bottom-card{background:#fff;border:1px solid var(--border);padding:9px 10px;min-height:78px}
+  .control-bottom-card h4{font-size:9px;text-transform:uppercase;color:var(--orange);letter-spacing:.7px;margin-bottom:5px}
+  .control-bottom-card p{font-size:8.5px;line-height:1.3;color:#667085}
+  .control-multibuilding-banner{margin-top:0;padding:9px 12px}
+  .control-multibuilding-banner b{font-size:10px}
+  .control-multibuilding-banner span{font-size:8px}
+  @media(max-width:1100px){.control-building-grid{grid-template-columns:1fr 1fr}.control-common-kpis{grid-template-columns:repeat(3,1fr)}.control-bottom-grid{grid-template-columns:1fr}}
+
+  .control-now-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
+  .control-now-card{background:#fff;border:1px solid var(--border);padding:14px;min-height:116px}
+  .control-now-card h4{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
+  .control-now-card p,.control-now-card li{font-size:10px;line-height:1.45;color:#667085}
+  .control-now-card ul{padding-left:16px;margin:0}
+  .december-banner{margin-top:10px;background:#111827;color:#fff;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+  .december-banner b{font-size:12px;letter-spacing:1px;text-transform:uppercase}
+  .december-banner span{font-size:10px;color:#d0d5dd}
+  .provisional-badge{display:inline-block;background:#fff3e8;border:1px solid #ffb47a;color:#c44b00;font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase;padding:4px 7px;margin-top:7px}
+  @media(max-width:1000px){.improve-metrics-grid,.control-now-grid{grid-template-columns:1fr}}
+
+
+  /* ── CONTADORES + APP · COMPARATIVA IMPROVE ── */
+  .counter-app-body{
+    flex:1;
+    min-height:0;
+    padding:18px 34px 14px;
+    background:#F4F5F7;
+    color:#27324A;
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+  .counter-app-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:18px;
+  }
+  .counter-app-kicker{
+    color:var(--orange);
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:1.6px;
+    text-transform:uppercase;
+    margin-bottom:4px;
+  }
+  .counter-app-heading h2{
+    margin:0;
+    color:#111827;
+    font-size:25px;
+    line-height:1.08;
+    max-width:850px;
+  }
+  .counter-app-pill{
+    flex:0 0 auto;
+    padding:7px 11px;
+    border-radius:999px;
+    background:#fff;
+    border:1px solid rgba(255,102,0,.35);
+    color:var(--orange);
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.8px;
+  }
+  .counter-app-grid{
+    flex:1;
+    min-height:0;
+    display:grid;
+    grid-template-columns:1.1fr .9fr;
+    gap:14px;
+  }
+  .counter-app-left,.counter-app-right{
+    min-height:0;
+    background:#fff;
+    border:1px solid #D0D5DD;
+    border-radius:14px;
+    padding:12px;
+    display:flex;
+    flex-direction:column;
+  }
+  .counter-app-section-title{
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:1.2px;
+    text-transform:uppercase;
+    color:var(--orange);
+    margin-bottom:8px;
+  }
+  .water-meter-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:8px;
+    min-height:0;
+  }
+  .water-meter-card{
+    border:1px solid #E4E7EC;
+    border-radius:10px;
+    padding:8px;
+    background:#F9FAFB;
+    text-align:center;
+  }
+  .water-meter-label{
+    font-size:9px;
+    font-weight:900;
+    color:#344054;
+    margin-bottom:5px;
+    text-transform:uppercase;
+  }
+  .water-meter-card img{
+    display:block;
+    width:100%;
+    height:105px;
+    object-fit:contain;
+    background:#fff;
+    border-radius:8px;
+  }
+  .water-meter-value{
+    margin-top:5px;
+    font-size:17px;
+    font-weight:900;
+    color:#111827;
+  }
+  .water-meter-value span{font-size:10px;color:#667085}
+  .counter-before-flow,.counter-after-flow{
+    margin-top:auto;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    padding-top:8px;
+  }
+  .counter-before-flow>div,.counter-after-flow>div{
+    background:#F8FAFC;
+    border:1px solid #D0D5DD;
+    border-radius:8px;
+    padding:6px 8px;
+    text-align:center;
+    min-width:70px;
+  }
+  .counter-before-flow b,.counter-after-flow b{
+    display:block;
+    font-size:7px;
+    color:var(--orange);
+    letter-spacing:.8px;
+    margin-bottom:2px;
+  }
+  .counter-before-flow span,.counter-after-flow span{
+    font-size:8px;
+    font-weight:800;
+    color:#344054;
+  }
+  .counter-flow-arrow{
+    min-width:auto!important;
+    padding:0!important;
+    border:0!important;
+    background:transparent!important;
+    color:var(--orange);
+    font-weight:900;
+  }
+  .after-highlight{border-color:var(--orange)!important;background:rgba(255,102,0,.08)!important}
+  .app-copy-shell{
+    flex:1;
+    min-height:0;
+    border:1px solid #D0D5DD;
+    border-radius:12px;
+    overflow:hidden;
+    background:#F8FAFC;
+  }
+  .app-copy-top{
+    background:#111827;
+    color:#fff;
+    padding:9px 12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+  }
+  .app-copy-brand{font-size:13px;font-weight:900}
+  .app-copy-brand span{color:var(--orange)}
+  .app-copy-status{font-size:7px;font-weight:900;letter-spacing:1px;color:#D0D5DD}
+  .app-copy-card{padding:10px 12px}
+  .app-copy-row{margin-bottom:7px}
+  .app-copy-row label{
+    display:block;
+    font-size:8px;
+    font-weight:900;
+    color:#667085;
+    text-transform:uppercase;
+    letter-spacing:.7px;
+    margin-bottom:3px;
+  }
+  .app-copy-field,.app-copy-input{
+    border:1px solid #D0D5DD;
+    border-radius:8px;
+    background:#fff;
+    min-height:30px;
+    padding:7px 9px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    font-size:9px;
+    color:#344054;
+  }
+  .app-copy-input b{font-size:15px;color:#111827}
+  .app-copy-input span{font-size:9px;color:#667085}
+  .app-copy-save{
+    width:100%;
+    border:0;
+    border-radius:8px;
+    padding:9px;
+    background:var(--orange);
+    color:#fff;
+    font-family:'Outfit',sans-serif;
+    font-size:9px;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:.8px;
+  }
+  .app-copy-confirm{
+    margin-top:7px;
+    padding:7px 8px;
+    border-radius:8px;
+    background:#ECFDF3;
+    color:#15803D;
+    font-size:8px;
+    font-weight:800;
+    text-align:center;
+  }
+  .counter-app-impact{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:8px;
+  }
+  .counter-app-impact>div{
+    background:#111827;
+    border-radius:10px;
+    padding:8px 10px;
+    text-align:center;
+  }
+  .counter-app-impact b{
+    display:block;
+    color:#fff;
+    font-size:15px;
+    line-height:1;
+  }
+  .counter-app-impact span{
+    display:block;
+    color:#D0D5DD;
+    font-size:8px;
+    margin-top:3px;
+  }
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="realtime.js"></script>
+</head>
+<body>
+
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" onclick="goTo(0)" title="Define"></div>
+  <div class="nav-dot" onclick="goTo(1)" title="Measure"></div>
+  <div class="nav-dot" onclick="goTo(2)" title="AS IS"></div>
+  <div class="nav-dot" onclick="goTo(3)" title="Analyze"></div>
+  <div class="nav-dot" onclick="goTo(4)" title="Improve"></div>
+  <div class="nav-dot" onclick="goTo(5)" title="Contadores + App"></div>
+  <div class="nav-dot" onclick="goTo(6)" title="TO BE"></div>
+  <div class="nav-dot" onclick="goTo(7)" title="DC01"></div>
+  <div class="nav-dot" onclick="goTo(8)" title="DC03 / DC02"></div>
+  <div class="nav-dot" onclick="goTo(9)" title="Resultados DC03"></div>
+  <div class="nav-dot" onclick="goTo(10)" title="Control"></div>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     SLIDE 1 — CONTEXTO: DMAIC + SIPOC + KPIs
+═══════════════════════════════════════════════ -->
+<section class="slide dmaic-snapshot-slide" id="slide-0" data-dmaic-phase="define">
+  <header class="slide-header">
+    <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">Reducir el tiempo de Reporting Operativo Data4</span></div>
+    <div class="hdr-badge">DEFINE</div>
+  </header>
+  <div class="s1-body">
+    <div class="dmaic-col dmaic-progress" aria-label="Progreso DMAIC"><div class="d-row dmaic-progress-row active">
+      <div class="d-letter">D</div>
+      <div class="d-info">
+        <div class="d-name">Define</div>
+        <div class="d-desc">Definir proyecto · SIPOC · alcance.</div>
+      </div>
+      <span class="dmaic-progress-mark current">ACTUAL</span>
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">M</div>
+      <div class="d-info">
+        <div class="d-name">Measure</div>
+        <div class="d-desc">Medir tiempos · personas · hojas · informes.</div>
+      </div>
+      
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">A</div>
+      <div class="d-info">
+        <div class="d-name">Analyze</div>
+        <div class="d-desc">Analizar métricas · Ishikawa.</div>
+      </div>
+      
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">I</div>
+      <div class="d-info">
+        <div class="d-name">Improve</div>
+        <div class="d-desc">TO BE · alcance de la mejora.</div>
+      </div>
+      
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">C</div>
+      <div class="d-info">
+        <div class="d-name">Control</div>
+        <div class="d-desc">Plan de control multiedificio.</div>
+      </div>
+      
+    </div><div class="dmaic-qr-card">
+      <div class="dmaic-qr-title">Participa desde tu móvil</div>
+      <img src="audience_qr.svg" alt="QR para acceder a la experiencia de audiencia">
+      <div class="dmaic-qr-copy">Escanea el código para abrir la experiencia de audiencia</div>
+      <div class="dmaic-qr-url">guillemarley.github.io/data4_reporting_experience/audience.html</div>
+    </div></div>
+    <div class="vdivider"></div>
+    <div class="right-col dmaic-panel">
+    <div class="phase-hero">
+      <div class="phase-letter-big">D</div>
+      <div class="phase-hero-copy">
+        <div class="phase-eyebrow">Fase completada · Definir</div>
+        <div class="phase-title">Define · Definir</div>
+        <div class="phase-summary">Objetivo del proyecto, participantes, alcance IN/OUT, SIPOC y métricas principales.</div>
+      </div>
+    </div>
+    <div class="phase-grid">
+      <div class="phase-card"><div class="phase-card-label">Objetivo</div><p>Reducir el tiempo dedicado al reporting operativo Data4 mediante la automatización de la actualización de los Operation Books de DC01, DC02 y DC03.</p></div>
+      <div class="phase-card"><div class="phase-card-label">Foco operativo</div><p>Alcance del proyecto, stakeholders, CTQs, SIPOC y baseline inicial del proceso.</p></div>
+    </div>
+    <div class="phase-card phase-full">
+      <div class="phase-card-label">Datos de fase</div>
+      <ul class="phase-list"><li>Problema: reporting mensual manual, dependiente de perfiles clave y con riesgo de penalización.</li><li>Objetivo: reducción esperada del 70-80% del esfuerzo manual manteniendo la entrega en ≤5 días laborables.</li><li>Alcance IN: Operation Books DC01, DC02 y DC03, inputs BMS/Iberdrola, mappings y validaciones automáticas.</li><li>Alcance OUT: otros CPDs, modificación de sistemas origen y subida final a plataformas del cliente.</li></ul>
+    </div>
+    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">88,6h</div><div class="phase-kpi-lbl">baseline mensual</div></div><div class="phase-kpi"><div class="phase-kpi-val">70-80%</div><div class="phase-kpi-lbl">reducción objetivo</div></div><div class="phase-kpi"><div class="phase-kpi-val">≤5d</div><div class="phase-kpi-lbl">plazo contractual</div></div><div class="phase-kpi"><div class="phase-kpi-val">0</div><div class="phase-kpi-lbl">penalizaciones objetivo</div></div></div>
+    <div class="phase-visual">
+      <div class="visual-title"><span>Define · Proyecto completo</span><span>SIPOC + alcance</span></div>
+      <div class="define-dashboard">
+        <div class="define-left-stack">
+          <div>
+            <div class="mini-section-title">Participantes</div>
+            <div class="participant-grid">
+              <div class="participant-card"><b>Sponsor</b><span>Ainhoa Andrés Camaño</span></div>
+              <div class="participant-card"><b>Green Belt</b><span>Guillermo Martínez de Hurtado</span></div>
+              <div class="participant-card"><b>Tutor</b><span>Roberto Herguedas Alonso</span></div>
+              <div class="participant-card"><b>Equipo</b><span>Serveo Data4</span></div>
+            </div>
+          </div>
+          <div class="scope-io-grid">
+            <div class="io-card in"><b>Dentro</b><p>Operation Books DC01/DC02/DC03, inputs BMS e Iberdrola, mappings específicos y validaciones automáticas.</p></div>
+            <div class="io-card out"><b>Fuera</b><p>Otros CPDs, cambios en sistemas origen y subida final a plataformas del cliente.</p></div>
+          </div>
+        </div>
+        <div class="define-right-stack">
+          <div class="mini-section-title">SIPOC resumido</div>
+          <table class="mini-sipoc compact">
+            <thead><tr><th>SUPPLIER</th><th>INPUT</th><th>PROCESS</th><th>OUTPUT</th><th>CUSTOMER</th></tr></thead>
+            <tbody>
+              <tr><td>BMS</td><td>Export mensual</td><td>Importar</td><td>Operation Book</td><td>Data4</td></tr>
+              <tr><td>Iberdrola</td><td>PDF / factura</td><td>Transformar</td><td>Validaciones</td><td>Serveo</td></tr>
+              <tr><td>App contadores</td><td>Lecturas</td><td>Mapear</td><td>Trazabilidad</td><td>Equipo Data4</td></tr>
+              <tr><td>Plantillas OB</td><td>Hojas/celdas</td><td>Actualizar</td><td>Entrega mensual</td><td>Cliente</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div></div>
+  </div>
+  </div>
+  <div class="slide-footer"></div>
+  <span class="slide-num">01 / 11</span>
+</section>
+
+<section class="slide dmaic-snapshot-slide" id="slide-1" data-dmaic-phase="measure">
+  <header class="slide-header">
+    <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">Reducir el tiempo de Reporting Operativo Data4</span></div>
+    <div class="hdr-badge">MEASURE</div>
+  </header>
+  <div class="s1-body">
+    <div class="dmaic-col dmaic-progress" aria-label="Progreso DMAIC"><div class="d-row dmaic-progress-row done">
+      <div class="d-letter">D</div>
+      <div class="d-info">
+        <div class="d-name">Define</div>
+        <div class="d-desc">Definir proyecto · SIPOC · alcance.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row active">
+      <div class="d-letter">M</div>
+      <div class="d-info">
+        <div class="d-name">Measure</div>
+        <div class="d-desc">Medir tiempos · personas · hojas · informes.</div>
+      </div>
+      <span class="dmaic-progress-mark current">ACTUAL</span>
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">A</div>
+      <div class="d-info">
+        <div class="d-name">Analyze</div>
+        <div class="d-desc">Analizar métricas · Ishikawa.</div>
+      </div>
+      
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">I</div>
+      <div class="d-info">
+        <div class="d-name">Improve</div>
+        <div class="d-desc">TO BE · alcance de la mejora.</div>
+      </div>
+      
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">C</div>
+      <div class="d-info">
+        <div class="d-name">Control</div>
+        <div class="d-desc">Plan de control multiedificio.</div>
+      </div>
+      
+    </div><div class="dmaic-qr-card">
+      <div class="dmaic-qr-title">Participa desde tu móvil</div>
+      <img src="audience_qr.svg" alt="QR para acceder a la experiencia de audiencia">
+      <div class="dmaic-qr-copy">Escanea el código para abrir la experiencia de audiencia</div>
+      <div class="dmaic-qr-url">guillemarley.github.io/data4_reporting_experience/audience.html</div>
+    </div>
+  </div>
+  <div class="vdivider"></div>
+    <div class="right-col dmaic-panel">
+    <div class="phase-hero">
+      <div class="phase-letter-big">M</div>
+      <div class="phase-hero-copy">
+        <div class="phase-eyebrow">Fase completada · Medir</div>
+        <div class="phase-title">Measure · Medir</div>
+        <div class="phase-summary">Cuantificación del AS IS: horas por bloque de trabajo y concentración de pérdidas de tiempo.</div>
+      </div>
+    </div>
+    <div class="phase-grid">
+      <div class="phase-card"><div class="phase-card-label">Objetivo</div><p>Establecer una línea base objetiva para priorizar la automatización donde más tiempo consume el proceso.</p></div>
+      <div class="phase-card"><div class="phase-card-label">Foco operativo</div><p>Pareto de horas: montaje de Operation Book, extracción, informes y picado manual de datos.</p></div>
+    </div>
+    <div class="phase-card phase-full">
+      <div class="phase-card-label">Datos de fase</div>
+      <ul class="phase-list"><li>Baseline Abril 2026: 88,6 h mensuales medidas entre DC01, DC02 y DC03.</li><li>El montaje del Operation Book concentra 43,0 h, el mayor cuello de botella individual.</li><li>La extracción de datos añade 27,4 h y explica gran parte del esfuerzo previo a la carga.</li><li>Operation Book + extracción concentran aproximadamente el 80% del esfuerzo manual medido.</li></ul>
+    </div>
+    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">88,6h</div><div class="phase-kpi-lbl">total medido</div></div><div class="phase-kpi"><div class="phase-kpi-val">43,0h</div><div class="phase-kpi-lbl">Operation Book</div></div><div class="phase-kpi"><div class="phase-kpi-val">27,4h</div><div class="phase-kpi-lbl">extracción</div></div><div class="phase-kpi"><div class="phase-kpi-val">79,5%</div><div class="phase-kpi-lbl">Top 2 bloques</div></div></div>
+    <div class="phase-visual">
+      <div class="visual-title"><span>Measure · Pareto de horas</span><span>Baseline 88,6 h</span></div>
+      <div class="mini-pareto">
+        <div class="pareto-row"><span class="pareto-label">Operation Book</span><div class="pareto-track"><div class="pareto-fill" style="width:100%"></div></div><span class="pareto-hours">43,0h</span><span class="pareto-cum">48,5%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Extracción</span><div class="pareto-track"><div class="pareto-fill" style="width:64%"></div></div><span class="pareto-hours">27,4h</span><span class="pareto-cum">79,5%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Informes</span><div class="pareto-track"><div class="pareto-fill" style="width:24%"></div></div><span class="pareto-hours">10,5h</span><span class="pareto-cum">91,4%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Picado datos</span><div class="pareto-track"><div class="pareto-fill" style="width:18%"></div></div><span class="pareto-hours">7,8h</span><span class="pareto-cum">100%</span></div>
+        <div class="pareto-note"><strong>Insight clave:</strong> Operation Book + extracción concentran 70,4 h, aproximadamente el 79,5% del esfuerzo mensual medido.</div>
+      </div>
+      </div>
+  </div>
+  </div>
+  <div class="slide-footer"></div>
+  <span class="slide-num">02 / 11</span>
+</section>
+
+<section class="slide" id="slide-2">
+  <header class="slide-header">
+    <div class="hdr-left">
+      <div class="hdr-bar"></div>
+      <span class="hdr-title">AS IS — Proceso Actual (Manual)</span>
+    </div>
+    <div class="hdr-badge">IMPROVE</div>
+  </header>
+
+  <button class="return-dmaic-btn" type="button" onclick="goTo(1)">← Volver a Measure</button>
+
+  <div class="s3-body">
+    <div class="asis-wrap">
+
+      <!-- FLUJO IZQUIERDA — PASO A PASO -->
+      <div class="asis-flow-panel">
+        <div class="asis-flow-title">Flujo actual — proceso manual paso a paso</div>
+
+        <div class="asis-flow-canvas">
+          <div class="process-map">
+
+            <div class="step-card start" style="grid-row:1">
+              <div class="step-num">01</div>
+              <div>
+                <div class="step-title">1° de mes</div>
+                <div class="step-desc">Inicio del ciclo mensual de reporting.</div>
+              </div>
+            </div>
+
+            <div class="flow-down" style="grid-row:2"></div>
+
+            <div class="step-card" style="grid-row:3">
+              <div class="step-num">02</div>
+              <div>
+                <div class="step-title">Descarga datos</div>
+                <div class="step-desc">Recogida manual desde fuentes no integradas.</div>
+              </div>
+            </div>
+
+            <div class="source-branch">
+              <div class="source-card"><div class="src-n">1</div><div><b>Iberdrola PDF/Excel</b><span>Correo + descarga manual</span></div></div>
+              <div class="source-card"><div class="src-n">2</div><div><b>MIV / Dream Report</b><span>DC02 · 12 Excels</span></div></div>
+              <div class="source-card"><div class="src-n">3</div><div><b>Toma manual técnicos</b><span>Lectura y paso a PC</span></div></div>
+              <div class="source-card"><div class="src-n">4</div><div><b>Toma de datos web</b><span>Consulta web / zoom manual</span></div></div>
+            </div>
+
+            <div class="flow-down" style="grid-row:4"></div>
+
+            <div class="step-card" style="grid-row:5">
+              <div class="step-num">03</div>
+              <div>
+                <div class="step-title">Cargar Operation Book</div>
+                <div class="step-desc">Copia a VSGA y carga manual en Excel.</div>
+              </div>
+            </div>
+
+            <div class="flow-down" style="grid-row:6"></div>
+
+            <div class="step-card" style="grid-row:7">
+              <div class="step-num">04</div>
+              <div>
+                <div class="step-title">Revisión de datos</div>
+                <div class="step-desc">Validación visual, manual y sin trazabilidad automática.</div>
+              </div>
+            </div>
+
+            <div class="flow-down" style="grid-row:8"></div>
+
+            <div class="step-card decision" style="grid-row:9">
+              <div class="step-num">05</div>
+              <div>
+                <div class="step-title">Corrección errores</div>
+                <div class="step-desc">Si hay error, se corrige y se vuelve a cargar.</div>
+              </div>
+            </div>
+
+            <div class="flow-down" style="grid-row:10"></div>
+
+            <div class="step-card" style="grid-row:11">
+              <div class="step-num">06</div>
+              <div>
+                <div class="step-title">Subida OODrive</div>
+                <div class="step-desc">Publicación manual de ficheros.</div>
+              </div>
+            </div>
+
+            <div class="flow-down" style="grid-row:12"></div>
+
+            <div class="step-card" style="grid-row:13">
+              <div class="step-num">07</div>
+              <div>
+                <div class="step-title">Informe mensual</div>
+                <div class="step-desc">Generación de 3 Power BI, 1 Excel y 1 Word.</div>
+              </div>
+            </div>
+
+            <div class="flow-down" style="grid-row:14"></div>
+
+            <div class="step-card final" style="grid-row:15">
+              <div class="step-num">08</div>
+              <div>
+                <div class="step-title">Subir OODrive</div>
+                <div class="step-desc">Entrega final del reporting mensual.</div>
+              </div>
+            </div>
+
+            <div class="side-panel">
+              <div class="side-block">
+                <h4>03 · Método de carga</h4>
+                <div class="mini-lines">
+                  <div class="mini-line copy"><b>Copia a VSGA</b>Pasos 1 y 2</div>
+                  <div class="mini-line manual"><b>A mano</b>Pasos 1, 2, 3 y 4</div>
+                </div>
+              </div>
+
+              <div class="side-block loop-box">
+                <h4>05 · Bucle de error</h4>
+                <div class="loop-copy">SÍ hay error → <strong>volver a carga</strong><br>NO hay error → continuar</div>
+              </div>
+
+              <div class="side-block">
+                <h4>07 · Outputs generados</h4>
+                <div class="mini-lines">
+                  <div class="mini-line out"><b>3 Power BI</b>Dashboards</div>
+                  <div class="mini-line out"><b>1 Excel</b>Consolidado</div>
+                  <div class="mini-line out"><b>1 Word</b>Informe final</div>
+                  <div class="mini-line manual"><b>Manual</b>Subida y revisión</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- DETALLE DERECHA -->
+      <div class="asis-detail">
+
+        <div class="stat-row">
+          <div class="stat-box"><div class="val">&gt;80h</div><div class="lbl">Horas mensuales invertidas en reporting</div></div>
+          <div class="stat-box"><div class="val">40+</div><div class="lbl">Pestañas Excel completadas manualmente</div></div>
+        </div>
+
+        <div class="detail-hdr">Problemas identificados</div>
+
+        <div class="pain-list">
+          <div class="pain-item">
+            <div class="pain-icon-box">📥</div>
+            <div class="pain-item-text">
+              <div class="pain-item-title">Descargas manuales de múltiples fuentes</div>
+              <div class="pain-item-desc">BMS, MIV, Dream Report, Iberdrola, JIRA/Planon — sin automatización ni integración entre sistemas.</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon-box">📸</div>
+            <div class="pain-item-text">
+              <div class="pain-item-title">Capturas manuales de pantalla</div>
+              <div class="pain-item-desc">Los técnicos fotografían e introducen datos manualmente en Excel. Alto riesgo de error humano.</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon-box">📊</div>
+            <div class="pain-item-text">
+              <div class="pain-item-title">40+ pestañas Excel sin validación</div>
+              <div class="pain-item-desc">Relleno manual de DC01, DC02, DC03. Sin validaciones automáticas ni trazabilidad del dato.</div>
+            </div>
+          </div>
+          <div class="pain-item">
+            <div class="pain-icon-box">⏰</div>
+            <div class="pain-item-text">
+              <div class="pain-item-title">Riesgo de entrega fuera de plazo</div>
+              <div class="pain-item-desc">Límite de 5 días laborables comprometido por el volumen manual. Defecto definido: &gt;80 horas invertidas.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="pain-strip">
+      <span class="icon">⚠</span>
+      <p><strong>+80 h/mes · 40+ pestañas Excel · 4 fuentes manuales sin integrar</strong> · capturas de pantalla · correcciones manuales de errores · riesgo de penalización contractual</p>
+    </div>
+
+  </div>
+
+  <div class="slide-footer"></div>
+  <span class="slide-num">03 / 11</span>
+</section>
+
+<section class="slide dmaic-snapshot-slide" id="slide-3" data-dmaic-phase="analyze">
+  <header class="slide-header">
+    <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">Reducir el tiempo de Reporting Operativo Data4</span></div>
+    <div class="hdr-badge">ANALYZE</div>
+  </header>
+  <div class="s1-body">
+    <div class="dmaic-col dmaic-progress" aria-label="Progreso DMAIC"><div class="d-row dmaic-progress-row done">
+      <div class="d-letter">D</div>
+      <div class="d-info">
+        <div class="d-name">Define</div>
+        <div class="d-desc">Definir proyecto · SIPOC · alcance.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row done">
+      <div class="d-letter">M</div>
+      <div class="d-info">
+        <div class="d-name">Measure</div>
+        <div class="d-desc">Medir tiempos · personas · hojas · informes.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row active">
+      <div class="d-letter">A</div>
+      <div class="d-info">
+        <div class="d-name">Analyze</div>
+        <div class="d-desc">Analizar métricas · Ishikawa.</div>
+      </div>
+      <span class="dmaic-progress-mark current">ACTUAL</span>
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">I</div>
+      <div class="d-info">
+        <div class="d-name">Improve</div>
+        <div class="d-desc">TO BE · alcance de la mejora.</div>
+      </div>
+      
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">C</div>
+      <div class="d-info">
+        <div class="d-name">Control</div>
+        <div class="d-desc">Plan de control multiedificio.</div>
+      </div>
+      
+    </div><div class="dmaic-qr-card">
+      <div class="dmaic-qr-title">Participa desde tu móvil</div>
+      <img src="audience_qr.svg" alt="QR para acceder a la experiencia de audiencia">
+      <div class="dmaic-qr-copy">Escanea el código para abrir la experiencia de audiencia</div>
+      <div class="dmaic-qr-url">guillemarley.github.io/data4_reporting_experience/audience.html</div>
+    </div>
+  </div>
+  <div class="vdivider"></div>
+    <div class="right-col dmaic-panel">
+    <div class="phase-hero">
+      <div class="phase-letter-big">A</div>
+      <div class="phase-hero-copy">
+        <div class="phase-eyebrow">Fase completada · Analizar</div>
+        <div class="phase-title">Analyze · Analizar</div>
+        <div class="phase-summary">Causas raíz del exceso de tiempo: manualidad, heterogeneidad de fuentes, mappings y retrabajo.</div>
+      </div>
+    </div>
+    <div class="phase-grid">
+      <div class="phase-card"><div class="phase-card-label">Objetivo</div><p>Explicar por qué el proceso supera las 80 h y qué causas debe atacar la herramienta.</p></div>
+      <div class="phase-card"><div class="phase-card-label">Foco operativo</div><p>Ishikawa actualizado: método, sistemas/fuentes, datos, mappings, personas, medición y SLA.</p></div>
+    </div>
+    <div class="phase-card phase-full">
+      <div class="phase-card-label">Datos de fase</div>
+      <ul class="phase-list"><li>Causa método: secuencia manual, copiar/pegar, revisión visual y recarga si hay errores.</li><li>Causa datos: exportaciones, PDFs, capturas/lecturas y estructuras de Excel heterogéneas.</li><li>Causa estandarización: cada edificio/fase requiere mappings específicos de señales, hojas y celdas.</li><li>Causa control: errores detectados tarde y poca trazabilidad automática antes de la herramienta.</li></ul>
+    </div>
+    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">Rework</div><div class="phase-kpi-lbl">bucle de error</div></div><div class="phase-kpi"><div class="phase-kpi-val">40+</div><div class="phase-kpi-lbl">hojas Excel</div></div><div class="phase-kpi"><div class="phase-kpi-val">3</div><div class="phase-kpi-lbl">edificios</div></div><div class="phase-kpi"><div class="phase-kpi-val">4</div><div class="phase-kpi-lbl">fases DC01</div></div></div>
+    <div class="phase-visual">
+      <div class="visual-title"><span>Analyze · Ishikawa</span><span>Causas raíz</span></div>
+      <div class="fishbone">
+        <div class="fishbone-line"></div>
+        <div class="fishbone-head">Tiempo de reporting &gt;80h</div>
+        <div class="bone top b1"><h4>Método</h4><p>Secuencia manual, copiar/pegar, revisión visual y recarga si hay errores.</p></div>
+        <div class="bone top b2"><h4>Fuentes</h4><p>BMS, Iberdrola, lecturas y plantillas sin flujo automatizado único.</p></div>
+        <div class="bone top b5"><h4>Personas</h4><p>Dependencia de perfiles expertos durante los primeros días del mes.</p></div>
+        <div class="bone bottom b3"><h4>Datos</h4><p>Exportaciones, PDFs, Excels y formatos distintos por edificio.</p></div>
+        <div class="bone bottom b4"><h4>Mappings</h4><p>DC01, DC02 y DC03 requieren señales, hojas y celdas específicas.</p></div>
+        <div class="bone bottom b6"><h4>Control</h4><p>Errores detectados tarde; retrabajo y poca trazabilidad automática.</p></div>
+      </div></div>
+  </div>
+  </div>
+  <div class="slide-footer"></div>
+  <span class="slide-num">04 / 11</span>
+</section>
+
+<section class="slide dmaic-snapshot-slide" id="slide-4" data-dmaic-phase="improve">
+  <header class="slide-header">
+    <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">Reducir el tiempo de Reporting Operativo Data4</span></div>
+    <div class="hdr-badge">IMPROVE</div>
+  </header>
+  <div class="s1-body">
+    <div class="dmaic-col dmaic-progress" aria-label="Progreso DMAIC"><div class="d-row dmaic-progress-row done">
+      <div class="d-letter">D</div>
+      <div class="d-info">
+        <div class="d-name">Define</div>
+        <div class="d-desc">Definir proyecto · SIPOC · alcance.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row done">
+      <div class="d-letter">M</div>
+      <div class="d-info">
+        <div class="d-name">Measure</div>
+        <div class="d-desc">Medir tiempos · personas · hojas · informes.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row done">
+      <div class="d-letter">A</div>
+      <div class="d-info">
+        <div class="d-name">Analyze</div>
+        <div class="d-desc">Analizar métricas · Ishikawa.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row active">
+      <div class="d-letter">I</div>
+      <div class="d-info">
+        <div class="d-name">Improve</div>
+        <div class="d-desc">TO BE · alcance de la mejora.</div>
+      </div>
+      <span class="dmaic-progress-mark current">ACTUAL</span>
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">C</div>
+      <div class="d-info">
+        <div class="d-name">Control</div>
+        <div class="d-desc">Plan de control multiedificio.</div>
+      </div>
+      
+    </div><div class="dmaic-qr-card">
+      <div class="dmaic-qr-title">Participa desde tu móvil</div>
+      <img src="audience_qr.svg" alt="QR para acceder a la experiencia de audiencia">
+      <div class="dmaic-qr-copy">Escanea el código para abrir la experiencia de audiencia</div>
+      <div class="dmaic-qr-url">guillemarley.github.io/data4_reporting_experience/audience.html</div>
+    </div>
+  </div>
+  <div class="vdivider"></div>
+    <div class="right-col dmaic-panel is-improve">
+    <div class="phase-hero">
+      <div class="phase-letter-big">I</div>
+      <div class="phase-hero-copy">
+        <div class="phase-eyebrow">Fase · Mejorar</div>
+        <div class="phase-title">Improve · Mejorar</div>
+        <div class="phase-summary">Construcción de la solución real: herramientas Python, mappings por edificio/fase y validaciones.</div>
+      </div>
+    </div>
+    <div class="phase-grid">
+      <div class="phase-card"><div class="phase-card-label">Objetivo</div><p>Implantar un proceso TO BE que automatice la actualización mensual de los Operation Books y reduzca el trabajo manual.</p></div>
+      <div class="phase-card"><div class="phase-card-label">Foco operativo</div><p>Inputs mensuales, motor Python, lógica común, mappings específicos, validaciones y escritura en plantillas existentes.</p></div>
+    </div>
+    <div class="phase-card phase-full">
+      <div class="phase-card-label">Datos de fase</div>
+      <ul class="phase-list"><li>DC03: herramienta entregada y utilizada como base funcional.</li><li>DC02: herramienta desarrollada/adaptada desde la arquitectura de DC03.</li><li>DC01: en desarrollo una única herramienta para DC01.1, DC01.2, DC01.3 y DC01.4.</li><li>App de contadores: implementada, operativa y controlada dentro del ecosistema del reporting.</li></ul>
+    </div>
+    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">App Contadores</div><div class="phase-kpi-lbl">entregada</div></div><div class="phase-kpi"><div class="phase-kpi-val">DC03</div><div class="phase-kpi-lbl">entregado</div></div><div class="phase-kpi"><div class="phase-kpi-val">DC02</div><div class="phase-kpi-lbl">validación</div></div><div class="phase-kpi"><div class="phase-kpi-val">DC01</div><div class="phase-kpi-lbl">en desarrollo</div></div></div>
+    <div class="phase-visual">
+      <div class="visual-title"><span>Improve · Mejora conseguida y cambio de trabajo</span><span>Resultado actual</span></div>
+      <div class="improve-metrics-grid">
+        <div class="improve-metric">
+          <div class="label">Extracción de datos</div>
+          <div class="big">27 h 03 min → 2 h 25 min</div>
+          <div class="sub">Reducción mensual del <b>91,1%</b>. La descarga masiva sustituye gran parte de la extracción manual.</div>
+        </div>
+        <div class="improve-metric">
+          <div class="label">Compilar Operation Book</div>
+          <div class="big">52 h → 40 min</div>
+          <div class="sub">Reducción mensual del <b>98,7%</b>. La herramienta genera y actualiza el OB automáticamente.</div>
+        </div>
+        <div class="improve-metric green">
+          <div class="label">Dedicación total actual</div>
+          <div class="big">89 h 03 min → 37 h 50 min</div>
+          <div class="sub"><b>−57,5%</b> de reducción de dedicación total actual.</div>
+        </div>
+      </div>
+      <div class="transition-note">
+        <strong>Qué ha cambiado:</strong> antes el esfuerzo estaba en extraer datos y construir el informe. Ahora esas tareas están prácticamente automatizadas y el tiempo se concentra temporalmente en <b>revisar fallos, ajustar mappings y estabilizar las herramientas</b>.
+      </div>
+      <div class="improve-visual" style="margin-top:10px">
+        <div class="architecture-flow">
+          <div class="arch-row">
+            <div class="arch-box"><b>BMS</b><span>descarga masiva mensual</span></div>
+            <div class="arch-box"><b>Iberdrola</b><span>PDF / datos de facturación</span></div>
+            <div class="arch-box"><b>App contadores</b><span>captura estructurada</span></div>
+          </div>
+          <div class="arch-arrow">▼</div>
+          <div class="arch-band">Automatización · ingesta + transformación + mapping</div>
+          <div class="arch-arrow">▼</div>
+          <div class="arch-band dark">Validaciones + generación del Operation Book</div>
+          
+        </div>
+        <div class="status-stack">
+          <div class="mini-section-title">Cambio de naturaleza del trabajo</div>
+          <div class="status-item done"><div class="status-pill">ANTES</div><div class="status-copy"><b>Producción manual</b><span>extraer · copiar · compilar · perseguir datos</span></div></div>
+          <div class="status-item progress"><div class="status-pill">AHORA</div><div class="status-copy"><b>Revisión por excepción</b><span>validar avisos · corregir mappings · estabilizar</span></div></div>
+          <div class="status-item stable"><div class="status-pill">OBJ.</div><div class="status-copy"><b>Steady-state</b><span>reducir también el tiempo de revisión tras la estabilización</span></div></div>
+        </div>
+      </div>
+      <div class="improve-focus-strip">Esfuerzo actual de revisión: <b>34 h 30 min/mes</b>. No se considera todavía el estado final del proceso.</div></div>
+  </div>
+  </div>
+  <div class="slide-footer"></div>
+  <span class="slide-num">05 / 11</span>
+</section>
+
+<section class="slide counter-app-slide" id="slide-5">
+  <header class="slide-header">
+    <div class="hdr-left">
+      <div class="hdr-bar"></div>
+      <span class="hdr-title">CONTADORES — MISMA LECTURA, NUEVO PROCESO</span>
+    </div>
+    <div class="hdr-badge">IMPROVE</div>
+  </header>
+
+  <div class="counter-app-body">
+    <div class="counter-app-heading">
+      <div>
+        <div class="counter-app-kicker">De captura repetida a registro único</div>
+        <h2>El técnico sigue leyendo el contador. Lo que cambia es lo que ocurre después.</h2>
+      </div>
+      <div class="counter-app-pill">MISMO DATO · MENOS PASOS</div>
+    </div>
+
+    <div class="counter-app-grid">
+      <div class="counter-app-left">
+        <div class="counter-app-section-title">1 · Lectura en campo</div>
+        <div class="water-meter-grid">
+          <div class="water-meter-card">
+            <div class="water-meter-label">Contador agua 1</div>
+            <img src="assets/contador_1.svg" alt="Contador de agua 1">
+            <div class="water-meter-value">18.742 <span>m³</span></div>
+          </div>
+          <div class="water-meter-card">
+            <div class="water-meter-label">Contador agua 2</div>
+            <img src="assets/contador_2.svg" alt="Contador de agua 2">
+            <div class="water-meter-value">11.386 <span>m³</span></div>
+          </div>
+          <div class="water-meter-card">
+            <div class="water-meter-label">Contador agua 3</div>
+            <img src="assets/contador_3.svg" alt="Contador de agua 3">
+            <div class="water-meter-value">7.954 <span>m³</span></div>
+          </div>
+        </div>
+
+        <div class="counter-before-flow">
+          <div><b>ANTES</b><span>Contador</span></div>
+          <div class="counter-flow-arrow">→</div>
+          <div><span>Papel</span></div>
+          <div class="counter-flow-arrow">→</div>
+          <div><span>Excel</span></div>
+          <div class="counter-flow-arrow">→</div>
+          <div><span>Operation Book</span></div>
+        </div>
+      </div>
+
+      <div class="counter-app-right">
+        <div class="counter-app-section-title">2 · Registro directo en App Contadores</div>
+        <div class="app-copy-shell">
+          <div class="app-copy-top">
+            <div class="app-copy-brand">Serveo <span>Data4</span></div>
+            <div class="app-copy-status">REGISTRO DE CONTADORES</div>
+          </div>
+
+          <div class="app-copy-card">
+            <div class="app-copy-row">
+              <label>Edificio</label>
+              <div class="app-copy-field">DC01 <span>⌄</span></div>
+            </div>
+            <div class="app-copy-row">
+              <label>Tipo de contador</label>
+              <div class="app-copy-field">Agua <span>⌄</span></div>
+            </div>
+            <div class="app-copy-row">
+              <label>Contador</label>
+              <div class="app-copy-field">Contador agua 1 <span>⌄</span></div>
+            </div>
+            <div class="app-copy-row">
+              <label>Lectura</label>
+              <div class="app-copy-input"><b>18.742</b><span>m³</span></div>
+            </div>
+            <button class="app-copy-save" type="button">Guardar registro</button>
+            <div class="app-copy-confirm">✓ Dato capturado una vez y preparado para reporting</div>
+          </div>
+        </div>
+
+        <div class="counter-after-flow">
+          <div><b>AHORA</b><span>Contador</span></div>
+          <div class="counter-flow-arrow">→</div>
+          <div class="after-highlight"><span>App Contadores</span></div>
+          <div class="counter-flow-arrow">→</div>
+          <div><span>Dato estructurado</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="counter-app-impact">
+      <div><b>1 lectura</b><span>en campo</span></div>
+      <div><b>1 registro</b><span>en la app</span></div>
+      <div><b>0 transcripciones</b><span>posteriores del mismo dato</span></div>
+    </div>
+  </div>
+
+  <div class="slide-footer"></div>
+  <span class="slide-num">06 / 11</span>
+</section>
+
+<section class="slide" id="slide-6">
+  <header class="slide-header">
+    <div class="hdr-left">
+      <div class="hdr-bar"></div>
+      <span class="hdr-title">TO BE — Proceso Automatizado (Target)</span>
+    </div>
+    <div class="hdr-badge">IMPROVE</div>
+  </header>
+
+  <button class="return-dmaic-btn" type="button" onclick="goTo(7)">← Volver a Improve</button>
+
+  <div class="tobe-v2-body">
+    <div class="tobe-v2-title">TO BE — Automatización real del Operation Book mensual</div>
+
+    <div class="tobe-v2-grid">
+      <div class="tobe-col">
+        <div class="tobe-col-title">Inputs mensuales</div>
+        <div class="tobe-card"><b>BMS</b><span>Exportación masiva mensual de datos operativos.</span></div>
+        <div class="tobe-card"><b>Iberdrola</b><span>PDF / datos de potencia, consumos y facturación.</span></div>
+        <div class="tobe-card"><b>App contadores</b><span>Lecturas capturadas en app y almacenadas en SharePoint.</span></div>
+      </div>
+
+      <div class="tobe-arrow-big">›</div>
+
+      <div class="tobe-col">
+        <div class="tobe-col-title">Motor automático</div>
+        <div class="tobe-engine"><b>Herramientas de automatización</b><span>Ingesta · transformación · mapping · validación · escritura Excel</span></div>
+        <div class="tobe-card"><b>Lógica común</b><span>Proceso reutilizable con configuración específica por edificio/fase.</span></div>
+      </div>
+
+      <div class="tobe-arrow-big">›</div>
+
+      <div class="tobe-col">
+        <div class="tobe-col-title">Aplicación por edificio</div>
+        <div class="tobe-building-grid">
+          <div class="tobe-building"><b>DC01</b><span>1 herramienta<br>4 fases</span></div>
+          <div class="tobe-building"><b>DC02</b><span>herramienta<br>adaptada</span></div>
+          <div class="tobe-building"><b>DC03</b><span>entregado<br>en control</span></div>
+        </div>
+        <div class="tobe-card tobe-output"><b>Operation Book mensual</b><span>Plantilla actualizada, validada y lista para revisión/entrega.</span></div>
+        <div class="tobe-card tobe-output"><b>Control de errores</b><span>La herramienta detecta incidencias y avisa qué elementos deben revisarse antes de la entrega.</span></div>
+        <div class="dc03-proof">
+          <div class="proof-card"><div class="pv">≈20 h</div><div class="pl">DC03 antes de la mejora</div></div>
+          <div class="proof-card success"><div class="pv">30 min</div><div class="pl">DC03 con la herramienta</div></div>
+          <div class="proof-card success"><div class="pv">−97,5%</div><div class="pl">reducción real de dedicación</div></div>
+        </div>
+        <div class="cost-note"><strong>Ahorro económico:</strong> pendiente de cuantificar; faltan los costes/hora de los perfiles implicados para convertir las horas ahorradas en €.</div>
+      </div>
+    </div>
+
+    <div class="app-tabs">
+      <button class="app-tab-btn" onclick="goTo(7)">Ver DC01</button>
+      <button class="app-tab-btn" onclick="goTo(8)">Ver DC03 / DC02</button>
+      <button class="app-tab-btn" onclick="goTo(5)">Ver App contadores</button>
+    </div>
+
+    <div class="tobe-benefits">
+      <div><span>✓</span> 30 min de ejecución · DC03</div>
+      <div><span>✓</span> −97,5% de dedicación</div>
+      <div><span>✓</span> 1 día de plazo de entrega</div>
+      <div><span>✓</span> Control de errores + avisos de revisión</div>
+    </div>
+  </div>
+
+  <div class="slide-footer"></div>
+  <span class="slide-num">07 / 11</span>
+</section>
+
+<section class="slide" id="slide-7">
+  <header class="slide-header">
+    <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">DEMO — Herramienta Operation Book DC01</span></div>
+    <div class="hdr-badge">IMPROVE</div>
+  </header>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(7)">← Volver a Improve</button>
+  <div class="tool-slide-body">
+    <div class="tool-tabs">
+      <button class="tool-tab active" onclick="goTo(7)">DC01</button>
+      <button class="tool-tab" onclick="goTo(8)">DC03 / DC02</button>
+      <button class="tool-tab" onclick="goTo(5)">App contadores</button>
+      <button class="tool-tab" onclick="goTo(6)">TO BE</button>
+    </div>
+    <div class="tool-frame-wrap"><iframe class="tool-frame" src="tool_dc01_demo.html" title="Herramienta DC01"></iframe></div>
+    <div class="tool-note">DC01: una única herramienta para las cuatro fases (DC01.1, DC01.2, DC01.3 y DC01.4), con inputs BMS/Data Export + Iberdrola y Operation Book del mes anterior.</div>
+  </div>
+  <div class="slide-footer"></div><span class="slide-num">08 / 11</span>
+</section>
+
+<section class="slide" id="slide-8">
+  <header class="slide-header">
+    <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">DEMO — Herramienta Operation Book DC03 / referencia DC02</span></div>
+    <div class="hdr-badge">IMPROVE</div>
+  </header>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(7)">← Volver a Improve</button>
+  <div class="tool-slide-body">
+    <div class="tool-tabs">
+      <button class="tool-tab" onclick="goTo(7)">DC01</button>
+      <button class="tool-tab active" onclick="goTo(8)">DC03 / DC02</button>
+      <button class="tool-tab" onclick="goTo(5)">App contadores</button>
+      <button class="tool-tab" onclick="goTo(6)">TO BE</button>
+    </div>
+    <div class="tool-frame-wrap"><iframe class="tool-frame" src="tool_dc03_demo.html" title="Herramienta DC03"></iframe></div>
+    <div class="tool-note">DC03 está entregado y en control. DC02 usa el mismo concepto de front y arquitectura, adaptado a su mapping. Resultado actual DC03: ~20 h → 30 min.</div>
+  </div>
+  <div class="slide-footer"></div><span class="slide-num">09 / 11</span>
+</section>
+
+<section class="slide" id="slide-9">
+  <header class="slide-header">
+    <div class="hdr-left">
+      <div class="hdr-bar"></div>
+      <span class="hdr-title">RESULTADO REAL — DC03 ENTREGADO Y EN CONTROL</span>
+    </div>
+    <div class="hdr-badge">CONTROL</div>
+  </header>
+
+  <button class="return-dmaic-btn" type="button" onclick="goTo(4)">← Volver a Improve</button>
+
+  <div class="results-slide-body">
+    <div class="results-hero">
+      <div>
+        <div class="results-kicker">Resultado medido tras la mejora</div>
+        <h2>DC03: de ~20 h a 30 min por Operation Book</h2>
+        <p>La herramienta ya permite generar el Operation Book de DC03 en una ejecución controlada, con validaciones y avisos de revisión antes de la entrega.</p>
+      </div>
+      <div class="results-big-kpis">
+        <div><b>30 min</b><span>ejecución actual</span></div>
+        <div><b>−97,5%</b><span>mejora real</span></div>
+        <div><b>1 día</b><span>plazo entrega</span></div>
+      </div>
+    </div>
+
+    <div class="results-large-table">
+      <div class="results-large-head">
+        <div>Objetivo del proyecto / KPI</div>
+        <div>Tiempos antes</div>
+        <div>Tiempos después de la mejora</div>
+        <div>% real de mejora / check objetivo</div>
+      </div>
+      <div class="results-large-row">
+        <div><b>Dedicación mensual · DC03</b><span>Tiempo invertido antes para generar el Operation Book del edificio.</span></div>
+        <div>≈ 20 h</div>
+        <div class="after">30 min</div>
+        <div class="improvement">✓ −97,5%</div>
+      </div>
+      <div class="results-large-row">
+        <div><b>Plazo de generación / entrega · DC03</b><span>Capacidad de completar el ciclo dentro del compromiso operativo.</span></div>
+        <div>Ventana ≤ 5 días laborables</div>
+        <div class="after">1 día</div>
+        <div class="improvement">✓ objetivo superado</div>
+      </div>
+      <div class="results-large-row">
+        <div><b>Reducción del esfuerzo manual</b><span>Objetivo del proyecto: reducción esperada del 70–80%.</span></div>
+        <div>Proceso manual con revisión visual</div>
+        <div class="after">Automatizado + revisión final</div>
+        <div class="improvement">✓ supera 70–80%</div>
+      </div>
+      <div class="results-large-row">
+        <div><b>Control de errores y avisos</b><span>La herramienta no solo carga datos: también ayuda a controlar la calidad antes de entregar.</span></div>
+        <div>Errores detectados tarde y retrabajo manual</div>
+        <div class="after">Control automático + avisos de revisión</div>
+        <div class="improvement">✓ trazabilidad y control</div>
+      </div>
+      <div class="results-large-row pending">
+        <div><b>Ahorro económico</b><span>Conversión de horas ahorradas a €.</span></div>
+        <div>Coste manual no cerrado</div>
+        <div class="after">Horas ahorradas ya medidas en DC03</div>
+        <div class="improvement">Pendiente costes/hora personal</div>
+      </div>
+    </div>
+
+    <div class="results-slide-actions">
+      <button class="app-tab-btn" onclick="goTo(8)">Ver proceso TO BE</button>
+      <button class="app-tab-btn" onclick="goTo(8)">Ver herramienta DC03 / DC02</button>
+    </div>
+  </div>
+
+  <div class="slide-footer"></div>
+  <span class="slide-num">10 / 11</span>
+</section>
+
+<section class="slide dmaic-snapshot-slide" id="slide-10" data-dmaic-phase="control">
+  <header class="slide-header">
+    <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">Reducir el tiempo de Reporting Operativo Data4</span></div>
+    <div class="hdr-badge">CONTROL</div>
+  </header>
+  <div class="s1-body">
+    <div class="dmaic-col dmaic-progress" aria-label="Progreso DMAIC"><div class="d-row dmaic-progress-row done">
+      <div class="d-letter">D</div>
+      <div class="d-info">
+        <div class="d-name">Define</div>
+        <div class="d-desc">Definir proyecto · SIPOC · alcance.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row done">
+      <div class="d-letter">M</div>
+      <div class="d-info">
+        <div class="d-name">Measure</div>
+        <div class="d-desc">Medir tiempos · personas · hojas · informes.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row done">
+      <div class="d-letter">A</div>
+      <div class="d-info">
+        <div class="d-name">Analyze</div>
+        <div class="d-desc">Analizar métricas · Ishikawa.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row done">
+      <div class="d-letter">I</div>
+      <div class="d-info">
+        <div class="d-name">Improve</div>
+        <div class="d-desc">TO BE · alcance de la mejora.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row active">
+      <div class="d-letter">C</div>
+      <div class="d-info">
+        <div class="d-name">Control</div>
+        <div class="d-desc">Plan de control multiedificio.</div>
+      </div>
+      <span class="dmaic-progress-mark current">ACTUAL</span>
+    </div><div class="dmaic-qr-card">
+      <div class="dmaic-qr-title">Participa desde tu móvil</div>
+      <img src="audience_qr.svg" alt="QR para acceder a la experiencia de audiencia">
+      <div class="dmaic-qr-copy">Escanea el código para abrir la experiencia de audiencia</div>
+      <div class="dmaic-qr-url">guillemarley.github.io/data4_reporting_experience/audience.html</div>
+    </div>
+  </div>
+  <div class="vdivider"></div>
+    <div class="right-col dmaic-panel">
+    <div class="phase-hero">
+      <div class="phase-letter-big">C</div>
+      <div class="phase-hero-copy">
+        <div class="phase-eyebrow">Fase · Controlar</div>
+        <div class="phase-title">Control · Controlar</div>
+        <div class="phase-summary">Plan de control común para DC01, DC02, DC03 y App Contadores, adaptado al nivel de madurez de cada solución.</div>
+      </div>
+    </div>
+    <div class="phase-grid">
+      <div class="phase-card"><div class="phase-card-label">Objetivo</div><p>Estabilizar el proceso completo y asegurar que la mejora se mantiene en todos los edificios con métricas comunes y trazables.</p></div>
+      <div class="phase-card"><div class="phase-card-label">Foco operativo</div><p>Tiempo de dedicación, First Time Right, incidencias, intervención manual, mappings pendientes y cumplimiento del SLA por edificio/fase.</p></div>
+    </div>
+    <div class="phase-card phase-full">
+      <div class="phase-card-label">Datos de fase</div>
+      <ul class="phase-list"><li>DC01: control por fases sobre mappings, generación de los cuatro Operation Books, avisos y correcciones.</li><li>DC02: validación y estabilización de la herramienta antes de entrar en seguimiento recurrente.</li><li>DC03: herramienta entregada utilizada como referencia de funcionamiento y control mensual.</li><li>App Contadores: captura operativa controlada como fuente estructurada para el reporting.</li></ul>
+    </div>
+    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">DC01</div><div class="phase-kpi-lbl">4 fases</div></div><div class="phase-kpi"><div class="phase-kpi-val">DC02</div><div class="phase-kpi-lbl">validación</div></div><div class="phase-kpi"><div class="phase-kpi-val">DC03</div><div class="phase-kpi-lbl">control</div></div><div class="phase-kpi"><div class="phase-kpi-val">App</div><div class="phase-kpi-lbl">operativa</div></div></div>
+    <div class="phase-visual">
+      <div class="visual-title"><span>Control · Plan de control multiedificio</span><span>SEGUIMIENTO</span></div>
+
+      <div class="control-building-grid">
+        <div class="control-building-card dc01">
+          <div class="control-building-head"><b>DC01</b><span>4 fases</span></div>
+          <div class="control-building-status">EN DESARROLLO / VALIDACIÓN</div>
+          <ul>
+            <li>Mappings por DC01.1–DC01.4</li>
+            <li>Generación correcta de los 4 OB</li>
+            <li>Avisos, errores y retrabajo</li>
+          </ul>
+        </div>
+        <div class="control-building-card dc02">
+          <div class="control-building-head"><b>DC02</b><span>1 OB · 2 fases</span></div>
+          <div class="control-building-status">VALIDACIÓN</div>
+          <ul>
+            <li>Inputs y señales BMS</li>
+            <li>Actualización de hojas y fórmulas</li>
+            <li>Estabilidad antes de operación recurrente</li>
+          </ul>
+        </div>
+        <div class="control-building-card dc03">
+          <div class="control-building-head"><b>DC03</b><span>referencia</span></div>
+          <div class="control-building-status">ENTREGADO · EN CONTROL</div>
+          <ul>
+            <li>Ejecución mensual recurrente</li>
+            <li>Incidencias y First Time Right</li>
+            <li>Tiempo real y cumplimiento de SLA</li>
+          </ul>
+        </div>
+        <div class="control-building-card app">
+          <div class="control-building-head"><b>APP CONTADORES</b><span>captura</span></div>
+          <div class="control-building-status">OPERATIVA · CONTROLADA</div>
+          <ul>
+            <li>Calidad y completitud del dato</li>
+            <li>Trazabilidad de registros</li>
+            <li>Uso operativo estable</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="control-common-wrap">
+        <div class="control-common-title">KPIs comunes de control</div>
+        <div class="control-common-kpis">
+          <div class="control-common-kpi"><b>Tiempo</b><span>Dedicación mensual por edificio</span></div>
+          <div class="control-common-kpi"><b>FTR</b><span>Correcto a la primera</span></div>
+          <div class="control-common-kpi"><b>Incidencias</b><span>Número y severidad</span></div>
+          <div class="control-common-kpi"><b>Manual</b><span>Intervenciones y retrabajo</span></div>
+          <div class="control-common-kpi"><b>≤5 días</b><span>Cumplimiento SLA</span></div>
+        </div>
+      </div>
+
+      <div class="control-bottom-grid">
+        <div class="control-bottom-card">
+          <h4>Trabajo actual de estabilización</h4>
+          <p>La revisión intensiva se concentra en cerrar errores, mappings y validaciones de <b>DC01 y DC02</b>, mientras DC03 aporta una referencia ya operativa.</p>
+        </div>
+        <div class="control-bottom-card">
+          <h4>Medición común en diciembre</h4>
+          <p>Compararemos los edificios con el mismo criterio: <b>tiempo total, revisión, FTR, incidencias, intervención manual y SLA</b>.</p>
+        </div>
+        <div class="control-bottom-card">
+          <h4>Resultado esperado</h4>
+          <p>Pasar de herramientas individuales en distintos niveles de madurez a un <b>proceso de reporting controlado y comparable entre edificios</b>.</p>
+        </div>
+      </div>
+
+      <div class="december-banner control-multibuilding-banner">
+        <div><b>Diciembre · primera foto conjunta</b><br><span>Medición estable de DC01, DC02, DC03 y captura de contadores bajo un mismo plan de control.</span></div>
+        <div style="text-align:right"><b>Siguiente objetivo</b><br><span>Validar ahorro definitivo por edificio y consolidado.</span></div>
+      </div></div>
+  </div>
+  </div>
+  <div class="slide-footer"></div>
+  <span class="slide-num">11 / 11</span>
+</section>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const dots   = document.querySelectorAll('.nav-dot');
+  let current  = 0;
+
+  function goTo(idx) {
+    current = idx;
+    slides[idx].scrollIntoView({ behavior:'smooth' });
+    dots.forEach((d,i) => d.classList.toggle('active', i===idx));
+    if (typeof syncAudienceForSlide === 'function') syncAudienceForSlide(idx);
+  }
+
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const i = [...slides].indexOf(e.target);
+        dots.forEach((d,j) => d.classList.toggle('active', j===i));
+        current = i;
+      }
+    });
+  }, { threshold:.5 });
+  slides.forEach(s => io.observe(s));
+
+  document.addEventListener('keydown', e => {
+    if (['ArrowDown','ArrowRight',' '].includes(e.key)) { e.preventDefault(); goTo(Math.min(current+1, slides.length-1)); }
+    if (['ArrowUp','ArrowLeft'].includes(e.key))         { e.preventDefault(); goTo(Math.max(current-1, 0)); }
+  });
+
+
+  const dmaicData = {
+    "define": {
+        "letter": "D",
+        "badge": "DEFINE",
+        "status": "Fase completada · Definir",
+        "title": "Define · Definir",
+        "summary": "Objetivo del proyecto, participantes, alcance IN/OUT, SIPOC y métricas principales.",
+        "objective": "Reducir el tiempo dedicado al reporting operativo Data4 mediante la automatización de la actualización de los Operation Books de DC01, DC02 y DC03.",
+        "focus": "Alcance del proyecto, stakeholders, CTQs, SIPOC y baseline inicial del proceso.",
+        "deliverables": [
+            "Problema: reporting mensual manual, dependiente de perfiles clave y con riesgo de penalización.",
+            "Objetivo: reducción esperada del 70-80% del esfuerzo manual manteniendo la entrega en ≤5 días laborables.",
+            "Alcance IN: Operation Books DC01, DC02 y DC03, inputs BMS/Iberdrola, mappings y validaciones automáticas.",
+            "Alcance OUT: otros CPDs, modificación de sistemas origen y subida final a plataformas del cliente."
+        ],
+        "kpis": [
+            [
+                "88,6h",
+                "baseline mensual"
+            ],
+            [
+                "70-80%",
+                "reducción objetivo"
+            ],
+            [
+                "≤5d",
+                "plazo contractual"
+            ],
+            [
+                "0",
+                "penalizaciones objetivo"
+            ]
+        ]
+    },
+    "measure": {
+        "letter": "M",
+        "badge": "MEASURE",
+        "status": "Fase completada · Medir",
+        "title": "Measure · Medir",
+        "summary": "Cuantificación del AS IS: horas por bloque de trabajo y concentración de pérdidas de tiempo.",
+        "objective": "Establecer una línea base objetiva para priorizar la automatización donde más tiempo consume el proceso.",
+        "focus": "Pareto de horas: montaje de Operation Book, extracción, informes y picado manual de datos.",
+        "deliverables": [
+            "Baseline Abril 2026: 88,6 h mensuales medidas entre DC01, DC02 y DC03.",
+            "El montaje del Operation Book concentra 43,0 h, el mayor cuello de botella individual.",
+            "La extracción de datos añade 27,4 h y explica gran parte del esfuerzo previo a la carga.",
+            "Operation Book + extracción concentran aproximadamente el 80% del esfuerzo manual medido."
+        ],
+        "kpis": [
+            [
+                "88,6h",
+                "total medido"
+            ],
+            [
+                "43,0h",
+                "Operation Book"
+            ],
+            [
+                "27,4h",
+                "extracción"
+            ],
+            [
+                "79,5%",
+                "Top 2 bloques"
+            ]
+        ]
+    },
+    "analyze": {
+        "letter": "A",
+        "badge": "ANALYZE",
+        "status": "Fase completada · Analizar",
+        "title": "Analyze · Analizar",
+        "summary": "Causas raíz del exceso de tiempo: manualidad, heterogeneidad de fuentes, mappings y retrabajo.",
+        "objective": "Explicar por qué el proceso supera las 80 h y qué causas debe atacar la herramienta.",
+        "focus": "Ishikawa actualizado: método, sistemas/fuentes, datos, mappings, personas, medición y SLA.",
+        "deliverables": [
+            "Causa método: secuencia manual, copiar/pegar, revisión visual y recarga si hay errores.",
+            "Causa datos: exportaciones, PDFs, capturas/lecturas y estructuras de Excel heterogéneas.",
+            "Causa estandarización: cada edificio/fase requiere mappings específicos de señales, hojas y celdas.",
+            "Causa control: errores detectados tarde y poca trazabilidad automática antes de la herramienta."
+        ],
+        "kpis": [
+            [
+                "Rework",
+                "bucle de error"
+            ],
+            [
+                "40+",
+                "hojas Excel"
+            ],
+            [
+                "3",
+                "edificios"
+            ],
+            [
+                "4",
+                "fases DC01"
+            ]
+        ]
+    },
+    "improve": {
+        "letter": "I",
+        "badge": "IMPROVE",
+        "status": "Fase · Mejorar",
+        "title": "Improve · Mejorar",
+        "summary": "Construcción de la solución real: herramientas Python, mappings por edificio/fase y validaciones.",
+        "objective": "Implantar un proceso TO BE que automatice la actualización mensual de los Operation Books y reduzca el trabajo manual.",
+        "focus": "Inputs mensuales, motor Python, lógica común, mappings específicos, validaciones y escritura en plantillas existentes.",
+        "deliverables": [
+            "DC03: herramienta entregada y utilizada como base funcional.",
+            "DC02: herramienta desarrollada/adaptada desde la arquitectura de DC03.",
+            "DC01: en desarrollo una única herramienta para DC01.1, DC01.2, DC01.3 y DC01.4.",
+            "App de contadores: implementada, operativa y controlada dentro del ecosistema del reporting."
+        ],
+        "kpis": [
+            [
+                "App Contadores",
+                "entregada"
+            ],
+            [
+                "DC03",
+                "entregado"
+            ],
+            [
+                "DC02",
+                "validación"
+            ],
+            [
+                "DC01",
+                "en desarrollo"
+            ]
+        ]
+    },
+    "control": {
+        "letter": "C",
+        "badge": "CONTROL",
+        "status": "Fase · Controlar",
+        "title": "Control · Controlar",
+        "summary": "Plan de control común para DC01, DC02, DC03 y App Contadores, adaptado al nivel de madurez de cada solución.",
+        "objective": "Estabilizar el proceso completo y asegurar que la mejora se mantiene en todos los edificios con métricas comunes y trazables.",
+        "focus": "Tiempo de dedicación, First Time Right, incidencias, intervención manual, mappings pendientes y cumplimiento del SLA por edificio/fase.",
+        "deliverables": [
+            "DC01: control por fases sobre mappings, generación de los cuatro Operation Books, avisos y correcciones.",
+            "DC02: validación y estabilización de la herramienta antes de entrar en seguimiento recurrente.",
+            "DC03: herramienta entregada utilizada como referencia de funcionamiento y control mensual.",
+            "App Contadores: captura operativa controlada como fuente estructurada para el reporting."
+        ],
+        "kpis": [
+            [
+                "DC01",
+                "4 fases"
+            ],
+            [
+                "DC02",
+                "validación"
+            ],
+            [
+                "DC03",
+                "control"
+            ],
+            [
+                "App",
+                "operativa"
+            ]
+        ]
+    }
+};
+
+
+
+
+  const phaseVisuals = {
+    define: `
+      <div class="visual-title"><span>Define · Proyecto completo</span><span>SIPOC + alcance</span></div>
+      <div class="define-dashboard">
+        <div class="define-left-stack">
+          <div>
+            <div class="mini-section-title">Participantes</div>
+            <div class="participant-grid">
+              <div class="participant-card"><b>Sponsor</b><span>Ainhoa Andrés Camaño</span></div>
+              <div class="participant-card"><b>Green Belt</b><span>Guillermo Martínez de Hurtado</span></div>
+              <div class="participant-card"><b>Tutor</b><span>Roberto Herguedas Alonso</span></div>
+              <div class="participant-card"><b>Equipo</b><span>Serveo Data4</span></div>
+            </div>
+          </div>
+          <div class="scope-io-grid">
+            <div class="io-card in"><b>Dentro</b><p>Operation Books DC01/DC02/DC03, inputs BMS e Iberdrola, mappings específicos y validaciones automáticas.</p></div>
+            <div class="io-card out"><b>Fuera</b><p>Otros CPDs, cambios en sistemas origen y subida final a plataformas del cliente.</p></div>
+          </div>
+        </div>
+        <div class="define-right-stack">
+          <div class="mini-section-title">SIPOC resumido</div>
+          <table class="mini-sipoc compact">
+            <thead><tr><th>SUPPLIER</th><th>INPUT</th><th>PROCESS</th><th>OUTPUT</th><th>CUSTOMER</th></tr></thead>
+            <tbody>
+              <tr><td>BMS</td><td>Export mensual</td><td>Importar</td><td>Operation Book</td><td>Data4</td></tr>
+              <tr><td>Iberdrola</td><td>PDF / factura</td><td>Transformar</td><td>Validaciones</td><td>Serveo</td></tr>
+              <tr><td>App contadores</td><td>Lecturas</td><td>Mapear</td><td>Trazabilidad</td><td>Equipo Data4</td></tr>
+              <tr><td>Plantillas OB</td><td>Hojas/celdas</td><td>Actualizar</td><td>Entrega mensual</td><td>Cliente</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>`,
+    measure: `
+      <div class="visual-title"><span>Measure · Pareto de horas</span><span>Baseline 88,6 h</span></div>
+      <div class="mini-pareto">
+        <div class="pareto-row"><span class="pareto-label">Operation Book</span><div class="pareto-track"><div class="pareto-fill" style="width:100%"></div></div><span class="pareto-hours">43,0h</span><span class="pareto-cum">48,5%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Extracción</span><div class="pareto-track"><div class="pareto-fill" style="width:64%"></div></div><span class="pareto-hours">27,4h</span><span class="pareto-cum">79,5%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Informes</span><div class="pareto-track"><div class="pareto-fill" style="width:24%"></div></div><span class="pareto-hours">10,5h</span><span class="pareto-cum">91,4%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Picado datos</span><div class="pareto-track"><div class="pareto-fill" style="width:18%"></div></div><span class="pareto-hours">7,8h</span><span class="pareto-cum">100%</span></div>
+        <div class="pareto-note"><strong>Insight clave:</strong> Operation Book + extracción concentran 70,4 h, aproximadamente el 79,5% del esfuerzo mensual medido.</div>
+      </div>
+      <div class="phase-action-minimal">
+        <button class="slide-link-btn" type="button" onclick="goTo(1)">Ver flujo AS IS</button>
+      </div>`,
+    analyze: `
+      <div class="visual-title"><span>Analyze · Ishikawa</span><span>Causas raíz</span></div>
+      <div class="fishbone">
+        <div class="fishbone-line"></div>
+        <div class="fishbone-head">Tiempo de reporting &gt;80h</div>
+        <div class="bone top b1"><h4>Método</h4><p>Secuencia manual, copiar/pegar, revisión visual y recarga si hay errores.</p></div>
+        <div class="bone top b2"><h4>Fuentes</h4><p>BMS, Iberdrola, lecturas y plantillas sin flujo automatizado único.</p></div>
+        <div class="bone top b5"><h4>Personas</h4><p>Dependencia de perfiles expertos durante los primeros días del mes.</p></div>
+        <div class="bone bottom b3"><h4>Datos</h4><p>Exportaciones, PDFs, Excels y formatos distintos por edificio.</p></div>
+        <div class="bone bottom b4"><h4>Mappings</h4><p>DC01, DC02 y DC03 requieren señales, hojas y celdas específicas.</p></div>
+        <div class="bone bottom b6"><h4>Control</h4><p>Errores detectados tarde; retrabajo y poca trazabilidad automática.</p></div>
+      </div>`,
+    improve: `
+      <div class="visual-title"><span>Improve · Mejora conseguida y cambio de trabajo</span><span>Resultado actual</span></div>
+      <div class="improve-metrics-grid">
+        <div class="improve-metric">
+          <div class="label">Extracción de datos</div>
+          <div class="big">27 h 03 min → 2 h 25 min</div>
+          <div class="sub">Reducción mensual del <b>91,1%</b>. La descarga masiva sustituye gran parte de la extracción manual.</div>
+        </div>
+        <div class="improve-metric">
+          <div class="label">Compilar Operation Book</div>
+          <div class="big">52 h → 40 min</div>
+          <div class="sub">Reducción mensual del <b>98,7%</b>. La herramienta genera y actualiza el OB automáticamente.</div>
+        </div>
+        <div class="improve-metric green">
+          <div class="label">Dedicación total actual</div>
+          <div class="big">89 h 03 min → 37 h 50 min</div>
+          <div class="sub"><b>−57,5%</b> de reducción de dedicación total actual.</div>
+        </div>
+      </div>
+      <div class="transition-note">
+        <strong>Qué ha cambiado:</strong> antes el esfuerzo estaba en extraer datos y construir el informe. Ahora esas tareas están prácticamente automatizadas y el tiempo se concentra temporalmente en <b>revisar fallos, ajustar mappings y estabilizar las herramientas</b>.
+      </div>
+      <div class="improve-visual" style="margin-top:10px">
+        <div class="architecture-flow">
+          <div class="arch-row">
+            <div class="arch-box"><b>BMS</b><span>descarga masiva mensual</span></div>
+            <div class="arch-box"><b>Iberdrola</b><span>PDF / datos de facturación</span></div>
+            <div class="arch-box"><b>App contadores</b><span>captura estructurada</span></div>
+          </div>
+          <div class="arch-arrow">▼</div>
+          <div class="arch-band">Automatización · ingesta + transformación + mapping</div>
+          <div class="arch-arrow">▼</div>
+          <div class="arch-band dark">Validaciones + generación del Operation Book</div>
+          <div class="phase-action-minimal improve-actions">
+            <button class="slide-link-btn" type="button" onclick="goTo(2)">Ver resultados DC03</button>
+            <button class="slide-link-btn secondary" type="button" onclick="goTo(3)">Ver proceso TO BE</button>
+          </div>
+        </div>
+        <div class="status-stack">
+          <div class="mini-section-title">Cambio de naturaleza del trabajo</div>
+          <div class="status-item done"><div class="status-pill">ANTES</div><div class="status-copy"><b>Producción manual</b><span>extraer · copiar · compilar · perseguir datos</span></div></div>
+          <div class="status-item progress"><div class="status-pill">AHORA</div><div class="status-copy"><b>Revisión por excepción</b><span>validar avisos · corregir mappings · estabilizar</span></div></div>
+          <div class="status-item stable"><div class="status-pill">OBJ.</div><div class="status-copy"><b>Steady-state</b><span>reducir también el tiempo de revisión tras la estabilización</span></div></div>
+        </div>
+      </div>
+      <div class="improve-focus-strip">Esfuerzo actual de revisión: <b>34 h 30 min/mes</b>. No se considera todavía el estado final del proceso.</div>`,
+    control: `
+      <div class="visual-title"><span>Control · Plan de control multiedificio</span><span>SEGUIMIENTO</span></div>
+
+      <div class="control-building-grid">
+        <div class="control-building-card dc01">
+          <div class="control-building-head"><b>DC01</b><span>4 fases</span></div>
+          <div class="control-building-status">EN DESARROLLO / VALIDACIÓN</div>
+          <ul>
+            <li>Mappings por DC01.1–DC01.4</li>
+            <li>Generación correcta de los 4 OB</li>
+            <li>Avisos, errores y retrabajo</li>
+          </ul>
+        </div>
+        <div class="control-building-card dc02">
+          <div class="control-building-head"><b>DC02</b><span>1 OB · 2 fases</span></div>
+          <div class="control-building-status">VALIDACIÓN</div>
+          <ul>
+            <li>Inputs y señales BMS</li>
+            <li>Actualización de hojas y fórmulas</li>
+            <li>Estabilidad antes de operación recurrente</li>
+          </ul>
+        </div>
+        <div class="control-building-card dc03">
+          <div class="control-building-head"><b>DC03</b><span>referencia</span></div>
+          <div class="control-building-status">ENTREGADO · EN CONTROL</div>
+          <ul>
+            <li>Ejecución mensual recurrente</li>
+            <li>Incidencias y First Time Right</li>
+            <li>Tiempo real y cumplimiento de SLA</li>
+          </ul>
+        </div>
+        <div class="control-building-card app">
+          <div class="control-building-head"><b>APP CONTADORES</b><span>captura</span></div>
+          <div class="control-building-status">OPERATIVA · CONTROLADA</div>
+          <ul>
+            <li>Calidad y completitud del dato</li>
+            <li>Trazabilidad de registros</li>
+            <li>Uso operativo estable</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="control-common-wrap">
+        <div class="control-common-title">KPIs comunes de control</div>
+        <div class="control-common-kpis">
+          <div class="control-common-kpi"><b>Tiempo</b><span>Dedicación mensual por edificio</span></div>
+          <div class="control-common-kpi"><b>FTR</b><span>Correcto a la primera</span></div>
+          <div class="control-common-kpi"><b>Incidencias</b><span>Número y severidad</span></div>
+          <div class="control-common-kpi"><b>Manual</b><span>Intervenciones y retrabajo</span></div>
+          <div class="control-common-kpi"><b>≤5 días</b><span>Cumplimiento SLA</span></div>
+        </div>
+      </div>
+
+      <div class="control-bottom-grid">
+        <div class="control-bottom-card">
+          <h4>Trabajo actual de estabilización</h4>
+          <p>La revisión intensiva se concentra en cerrar errores, mappings y validaciones de <b>DC01 y DC02</b>, mientras DC03 aporta una referencia ya operativa.</p>
+        </div>
+        <div class="control-bottom-card">
+          <h4>Medición común en diciembre</h4>
+          <p>Compararemos los edificios con el mismo criterio: <b>tiempo total, revisión, FTR, incidencias, intervención manual y SLA</b>.</p>
+        </div>
+        <div class="control-bottom-card">
+          <h4>Resultado esperado</h4>
+          <p>Pasar de herramientas individuales en distintos niveles de madurez a un <b>proceso de reporting controlado y comparable entre edificios</b>.</p>
+        </div>
+      </div>
+
+      <div class="december-banner control-multibuilding-banner">
+        <div><b>Diciembre · primera foto conjunta</b><br><span>Medición estable de DC01, DC02, DC03 y captura de contadores bajo un mismo plan de control.</span></div>
+        <div style="text-align:right"><b>Siguiente objetivo</b><br><span>Validar ahorro definitivo por edificio y consolidado.</span></div>
+      </div>`
+  };
+
+  function setDmaicPhase(phaseKey) {
+    const data = dmaicData[phaseKey] || dmaicData.improve;
+    const panel = document.getElementById('dmaicPanel');
+    if (panel) {
+      panel.classList.toggle('is-blank-control', !!data.blank);
+      panel.classList.toggle('is-improve', phaseKey === 'improve');
+    }
+    document.querySelectorAll('.dmaic-phase').forEach(row => {
+      const isActive = row.dataset.phase === phaseKey;
+      row.classList.toggle('active', isActive);
+      row.classList.toggle('inactive', !isActive);
+      row.toggleAttribute('aria-current', isActive);
+    });
+    const setText = (id, value) => {
+      const el = document.getElementById(id);
+      if (el) el.textContent = value;
+    };
+    setText('phaseLetter', data.letter);
+    setText('phaseStatus', data.status);
+    setText('phaseTitle', data.title);
+    setText('phaseSummary', data.summary);
+    setText('phaseObjective', data.objective);
+    setText('phaseFocus', data.focus);
+    const badge = document.getElementById('dmaicHeaderBadge');
+    if (badge) badge.textContent = data.badge;
+    const list = document.getElementById('phaseDeliverables');
+    if (list) list.innerHTML = (data.deliverables || []).map(item => `<li>${item}</li>`).join('');
+    const kpis = document.getElementById('phaseKpis');
+    if (kpis) kpis.innerHTML = (data.kpis || []).map(([value, label]) => `<div class="phase-kpi"><div class="phase-kpi-val">${value}</div><div class="phase-kpi-lbl">${label}</div></div>`).join('');
+    const visual = document.getElementById('phaseVisual');
+    if (visual) visual.innerHTML = phaseVisuals[phaseKey] || phaseVisuals.improve;
+  }
+
+  async function handleDmaicSelection(phaseKey) {
+    setDmaicPhase(phaseKey);
+    if (typeof syncAudienceForDmaic === 'function') await syncAudienceForDmaic(phaseKey);
+  }
+
+  document.querySelectorAll('.dmaic-phase').forEach(row => {
+    row.addEventListener('click', () => handleDmaicSelection(row.dataset.phase));
+    row.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        handleDmaicSelection(row.dataset.phase);
+      }
+    });
+  });
+  setDmaicPhase('define');
+
+</script>
+
+
+<script>
+  let autoAudienceSync = true;
+  let lastAudiencePhaseRequested = null;
+
+  const slideAudienceMap = {
+    0:'lobby',
+    1:'lobby',
+    2:'asis',
+    3:'lobby',
+    4:'improve',
+    5:'improve',
+    6:'improve',
+    7:'improve',
+    8:'improve',
+    9:'improve',
+    10:'control'
+  };
+  const dmaicAudienceMap = {
+    measure:'asis',
+    improve:'improve',
+    control:'control'
+  };
+
+  function toggleAutoAudienceSync(enabled){
+    autoAudienceSync = !!enabled;
+    const label=document.getElementById('autoSyncState');
+    if(label) label.textContent=autoAudienceSync?'ON':'OFF';
+  }
+
+  async function syncAudienceForSlide(idx){
+    if(!autoAudienceSync) return;
+    const phase=slideAudienceMap[idx];
+    if(!phase || phase===lastAudiencePhaseRequested) return;
+    await setAudiencePhase(phase, true);
+  }
+
+  async function syncAudienceForDmaic(phaseKey){
+    if(!autoAudienceSync) return;
+    const phase=dmaicAudienceMap[phaseKey];
+    if(!phase || phase===lastAudiencePhaseRequested) return;
+    await setAudiencePhase(phase, true);
+  }
+
+  function toggleLivePanel(){ document.getElementById('livePanel').classList.toggle('open'); }
+  async function setAudiencePhase(phase, automatic=false){
+    let pin=sessionStorage.getItem('data4_presenter_pin');
+    if(!pin){ pin=prompt('PIN del presentador'); if(!pin) return; sessionStorage.setItem('data4_presenter_pin',pin); }
+    try{
+      const ok=await Data4Realtime.setPhase(phase,pin);
+      if(!ok){ sessionStorage.removeItem('data4_presenter_pin'); lastAudiencePhaseRequested=null; alert('PIN incorrecto.'); return; }
+      lastAudiencePhaseRequested=phase;
+      await refreshLiveStats();
+    }catch(e){ console.error(e); alert('Supabase: '+(e?.message||String(e))); }
+  }
+  async function refreshLiveStats(){
+    const box=document.getElementById('liveStatusBox'); if(!box) return;
+    try{
+      const phase=await Data4Realtime.getPhase();
+      const s=await Data4Realtime.stats();
+      if(!s){ box.innerHTML='<b>Modo local</b>'; return; }
+      const counts={gestor:0,area:0,graduate:0,tecnico:0};
+      s.participants.forEach(x=>counts[x.role]=(counts[x.role]||0)+1);
+      const ctl=s.responses.filter(x=>x.phase==='control').map(x=>Number(x.answer)).filter(Number.isFinite);
+      const avg=ctl.length?(ctl.reduce((a,b)=>a+b,0)/ctl.length).toFixed(1):'—';
+      lastAudiencePhaseRequested=phase;
+      const phaseNames={lobby:'ESPERA',asis:'ANTES',improve:'DESPUÉS',control:'CONTROL',results:'RESULTADOS'};
+      const launcher=document.getElementById('liveLauncher');
+      if(launcher) launcher.textContent='LIVE · '+(phaseNames[phase]||String(phase).toUpperCase());
+      box.innerHTML='<b>Fase audiencia:</b> '+(phaseNames[phase]||String(phase).toUpperCase())+
+        '<br><b>Participantes:</b> '+s.participants.length+
+        ' · G '+counts.gestor+' · AM '+counts.area+' · Gr '+counts.graduate+' · T '+counts.tecnico+
+        '<br><b>Respuestas:</b> '+s.responses.length+' · <b>Control:</b> '+avg+'/5';
+    }catch(e){ console.error(e); box.textContent='Error de conexión: '+(e?.message||String(e)); }
+  }
+  window.addEventListener('load', async()=>{
+    try{
+      await refreshLiveStats();
+      Data4Realtime.subscribePhase(()=>refreshLiveStats());
+    }catch(e){ console.error(e); }
+  });
+</script>
+
+<button id="liveLauncher" class="live-launcher" type="button" onclick="toggleLivePanel()">LIVE</button>
+<div id="livePanel" class="live-panel" aria-live="polite">
+  <h4>Participación en directo</h4>
+  <div class="live-sub">Sesión <b>D4DEMO</b> · controla lo que ve la audiencia</div>
+  <label style="display:flex;align-items:center;gap:8px;margin:9px 0 10px;font-size:11px;font-weight:700">
+    <input type="checkbox" checked onchange="toggleAutoAudienceSync(this.checked)">
+    Sincronización automática <span id="autoSyncState" style="color:#ff6600">ON</span>
+  </label>
+  <div class="live-grid">
+    <button class="live-btn" onclick="setAudiencePhase('lobby')">Lobby</button>
+    <button class="live-btn" onclick="setAudiencePhase('asis')">AS IS</button>
+    <button class="live-btn primary" onclick="setAudiencePhase('improve')">Improve</button>
+    <button class="live-btn" onclick="setAudiencePhase('control')">Control</button>
+    <button class="live-btn" onclick="setAudiencePhase('results')">Resultados</button>
+    <button class="live-btn" onclick="refreshLiveStats()">Actualizar</button>
+  </div>
+  <div id="liveStatusBox" class="live-status">Conectando con Supabase…</div>
+  <div class="live-url">Audiencia: /data4_reporting_experience/audience.html</div>
+</div>
+
+</body>
+</html>
