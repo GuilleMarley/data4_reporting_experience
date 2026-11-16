@@ -2878,6 +2878,25 @@
     font-size:8px;
     line-height:1.35;
   }
+
+.hero-new{background:#101827;color:#fff;isolation:isolate}
+.hero-new:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 85% 42%,rgba(255,102,0,.23),transparent 37%),linear-gradient(130deg,rgba(255,102,0,.08),transparent 52%);z-index:-1}
+.hero-deco{position:absolute;width:60vw;height:60vw;right:-20vw;top:-14vw;border:2px solid rgba(255,102,0,.3);border-radius:50%;box-shadow:0 0 0 85px rgba(255,102,0,.035),0 0 0 170px rgba(255,102,0,.018);pointer-events:none}
+.hero-head{display:flex;align-items:center;justify-content:space-between;padding:35px 6vw;z-index:1}
+.hero-head b{font-size:22px;letter-spacing:.12em}.hero-head b span{color:#ff6600}.hero-head i{color:#8a93a4;font-style:normal;margin:0 10px}.hero-head small{font-size:11px;font-weight:900;letter-spacing:.2em;color:#abb6c7}
+.hero-main{flex:1;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;padding:0 8vw 5vh;z-index:1}
+.hero-eyebrow{font-size:13px;letter-spacing:.2em;color:#ff924f;font-weight:900}
+.hero-main h1{font-size:clamp(54px,6.5vw,112px);line-height:.96;letter-spacing:-.055em;font-weight:900;margin:23px 0 26px}
+.hero-main h1 em{color:#ff6600;font-style:normal}
+.hero-main p{max-width:750px;color:#c5cedb;font-size:clamp(17px,1.6vw,25px);line-height:1.43}
+.hero-tags{display:flex;flex-wrap:wrap;gap:11px;margin-top:32px}.hero-tags span{padding:10px 15px;border:1px solid #5b6270;border-radius:7px;font-size:11px;font-weight:900;letter-spacing:.08em}
+.hero-foot{display:flex;justify-content:space-between;align-items:center;gap:20px;padding:24px 6vw 34px;border-top:1px solid #343b49;z-index:1;font-size:11px;font-weight:900;letter-spacing:.12em;color:#aab4c4}
+.hero-foot span:last-child{color:#ff6600;font-size:17px}
+.hero-closing .hero-main h1{font-size:clamp(92px,14vw,220px);margin:10px 0 22px}
+.hero-questions{margin-top:35px;border:1px solid rgba(255,102,0,.5);border-left:6px solid #ff6600;background:rgba(255,102,0,.1);padding:20px 27px;border-radius:10px}
+.hero-questions strong{display:block;font-size:28px;letter-spacing:.09em}.hero-questions span{display:block;color:#c6cfda;font-size:14px;margin-top:5px}
+@media(max-width:700px){.hero-head{padding:22px 25px}.hero-head b{font-size:16px}.hero-head small{font-size:8px}.hero-main{padding:0 28px 35px}.hero-main h1{font-size:clamp(42px,9vw,74px)}.hero-main p{font-size:16px}.hero-closing .hero-main h1{font-size:clamp(75px,16vw,130px)}.hero-questions strong{font-size:20px}.hero-foot{padding:22px 25px 65px;font-size:9px}}
+@media(prefers-reduced-motion:no-preference){.hero-main{animation:heroIn .7s ease-out both}@keyframes heroIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -2887,22 +2906,29 @@
 <body>
 
 <nav class="nav-dots" id="navDots">
-  <div class="nav-dot active" onclick="goTo(0)" title="Define"></div>
-  <div class="nav-dot" onclick="goTo(1)" title="Measure"></div>
-  <div class="nav-dot" onclick="goTo(2)" title="AS IS"></div>
-  <div class="nav-dot" onclick="goTo(3)" title="Analyze"></div>
-  <div class="nav-dot" onclick="goTo(4)" title="Improve"></div>
-  <div class="nav-dot" onclick="goTo(5)" title="Contadores + App"></div>
-  <div class="nav-dot" onclick="goTo(6)" title="TO BE"></div>
-  <div class="nav-dot" onclick="goTo(7)" title="DC01"></div>
-  <div class="nav-dot" onclick="goTo(8)" title="DC03 / DC02"></div>
-  <div class="nav-dot" onclick="goTo(9)" title="Resultados"></div>
-  <div class="nav-dot" onclick="goTo(10)" title="Control"></div>
+<div class="nav-dot active" onclick="goTo(0)" title="Inicio"></div>
+<div class="nav-dot" onclick="goTo(1)" title="Define"></div>
+<div class="nav-dot" onclick="goTo(2)" title="Measure"></div>
+<div class="nav-dot" onclick="goTo(3)" title="AS IS"></div>
+<div class="nav-dot" onclick="goTo(4)" title="Analyze"></div>
+<div class="nav-dot" onclick="goTo(5)" title="Improve"></div>
+<div class="nav-dot" onclick="goTo(6)" title="Contadores + App"></div>
+<div class="nav-dot" onclick="goTo(7)" title="TO BE"></div>
+<div class="nav-dot" onclick="goTo(8)" title="DC01"></div>
+<div class="nav-dot" onclick="goTo(9)" title="DC03 / DC02"></div>
+<div class="nav-dot" onclick="goTo(10)" title="Resultados"></div>
+<div class="nav-dot" onclick="goTo(11)" title="Control"></div>
+<div class="nav-dot" onclick="goTo(12)" title="Preguntas"></div>
 </nav>
 
 <!-- ══════════════════════════════════════════════
      SLIDE 1 — CONTEXTO: DMAIC + SIPOC + KPIs
 ═══════════════════════════════════════════════ -->
+<section class="slide hero-new hero-opening" id="slide-intro">
+  <div class="hero-deco"></div><div class="hero-head"><b>DATA<span>4</span> <i>×</i> SERVEO</b><small>LEAN SIX SIGMA · GREEN BELT</small></div>
+  <main class="hero-main"><div class="hero-eyebrow">PROYECTO DE MEJORA OPERATIVA</div><h1>MENOS TIEMPO<br><em>REPORTANDO.</em><br>MÁS TIEMPO<br>APORTANDO.</h1><p>Digitalización y automatización del reporting operativo mensual de los centros de datos Data4.</p><div class="hero-tags"><span>DC01</span><span>DC02</span><span>DC03</span><span>APP CONTADORES</span></div></main>
+  <footer class="hero-foot"><span>DE LA CAPTURA MANUAL AL OPERATION BOOK AUTOMATIZADO</span><span>01 / 13</span></footer>
+</section>
 <section class="slide dmaic-snapshot-slide" id="slide-0" data-dmaic-phase="define">
   <header class="slide-header">
     <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">Reducir el tiempo de Reporting Operativo Data4</span></div>
@@ -3007,7 +3033,7 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">01 / 11</span>
+  <span class="slide-num">02 / 13</span>
 </section>
 
 <section class="slide dmaic-snapshot-slide" id="slide-1" data-dmaic-phase="measure">
@@ -3094,7 +3120,7 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">02 / 11</span>
+  <span class="slide-num">03 / 13</span>
 </section>
 
 <section class="slide" id="slide-2">
@@ -3106,7 +3132,7 @@
     <div class="hdr-badge">IMPROVE</div>
   </header>
 
-  <button class="return-dmaic-btn" type="button" onclick="goTo(1)">← Volver a Measure</button>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(2)">← Volver a Measure</button>
 
   <div class="s3-body">
     <div class="asis-wrap">
@@ -3284,7 +3310,7 @@
   </div>
 
   <div class="slide-footer"></div>
-  <span class="slide-num">03 / 11</span>
+  <span class="slide-num">04 / 13</span>
 </section>
 
 <section class="slide dmaic-snapshot-slide" id="slide-3" data-dmaic-phase="analyze">
@@ -3373,7 +3399,7 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">04 / 11</span>
+  <span class="slide-num">05 / 13</span>
 </section>
 
 <section class="slide dmaic-snapshot-slide" id="slide-4" data-dmaic-phase="improve">
@@ -3493,7 +3519,7 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">05 / 11</span>
+  <span class="slide-num">06 / 13</span>
 </section>
 
 <section class="slide counter-app-slide" id="slide-5">
@@ -3594,7 +3620,7 @@
   </div>
 
   <div class="slide-footer"></div>
-  <span class="slide-num">06 / 11</span>
+  <span class="slide-num">07 / 13</span>
 </section>
 
 <section class="slide" id="slide-6">
@@ -3606,7 +3632,7 @@
     <div class="hdr-badge">IMPROVE</div>
   </header>
 
-  <button class="return-dmaic-btn" type="button" onclick="goTo(4)">← Volver a Improve</button>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(5)">← Volver a Improve</button>
 
   <div class="tobe-v2-body">
     <div class="tobe-v2-title">TO BE — Automatización real del Operation Book mensual</div>
@@ -3648,9 +3674,9 @@
     </div>
 
     <div class="app-tabs">
-      <button class="app-tab-btn" onclick="goTo(7)">Ver DC01</button>
-      <button class="app-tab-btn" onclick="goTo(8)">Ver DC03 / DC02</button>
-      <button class="app-tab-btn" onclick="goTo(5)">Ver App contadores</button>
+      <button class="app-tab-btn" onclick="goTo(8)">Ver DC01</button>
+      <button class="app-tab-btn" onclick="goTo(9)">Ver DC03 / DC02</button>
+      <button class="app-tab-btn" onclick="goTo(6)">Ver App contadores</button>
     </div>
 
     <div class="tobe-benefits">
@@ -3662,7 +3688,7 @@
   </div>
 
   <div class="slide-footer"></div>
-  <span class="slide-num">07 / 11</span>
+  <span class="slide-num">08 / 13</span>
 </section>
 
 <section class="slide" id="slide-7">
@@ -3670,18 +3696,18 @@
     <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">DEMO — Herramienta Operation Book DC01</span></div>
     <div class="hdr-badge">IMPROVE</div>
   </header>
-  <button class="return-dmaic-btn" type="button" onclick="goTo(7)">← Volver a Improve</button>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(8)">← Volver a Improve</button>
   <div class="tool-slide-body">
     <div class="tool-tabs">
-      <button class="tool-tab active" onclick="goTo(7)">DC01</button>
-      <button class="tool-tab" onclick="goTo(8)">DC03 / DC02</button>
-      <button class="tool-tab" onclick="goTo(5)">App contadores</button>
-      <button class="tool-tab" onclick="goTo(6)">TO BE</button>
+      <button class="tool-tab active" onclick="goTo(8)">DC01</button>
+      <button class="tool-tab" onclick="goTo(9)">DC03 / DC02</button>
+      <button class="tool-tab" onclick="goTo(6)">App contadores</button>
+      <button class="tool-tab" onclick="goTo(7)">TO BE</button>
     </div>
     <div class="tool-frame-wrap"><iframe class="tool-frame" src="tool_dc01_demo.html" title="Herramienta DC01"></iframe></div>
     <div class="tool-note">DC01: una única herramienta para las cuatro fases (DC01.1, DC01.2, DC01.3 y DC01.4), con inputs BMS/Data Export + Iberdrola y Operation Book del mes anterior.</div>
   </div>
-  <div class="slide-footer"></div><span class="slide-num">08 / 11</span>
+  <div class="slide-footer"></div><span class="slide-num">09 / 13</span>
 </section>
 
 <section class="slide" id="slide-8">
@@ -3689,18 +3715,18 @@
     <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">DEMO — Herramienta Operation Book DC03 / referencia DC02</span></div>
     <div class="hdr-badge">IMPROVE</div>
   </header>
-  <button class="return-dmaic-btn" type="button" onclick="goTo(7)">← Volver a Improve</button>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(8)">← Volver a Improve</button>
   <div class="tool-slide-body">
     <div class="tool-tabs">
-      <button class="tool-tab" onclick="goTo(7)">DC01</button>
-      <button class="tool-tab active" onclick="goTo(8)">DC03 / DC02</button>
-      <button class="tool-tab" onclick="goTo(5)">App contadores</button>
-      <button class="tool-tab" onclick="goTo(6)">TO BE</button>
+      <button class="tool-tab" onclick="goTo(8)">DC01</button>
+      <button class="tool-tab active" onclick="goTo(9)">DC03 / DC02</button>
+      <button class="tool-tab" onclick="goTo(6)">App contadores</button>
+      <button class="tool-tab" onclick="goTo(7)">TO BE</button>
     </div>
     <div class="tool-frame-wrap"><iframe class="tool-frame" src="tool_dc03_demo.html" title="Herramienta DC03"></iframe></div>
     <div class="tool-note">DC03 está entregado y en control. DC02 usa el mismo concepto de front y arquitectura, adaptado a su mapping. Resultado actual DC03: ~20 h → 30 min.</div>
   </div>
-  <div class="slide-footer"></div><span class="slide-num">09 / 11</span>
+  <div class="slide-footer"></div><span class="slide-num">10 / 13</span>
 </section>
 
 <section class="slide" id="slide-9">
@@ -3771,7 +3797,7 @@
   </div>
 
   <div class="slide-footer"></div>
-  <span class="slide-num">10 / 11</span>
+  <span class="slide-num">11 / 13</span>
 </section>
 
 <section class="slide dmaic-snapshot-slide" id="slide-10" data-dmaic-phase="control">
@@ -3920,7 +3946,13 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">11 / 11</span>
+  <span class="slide-num">12 / 13</span>
+</section>
+
+<section class="slide hero-new hero-closing" id="slide-outro">
+  <div class="hero-deco"></div><div class="hero-head"><b>DATA<span>4</span> <i>×</i> SERVEO</b><small>GREEN BELT · CIERRE</small></div>
+  <main class="hero-main"><div class="hero-eyebrow">EL SIGUIENTE PASO ES CONSOLIDAR</div><h1>GRACIAS<em>.</em></h1><p>De un proceso manual y repetitivo a herramientas entregadas. Ahora el foco es reducir incidencias, revisión y retrabajo.</p><div class="hero-questions"><strong>¿PREGUNTAS?</strong><span>Hablemos del proyecto, los resultados y los siguientes pasos.</span></div></main>
+  <footer class="hero-foot"><span>DATA4 · AUTOMATIZACIÓN DEL REPORTING OPERATIVO</span><span>13 / 13</span></footer>
 </section>
 
 <script>
@@ -4186,8 +4218,8 @@
           <div class="arch-arrow">▼</div>
           <div class="arch-band dark">Validaciones + generación del Operation Book</div>
           <div class="phase-action-minimal improve-actions">
-            <button class="slide-link-btn" type="button" onclick="goTo(2)">Ver resultados DC03</button>
-            <button class="slide-link-btn secondary" type="button" onclick="goTo(3)">Ver proceso TO BE</button>
+            <button class="slide-link-btn" type="button" onclick="goTo(3)">Ver resultados DC03</button>
+            <button class="slide-link-btn secondary" type="button" onclick="goTo(4)">Ver proceso TO BE</button>
           </div>
         </div>
         <div class="status-stack">
@@ -4299,19 +4331,7 @@
   let autoAudienceSync = true;
   let lastAudiencePhaseRequested = null;
 
-  const slideAudienceMap = {
-    0:'lobby',
-    1:'lobby',
-    2:'asis',
-    3:'lobby',
-    4:'improve',
-    5:'improve',
-    6:'improve',
-    7:'improve',
-    8:'improve',
-    9:'improve',
-    10:'control'
-  };
+  const slideAudienceMap = {0:'lobby',1:'lobby',2:'lobby',3:'asis',4:'lobby',5:'improve',6:'improve',7:'improve',8:'improve',9:'improve',10:'improve',11:'improve',12:'control'};
   const dmaicAudienceMap = {
     measure:'asis',
     improve:'improve',
