@@ -85,6 +85,69 @@ button,input{font:inherit}
  .waiting-card,.end-card{padding:28px 21px}
 }
 @media(prefers-reduced-motion:no-preference){.stage{animation:appear .35s ease-out}@keyframes appear{from{opacity:.1;transform:translateY(9px)}to{opacity:1;transform:translateY(0)}}}
+
+/* Interactive Operation Book assembly – BMS + endless spreadsheet */
+.ob-steps{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:18px 0}
+.ob-steps span{display:inline-flex;align-items:center;gap:8px;border:1px solid #d8e2ef;background:#fff;color:#526075;border-radius:9px;font-size:11px;padding:9px 12px;font-weight:800}
+.ob-steps b{background:#ff6600;color:white;border-radius:5px;padding:5px 6px;font-size:10px}
+.ob-workspace{display:grid;grid-template-columns:minmax(300px,.9fr) minmax(380px,1.1fr);gap:17px;align-items:start}
+.ob-bms,.ob-excel{min-width:0;border:1px solid #ccd6e1;border-radius:15px;overflow:hidden;box-shadow:0 10px 26px rgba(22,32,49,.08)}
+.ob-bms{background:#17263c;color:#e8f0fc}
+.ob-bms-head{background:#0d192a;padding:14px 16px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.ob-bms-head>div{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.ob-bms-head strong{font-size:12px;letter-spacing:.07em}.ob-bms-head small{color:#95a8c4;font-size:10px;width:100%;margin-left:43px}
+.ob-window-dots{display:inline-flex;gap:4px;margin-right:6px}.ob-window-dots i{height:7px;width:7px;border-radius:50%;background:#ee6c53}.ob-window-dots i:nth-child(2){background:#f7c054}.ob-window-dots i:nth-child(3){background:#45b783}
+.ob-live{color:#6ee7a5;font-size:9px;font-weight:900;letter-spacing:.09em}.ob-live span{display:inline-block;width:6px;height:6px;border-radius:50%;background:#3bc67b;margin-right:4px}
+.ob-bms-body{padding:13px}
+.ob-system-line{display:flex;justify-content:space-between;gap:8px;font-size:12px;margin-bottom:11px}.ob-system-line span{color:#a8bad2;font-size:10px}
+.ob-filters{display:flex;gap:7px;margin-bottom:9px}
+.ob-filters select,.ob-filters input{min-width:0;border:1px solid #465c78;background:#263852;color:#f2f6ff;border-radius:8px;padding:9px;font-size:12px;outline:none}
+.ob-filters select{flex:0 1 44%}.ob-filters input{flex:1}
+.ob-filters input::placeholder{color:#9aaec6}
+.ob-bms-list{height:306px;overflow-y:auto;border:1px solid #36506c;border-radius:8px;background:#132239;overscroll-behavior:contain}
+.ob-signal{display:grid;grid-template-columns:1fr auto;align-items:center;gap:8px;width:100%;text-align:left;border:0;border-bottom:1px solid #30465e;background:transparent;color:#dce8f8;padding:10px;cursor:pointer}
+.ob-signal:hover,.ob-signal:focus-visible{background:#203952;outline:none}
+.ob-signal[aria-pressed="true"]{background:#344b66;border-left:3px solid #ff6600;padding-left:7px}
+.ob-signal-name{font-size:11px;font-weight:800;display:block;line-height:1.25}
+.ob-signal-id{color:#9eb0c9;font-size:9px;margin-top:3px;display:block}
+.ob-signal-val{font-size:11px;color:#b6ffc9;font-weight:900;white-space:nowrap}
+.ob-more{display:block;width:100%;border:1px solid #405977;border-radius:8px;background:#243952;color:#dce6f4;font-size:11px;font-weight:800;padding:9px;margin-top:8px;cursor:pointer}
+.ob-monitor{margin-top:13px;padding:14px;border-radius:10px;border:1px solid #466180;background:#101d2e}
+.ob-monitor-head{display:flex;justify-content:space-between;gap:8px;color:#a0b5d1;font-size:9px;font-weight:900;letter-spacing:.08em}
+.ob-monitor-head span:last-child{color:#5bd18b}
+.ob-monitor-name{font-weight:800;font-size:12px;min-height:30px;margin-top:11px}
+.ob-reading{display:flex;align-items:baseline;gap:9px;margin:6px 0}.ob-reading strong{font-size:35px;line-height:1;color:#f2fafc;letter-spacing:-.04em}.ob-reading span{color:#7edbab;font-weight:700;font-size:13px}
+.ob-monitor-hint{border-top:1px solid #2c405b;padding-top:10px;margin-top:11px;font-size:10px;line-height:1.45;color:#aabbd1}
+.ob-excel{background:#fff}
+.ob-excel-header{display:flex;align-items:center;gap:9px;padding:12px 13px;background:#f6f9fc;border-bottom:1px solid #dce3ec}
+.ob-excel-header strong{font-size:12px;color:#23384c}.ob-excel-header small{display:block;font-size:10px;color:#788798;margin-top:4px}
+.ob-save-hint{margin-left:auto;font-size:9px;color:#c56c13;font-weight:900;white-space:nowrap}
+.ob-sheet-ribbon{background:#f4f7f9;padding:9px 12px;font-size:10px;color:#5d6878;border-bottom:1px solid #dce3ea;white-space:nowrap;overflow:hidden}
+.ob-excel-status{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:10px 12px;font-size:10px;font-weight:900;color:#247748}
+.ob-excel-status span:last-child{color:#da6a0a;font-size:9px}
+.ob-rows-scroll{max-height:520px;overflow:auto;overscroll-behavior:contain}
+.ob-table{width:100%;border-collapse:collapse;min-width:420px;font-size:11px}
+.ob-table th,.ob-table td{border:1px solid #e0e6ed;padding:7px 8px;vertical-align:middle}
+.ob-table thead{position:sticky;top:0;z-index:2}
+.ob-table thead th{background:#e8f0e9;color:#3f6653;font-size:9px;font-weight:900;text-align:left}
+.ob-table thead .ob-letters th{background:#e6ebf1;color:#65758b;text-align:center;padding:6px}
+.ob-table td:first-child,.ob-table th:first-child{background:#edf1f5;text-align:center;color:#8c96a3;width:30px;font-size:9px}
+.ob-table td:nth-child(2){font-weight:800;color:#34445a;max-width:180px}
+.ob-table td:nth-child(3){text-align:center;color:#718094;font-weight:800;width:57px}
+.ob-table td:nth-child(4){min-width:105px;padding:3px 5px;background:#fcfff3}
+.ob-table td:nth-child(5){font-size:9px;color:#ac7731;width:66px}
+.ob-table tr.ob-filled td:nth-child(5){color:#168552;font-weight:900}
+.ob-table input{display:block;width:100%;min-width:80px;font-size:13px;font-weight:800;border:1.5px solid #b3d2b0;border-radius:4px;background:#f8fff6;color:#174b31;padding:7px 6px}
+.ob-table input:focus{outline:2px solid rgba(25,128,77,.25);border-color:#228b57}
+.ob-table input::placeholder{color:#a2afa2;font-size:10px;font-weight:500}
+.ob-sheet-foot{display:flex;align-items:center;gap:8px;justify-content:space-between;border-top:1px solid #dee5ed;background:#eef2f6;padding:6px 10px}
+.ob-tab{background:#fff;padding:8px 13px;border-bottom:3px solid #198e55;font-size:10px;font-weight:900;color:#197447}
+.ob-sheet-foot span:last-child{font-size:9px;color:#8b96a3}
+.ob-footer{margin-top:16px;padding:16px 18px;border-radius:12px;border-left:4px solid #ff6600;background:#fff8f2;color:#77543b;font-size:12px;line-height:1.5}
+.ob-footer b{color:#b8500b}
+@media(max-width:900px){.ob-workspace{grid-template-columns:1fr}.ob-bms-list{height:200px}.ob-rows-scroll{max-height:370px}.ob-filters select,.ob-filters input{font-size:12px}.ob-system-line{margin-bottom:8px}}
+@media(max-width:520px){.ob-workspace{gap:12px}.ob-excel-header{padding:9px}.ob-save-hint{display:none}.ob-steps{gap:5px}.ob-steps span{font-size:10px;padding:6px 8px}.ob-steps b{font-size:9px;padding:3px}.ob-bms-list{height:180px}.ob-monitor{padding:11px}.ob-monitor-name{min-height:24px}.ob-reading strong{font-size:30px}}
+
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -166,12 +229,63 @@ button,input{font:inherit}
     </div>
   </section>
 
-  <section id="improveView" class="stage waiting-card" hidden>
-    <div class="waiting-graphic">✓</div>
-    <div class="kicker">IMPROVE · DESPUÉS</div>
-    <h1 class="title">Un único registro.</h1>
-    <p class="intro">Acabas de experimentar el proceso manual: anotar las lecturas y volverlas a transcribir. La mejora consiste en capturar el dato una sola vez desde la App Contadores.</p>
-    <div class="waiting-step"><span class="sync-dot"></span>La demostración de la App Contadores se incorporará en el siguiente bloque interactivo.</div>
+  <section id="improveView" class="stage" hidden>
+    <div class="kicker">SIMULADOR · CONSTRUCCIÓN MANUAL DEL OPERATION BOOK</div>
+    <h1 class="title">Y ahora... rellena el Operation Book.</h1>
+    <p class="intro">Imagina que ya tienes las lecturas de campo. Falta abrir el <b>BMS</b>, localizar una a una las señales de UPS, interruptores, contadores, temperatura y humedad, y <b>picar cada valor en Excel</b>. Prueba a completar algunas filas.</p>
+
+    <div class="ob-steps">
+      <span><b>01</b> Abre una señal del BMS</span>
+      <span><b>02</b> Lee su valor</span>
+      <span><b>03</b> Busca la fila y escríbelo</span>
+    </div>
+    <div class="ob-workspace">
+      <section class="ob-bms" aria-label="BMS simulado">
+        <div class="ob-bms-head">
+          <div><span class="ob-window-dots"><i></i><i></i><i></i></span><strong>BMS · SUPERVISIÓN</strong><small>Data4 · Modo simulación</small></div>
+          <span class="ob-live"><span></span> ONLINE</span>
+        </div>
+        <div class="ob-bms-body">
+          <div class="ob-system-line"><b>Árbol de señales</b><span>DC01 / DC02 / DC03</span></div>
+          <div class="ob-filters">
+            <select id="bmsCategory" aria-label="Categoría de señales BMS">
+              <option value="all">Todos los equipos</option>
+              <option value="UPS">UPS e interruptores</option>
+              <option value="CONTADORES">Contadores</option>
+              <option value="TEMPERATURA">Temperatura</option>
+              <option value="HUMEDAD">Humedad</option>
+            </select>
+            <input id="bmsSearch" type="search" placeholder="Filtrar señal..." aria-label="Buscar señal del BMS" autocomplete="off">
+          </div>
+          <div class="ob-bms-list" id="bmsSignals" aria-label="Listado de señales BMS"></div>
+          <button type="button" id="bmsMore" class="ob-more">Mostrar más señales</button>
+          <div class="ob-monitor" aria-live="polite">
+            <div class="ob-monitor-head"><span>VALOR CONSULTADO</span><span>● LIVE</span></div>
+            <div id="bmsSelectedName" class="ob-monitor-name">Selecciona un equipo del listado</div>
+            <div class="ob-reading"><strong id="bmsSelectedValue">—</strong><span id="bmsSelectedUnit"></span></div>
+            <div class="ob-monitor-hint">Copia manualmente este valor en la fila correspondiente de Excel. Nada se transfiere automáticamente.</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ob-excel" aria-label="Operation Book Excel simulado">
+        <div class="ob-excel-header">
+          <div class="excel-icon">X</div>
+          <div><strong>D4_Operation_Book.xlsx</strong><small>DC01 · Pestaña ENERGY / BMS</small></div>
+          <div class="ob-save-hint">● SIN AUTOMATIZAR</div>
+        </div>
+        <div class="ob-sheet-ribbon">Archivo &nbsp;&nbsp; Inicio &nbsp;&nbsp; Insertar &nbsp;&nbsp; Fórmulas &nbsp;&nbsp; Datos &nbsp;&nbsp; Revisar</div>
+        <div class="ob-excel-status"><span id="obProgress">0 valores transcritos</span><span>DESPLÁZATE PARA VER MÁS ↓</span></div>
+        <div class="ob-rows-scroll" id="obRowsScroll" tabindex="0" aria-label="Tabla Excel con lista continua de equipos y señales">
+          <table class="ob-table" aria-label="Operation Book con señales de BMS">
+            <thead><tr class="ob-letters"><th></th><th>A</th><th>B</th><th>C</th><th>D</th></tr><tr><th>1</th><th>ETIQUETA BMS</th><th>UNIDAD</th><th>LECTURA</th><th>ESTADO</th></tr></thead>
+            <tbody id="obRows"></tbody>
+          </table>
+        </div>
+        <div class="ob-sheet-foot"><span class="ob-tab">ENERGY_BMS</span><span id="obRowsHint">Mostrando filas 2–25 · sigue bajando ↓</span></div>
+      </section>
+    </div>
+    <div class="ob-footer"><b>¿Ves el problema?</b> Esto es solo una simulación con valores de ejemplo. El Operation Book contiene muchas más señales y exige comprobar que cada dato termina en la celda correcta. <b>La herramienta automatiza esta transferencia.</b></div>
   </section>
 
   <section id="endView" class="stage end-card" hidden>
@@ -257,6 +371,118 @@ button,input{font:inherit}
     input.value=getStored('reading'+input.dataset.reading)||'';
     input.addEventListener('input',function(){putStored('reading'+input.dataset.reading,input.value);});
   });
+
+  // Manual BMS -> endless Excel experience. Values are illustrative, not live BMS telemetry.
+  var obInitialized=false;
+  var obRowsLoaded=0;
+  var obBatchSize=24;
+  var bmsDisplayCount=28;
+  var obSelected=-1;
+  var obTotalSignals=960;
+  function obSignal(index){
+    var n=Math.floor(index/12)+1;
+    var s=String(n).padStart(3,'0');
+    var kind=index%12;
+    var specs=[
+      ['UPS','UPS-A'+s+' · Interruptor de entrada','estado','CERRADO'],
+      ['UPS','UPS-B'+s+' · Interruptor de bypass','estado',n%7===0?'ABIERTO':'CERRADO'],
+      ['UPS','UPS-A'+s+' · Tensión de entrada','V',String(398+(n%7))],
+      ['UPS','UPS-B'+s+' · Carga de salida','%',String(46+(n%39))],
+      ['UPS','UPS-C'+s+' · Potencia activa','kW',(128+(n%61)*1.3).toFixed(1)],
+      ['CONTADORES','Contador eléctrico '+s,'kWh',String(1340000+n*137)],
+      ['CONTADORES','Contador de agua '+s,'m³',(7800+n*14.6).toFixed(1)],
+      ['TEMPERATURA','Sensor temperatura DH'+s,'°C',(20+(n%26)*.2).toFixed(1)],
+      ['HUMEDAD','Sensor humedad DH'+s,'%HR',String(38+(n%24))],
+      ['UPS','UPS-A'+s+' · Interruptor de salida','estado','CERRADO'],
+      ['TEMPERATURA','Sensor temperatura retorno '+s,'°C',(23+(n%22)*.3).toFixed(1)],
+      ['HUMEDAD','Sensor humedad sala '+s,'%HR',String(41+(n%21))]
+    ];
+    var d=specs[kind];
+    return {index:index,name:d[1],category:d[0],unit:d[2],value:d[3],key:'SIG-'+String(index+1).padStart(4,'0')};
+  }
+  function obEscape(s){return String(s).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];});}
+  function obRefreshBMS(){
+    var cat=document.getElementById('bmsCategory').value;
+    var q=document.getElementById('bmsSearch').value.trim().toLowerCase();
+    var hits=[];
+    for(var i=0;i<obTotalSignals;i++){
+      var signal=obSignal(i);
+      if(cat!=='all'&&cat!==signal.category)continue;
+      if(q&&!((signal.name+' '+signal.key+' '+signal.unit).toLowerCase().includes(q)))continue;
+      hits.push(signal);
+    }
+    var shown=hits.slice(0,bmsDisplayCount);
+    document.getElementById('bmsSignals').innerHTML=shown.map(function(item){
+      return '<button type="button" class="ob-signal" data-signal="'+item.index+'" aria-pressed="'+(item.index===obSelected)+'">'+
+      '<span><span class="ob-signal-name">'+obEscape(item.name)+'</span><span class="ob-signal-id">'+obEscape(item.key)+' · '+obEscape(item.category)+'</span></span>'+
+      '<span class="ob-signal-val">'+obEscape(item.value)+' '+obEscape(item.unit)+'</span></button>';
+    }).join('')||(q?'<div style="padding:15px;color:#b4c2d4;font-size:12px">No se encontró esa señal.</div>':'');
+    var more=document.getElementById('bmsMore');
+    more.hidden=hits.length<=bmsDisplayCount;
+    more.textContent='Mostrar más señales ('+shown.length+' de '+hits.length+')';
+  }
+  function obSelectSignal(idx){
+    var item=obSignal(idx);
+    obSelected=idx;
+    document.getElementById('bmsSelectedName').textContent=item.name+' · '+item.key;
+    document.getElementById('bmsSelectedValue').textContent=item.value;
+    document.getElementById('bmsSelectedUnit').textContent=item.unit;
+    document.querySelectorAll('.ob-signal').forEach(function(el){el.setAttribute('aria-pressed',String(Number(el.dataset.signal)===idx));});
+  }
+  function obUpdateProgress(){
+    var count=0;
+    var entries=document.querySelectorAll('#obRows input[data-ob-index]');
+    entries.forEach(function(el){if(el.value.trim())count++;});
+    document.getElementById('obProgress').textContent=count+' valores transcritos en las filas visibles';
+  }
+  function obAddRows(){
+    var fragment=document.createDocumentFragment();
+    for(var n=0;n<obBatchSize;n++){
+      var idx=obRowsLoaded++;
+      var item=obSignal(idx%obTotalSignals);
+      var row=document.createElement('tr');
+      var key='ob_row_'+idx;
+      var stored=getStored(key)||'';
+      row.className=stored?'ob-filled':'';
+      row.innerHTML='<td>'+String(idx+2)+'</td><td>'+obEscape(item.name)+'</td><td>'+obEscape(item.unit)+'</td>'+
+      '<td><input data-ob-index="'+idx+'" aria-label="Valor de '+obEscape(item.name)+'" inputmode="text" autocomplete="off" placeholder="Picar dato" value="'+obEscape(stored)+'"></td>'+
+      '<td class="ob-state">'+(stored?'Introducido':'Pendiente')+'</td>';
+      fragment.appendChild(row);
+    }
+    document.getElementById('obRows').appendChild(fragment);
+    document.getElementById('obRowsHint').textContent='Mostrando filas 2–'+(obRowsLoaded+1)+' · sigue bajando ↓';
+    obUpdateProgress();
+  }
+  function obCheckEnd(){
+    var el=document.getElementById('obRowsScroll');
+    if(el.scrollHeight-el.scrollTop-el.clientHeight<280)obAddRows();
+  }
+  function obSetup(){
+    if(obInitialized)return;
+    obInitialized=true;
+    document.getElementById('bmsCategory').addEventListener('change',function(){bmsDisplayCount=28;obRefreshBMS();});
+    document.getElementById('bmsSearch').addEventListener('input',function(){bmsDisplayCount=28;obRefreshBMS();});
+    document.getElementById('bmsMore').addEventListener('click',function(){bmsDisplayCount+=28;obRefreshBMS();});
+    document.getElementById('bmsSignals').addEventListener('click',function(e){
+      var btn=e.target.closest('button[data-signal]');
+      if(btn)obSelectSignal(Number(btn.dataset.signal));
+    });
+    document.getElementById('obRows').addEventListener('input',function(e){
+      var el=e.target.closest('input[data-ob-index]');
+      if(!el)return;
+      var value=el.value;
+      putStored('ob_row_'+el.dataset.obIndex,value);
+      var row=el.closest('tr');
+      row.classList.toggle('ob-filled',!!value.trim());
+      row.querySelector('.ob-state').textContent=value.trim()?'Introducido':'Pendiente';
+      obUpdateProgress();
+    });
+    document.getElementById('obRowsScroll').addEventListener('scroll',obCheckEnd,{passive:true});
+    obRefreshBMS();
+    obAddRows();
+    obAddRows();
+  }
+
   var views={
     lobby:document.getElementById('waitView'),
     asis:document.getElementById('asisView'),
@@ -274,6 +500,7 @@ button,input{font:inherit}
     views[next].hidden=false;
     document.getElementById('phaseLabel').textContent=labels[next];
     if(next==='asis'){requestAnimationFrame(initCanvases);}
+    if(next==='improve'){obSetup();}
     window.scrollTo({top:0,behavior:'instant'});
   }
   async function pollPhase(){
