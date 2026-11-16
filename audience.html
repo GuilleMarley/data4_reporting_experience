@@ -148,6 +148,37 @@ button,input{font:inherit}
 @media(max-width:900px){.ob-workspace{grid-template-columns:1fr}.ob-bms-list{height:200px}.ob-rows-scroll{max-height:370px}.ob-filters select,.ob-filters input{font-size:12px}.ob-system-line{margin-bottom:8px}}
 @media(max-width:520px){.ob-workspace{gap:12px}.ob-excel-header{padding:9px}.ob-save-hint{display:none}.ob-steps{gap:5px}.ob-steps span{font-size:10px;padding:6px 8px}.ob-steps b{font-size:9px;padding:3px}.ob-bms-list{height:180px}.ob-monitor{padding:11px}.ob-monitor-name{min-height:24px}.ob-reading strong{font-size:30px}}
 
+
+/* State-controlled app and automatic Operation Book */
+.asis-optional-excel{margin-top:20px;border:1px solid #d7dfe9;border-radius:14px;overflow:hidden;background:#fff}
+.asis-optional-excel summary{padding:15px 17px;cursor:pointer;font-weight:900;color:#25416b;background:#f5f8fc;border-left:4px solid #ff6600;font-size:13px}
+.asis-optional-excel>p{padding:12px 16px;color:#62718a;font-size:12px;line-height:1.4}
+.ob-auto-panel{display:flex;gap:14px;align-items:center;justify-content:space-between;padding:14px;border-radius:12px;border:1px solid #b4d6c4;background:#effdf4;margin:15px 0}
+.ob-auto-panel strong{display:block;color:#116c42;font-size:13px}
+.ob-auto-panel span{display:block;color:#537766;font-size:12px;margin-top:5px}
+.ob-auto-panel button{padding:15px 17px;border-radius:9px;border:0;background:#177949;color:#fff;font-size:12px;font-weight:900;cursor:pointer;box-shadow:0 6px 13px rgba(0,80,32,.15)}
+.ob-auto-result{padding:13px 18px;margin:0 0 15px;background:#d9fce7;color:#14603c;font-weight:900;border-left:4px solid #27ac68;border-radius:8px}
+.pa-shell{max-width:960px;margin:25px auto;background:#fff;border:1px solid #dae2e9;border-radius:16px;box-shadow:0 15px 35px rgba(19,38,66,.09);overflow:hidden}
+.pa-top{background:#101c30;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:16px 20px;font-size:11px;letter-spacing:.07em;font-weight:900}
+.pa-top-brand{font-size:18px;letter-spacing:0}.pa-top-brand b{color:#ff6600}
+.pa-bar{padding:22px 20px 18px;background:#f9fafc;border-bottom:1px solid #dee6ed;display:flex;justify-content:space-between;gap:10px;align-items:center}
+.pa-bar b{display:block;font-size:24px;color:#1c314c;font-weight:900}.pa-bar small{font-size:12px;color:#69798a}
+.pa-badge{background:#fff0e5;color:#c95000;padding:8px 12px;font-size:10px;font-weight:900;border-radius:30px;white-space:nowrap}
+.pa-choices{display:grid;grid-template-columns:1fr 1fr;gap:16px;padding:19px 20px 6px}
+.pa-choices label{display:block;font-size:12px;font-weight:800;color:#4a5a6b}
+.pa-choices select{width:100%;display:block;margin-top:6px;background:#fff;border:1px solid #d5dfe8;color:#26384b;border-radius:8px;padding:11px;font-size:15px}
+.pa-instructions{color:#5d7287;font-size:12px;padding:14px 20px 2px}
+.pa-meters{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;padding:16px 20px}
+.pa-meter{border:1px solid #d6dfe9;border-top:4px solid #ff6600;border-radius:12px;min-width:0;padding:12px;background:#fdfefe}
+.pa-meter>div{display:flex;align-items:center;justify-content:space-between;gap:8px}.pa-meter>div b{font-size:13px;color:#183252}.pa-meter>div span{color:#d15c10;font-weight:900;font-size:11px}
+.pa-meter img{display:block;width:100%;height:130px;object-fit:contain;margin:6px 0}
+.pa-meter label{display:block;color:#52657b;font-weight:800;font-size:11px}
+.pa-meter input{margin-top:7px;width:100%;border:1px solid #bed1c3;border-radius:7px;background:#f7fff9;padding:12px;font-size:16px;font-weight:900;color:#1a4a2d}
+.pa-meter input:focus{border-color:#117e4b;outline:2px solid #b9e5c9}
+.pa-actions{display:flex;align-items:center;gap:18px;padding:14px 20px 21px;flex-wrap:wrap}
+.pa-actions button{border:0;background:#ff6600;color:#fff;padding:15px 22px;font-weight:900;border-radius:10px;cursor:pointer;font-size:12px}
+.pa-actions span{font-size:12px;color:#65768c;flex:1;line-height:1.4}
+@media(max-width:720px){.pa-meters{grid-template-columns:1fr}.pa-meter{display:grid;grid-template-columns:105px 1fr;column-gap:12px;align-items:center}.pa-meter>div{grid-column:1/-1}.pa-meter img{height:86px}.pa-meter label{min-width:0}.pa-choices{gap:9px}.pa-bar{padding:16px}.pa-bar b{font-size:20px}.pa-badge{font-size:9px}.pa-top{font-size:9px;padding:13px}.pa-top-brand{font-size:16px}.ob-auto-panel{flex-direction:column;align-items:stretch}.ob-auto-panel button{width:100%}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -176,7 +207,7 @@ button,input{font:inherit}
   <section id="asisView" class="stage" hidden>
     <div class="kicker">AS IS · EXPERIENCIA INTERACTIVA</div>
     <h1 class="title">Así se registraban las lecturas.</h1>
-    <p class="intro">Observa los <b>tres contadores de agua</b> de la presentación. Primero apunta sus valores con el dedo y espera instrucciones para el Excel. Todas las lecturas están en <b>m³</b>.</p>
+    <p class="intro">Observa los <b>tres contadores de agua</b> de la presentación. Primero apunta sus valores con el dedo. Cuando veas los apuntes manuscritos, puedes abrir el Excel de lecturas para transcribirlos. Todas las lecturas están en <b>m³</b>.</p>
     <div class="flow-strip" aria-label="Etapas de la actividad">
       <span class="flow-chip active">1 · Leer y anotar</span><span class="flow-arrow">→</span>
       <span class="flow-chip">2 · Esperar el Excel</span><span class="flow-arrow">→</span>
@@ -206,24 +237,7 @@ button,input{font:inherit}
       </article>
     </div>
 
-  </section>
-
-  <section id="excelView" class="stage" hidden>
-    <div class="kicker">AS IS · TRANSCRIPCIÓN MANUAL</div>
-    <h1 class="title">Ahora pásalo a Excel.</h1>
-    <p class="intro">Observa las <b>tres anotaciones manuscritas</b> que se muestran en la presentación y copia sus valores en las celdas de esta hoja. Es el segundo registro manual del proceso.</p>
-    <div class="flow-strip" aria-label="Etapas de la actividad">
-      <span class="flow-chip">1 · Lectura en campo</span><span class="flow-arrow">→</span>
-      <span class="flow-chip active">2 · Transcribir a Excel</span><span class="flow-arrow">→</span>
-      <span class="flow-chip">Operation Book</span>
-    </div>
-
-    <div class="section-head">
-      <div><h2>Ahora transcríbelo al Excel</h2><p>Vuelve a introducir los mismos valores, esta vez usando el teclado.</p></div>
-      <span class="section-n">02 / 02</span>
-    </div>
-
-    <div class="excel-shell">
+    <details class="asis-optional-excel"><summary>Continuar con el Excel de lecturas manuscritas</summary><p>Cuando aparezcan las notas manuscritas, utiliza estos tres campos para transcribirlas. Los datos se conservan en tu dispositivo.</p><div class="excel-shell">
       <div class="excel-toolbar"><div class="excel-icon">X</div><div><div class="excel-name">Lecturas_agua.xlsx</div><div class="excel-hint">Hoja manual · datos para Operation Book</div></div></div>
       <div class="sheet-scroll">
         <table class="sheet" aria-label="Excel simulado de lecturas de agua">
@@ -238,13 +252,18 @@ button,input{font:inherit}
       </div>
       <div class="excel-tabs"><div class="excel-tab">Contadores de agua</div></div>
       <div class="excel-caption">Misma lectura, dos anotaciones distintas. Tus datos se mantienen únicamente en este navegador para la demostración.</div>
-    </div>
+    </div></details>
   </section>
 
   <section id="improveView" class="stage" hidden>
-    <div class="kicker">SIMULADOR · CONSTRUCCIÓN MANUAL DEL OPERATION BOOK</div>
-    <h1 class="title">Y ahora... rellena el Operation Book.</h1>
-    <p class="intro">Imagina que ya tienes las lecturas de campo. Falta abrir el <b>BMS</b>, localizar una a una las señales de UPS, interruptores, contadores, temperatura y humedad, y <b>picar cada valor en Excel</b>. Prueba a completar algunas filas.</p>
+    <div class="kicker" id="obModeKicker">AS IS · CONSTRUCCIÓN MANUAL DEL OPERATION BOOK</div>
+    <h1 class="title" id="obModeTitle">Y ahora... rellena el Operation Book.</h1>
+    <p class="intro" id="obModeIntro">Imagina que ya tienes las lecturas de campo. Abre el <b>BMS</b>, localiza una a una las señales de UPS, interruptores, contadores, temperatura y humedad y <b>pica cada dato en Excel</b>. Prueba a completar varias filas.</p>
+    <div id="obAutoPanel" class="ob-auto-panel" hidden>
+      <div><strong>TO BE · AUTOMATIZACIÓN</strong><span>El mismo BMS y las mismas señales. Ahora no hace falta copiarlas una a una.</span></div>
+      <button id="obAutofillBtn" type="button">RELLENAR TODO EL OPERATION BOOK</button>
+    </div>
+    <div id="obAutoResult" class="ob-auto-result" role="status" aria-live="polite" hidden></div>
 
     <div class="ob-steps">
       <span><b>01</b> Abre una señal del BMS</span>
@@ -275,7 +294,7 @@ button,input{font:inherit}
             <div class="ob-monitor-head"><span>VALOR CONSULTADO</span><span>● LIVE</span></div>
             <div id="bmsSelectedName" class="ob-monitor-name">Selecciona un equipo del listado</div>
             <div class="ob-reading"><strong id="bmsSelectedValue">—</strong><span id="bmsSelectedUnit"></span></div>
-            <div class="ob-monitor-hint">Copia manualmente este valor en la fila correspondiente de Excel. Nada se transfiere automáticamente.</div>
+            <div class="ob-monitor-hint" id="obMonitorHint">Copia manualmente este valor en la fila correspondiente de Excel. Nada se transfiere automáticamente.</div>
           </div>
         </div>
       </section>
@@ -284,7 +303,7 @@ button,input{font:inherit}
         <div class="ob-excel-header">
           <div class="excel-icon">X</div>
           <div><strong>D4_Operation_Book.xlsx</strong><small>DC01 · Pestaña ENERGY / BMS</small></div>
-          <div class="ob-save-hint">● SIN AUTOMATIZAR</div>
+          <div class="ob-save-hint" id="obStatusHint">● SIN AUTOMATIZAR</div>
         </div>
         <div class="ob-sheet-ribbon">Archivo &nbsp;&nbsp; Inicio &nbsp;&nbsp; Insertar &nbsp;&nbsp; Fórmulas &nbsp;&nbsp; Datos &nbsp;&nbsp; Revisar</div>
         <div class="ob-excel-status"><span id="obProgress">0 valores transcritos</span><span>DESPLÁZATE PARA VER MÁS ↓</span></div>
@@ -297,14 +316,29 @@ button,input{font:inherit}
         <div class="ob-sheet-foot"><span class="ob-tab">ENERGY_BMS</span><span id="obRowsHint">Mostrando filas 2–25 · sigue bajando ↓</span></div>
       </section>
     </div>
-    <div class="ob-footer"><b>¿Ves el problema?</b> Esto es solo una simulación con valores de ejemplo. El Operation Book contiene muchas más señales y exige comprobar que cada dato termina en la celda correcta. <b>La herramienta automatiza esta transferencia.</b></div>
+    <div class="ob-footer" id="obModeFooter"><b>¿Ves el problema?</b> Esto es una simulación con valores de ejemplo. Un Operation Book exige consultar muchas señales y llevar cada dato a la celda correcta. <b>La automatización elimina el picado repetitivo.</b></div>
   </section>
 
-  <section id="endView" class="stage end-card" hidden>
-    <div class="kicker">DATA4 · GREEN BELT</div>
-    <h1 class="title">Gracias por participar.</h1>
-    <p class="intro">La automatización ya ha reducido gran parte del trabajo manual. El siguiente objetivo es estabilizar el proceso y reducir la revisión de incidencias.</p>
-    <div class="end-stat"><b>57,5%</b><span>Reducción total de dedicación medida actualmente</span></div>
+  <section id="appView" class="stage" hidden>
+    <div class="kicker">TO BE · APP CONTADORES</div>
+    <h1 class="title">La misma lectura. Un solo registro.</h1>
+    <p class="intro">Introduce las tres lecturas directamente en esta <b>simulación de Power Apps</b>. No hace falta apuntarlas en papel ni volver a copiarlas a Excel.</p>
+    <div class="pa-shell">
+      <div class="pa-top"><span class="pa-top-brand">Serveo <b>Data4</b></span><span>REGISTRO DE CONTADORES</span></div>
+      <div class="pa-bar"><div><b>App Contadores</b><small>Captura estructurada · demostración interactiva</small></div><span class="pa-badge">REGISTRO DIRECTO</span></div>
+      <div class="pa-choices">
+        <label>Edificio<select id="paBuilding"><option>DC01</option><option>DC02</option><option>DC03</option></select></label>
+        <label>Tipo de contador<select id="paType"><option>Agua</option></select></label>
+      </div>
+      <div class="pa-instructions">Lee cada contador y escribe su valor aquí. Puedes guardar los tres registros con un único toque.</div>
+      <div class="pa-meters">
+        <div class="pa-meter"><div><b>Contador agua 1</b><span>m³</span></div><img src="assets/contador_1.svg" alt="Contador de agua 1"><label>Lectura <input data-pa-meter="1" inputmode="decimal" type="text" autocomplete="off" placeholder="Escribe la lectura" aria-label="Lectura del contador de agua 1"></label></div>
+        <div class="pa-meter"><div><b>Contador agua 2</b><span>m³</span></div><img src="assets/contador_2.svg" alt="Contador de agua 2"><label>Lectura <input data-pa-meter="2" inputmode="decimal" type="text" autocomplete="off" placeholder="Escribe la lectura" aria-label="Lectura del contador de agua 2"></label></div>
+        <div class="pa-meter"><div><b>Contador agua 3</b><span>m³</span></div><img src="assets/contador_3.svg" alt="Contador de agua 3"><label>Lectura <input data-pa-meter="3" inputmode="decimal" type="text" autocomplete="off" placeholder="Escribe la lectura" aria-label="Lectura del contador de agua 3"></label></div>
+      </div>
+      <div class="pa-actions"><button type="button" id="paSave">GUARDAR LAS TRES LECTURAS</button><span id="paStatus" role="status" aria-live="polite">Los registros se guardan únicamente en este navegador de demostración.</span></div>
+    </div>
+    <div class="ob-footer"><b>Un dato, un registro:</b> esta copia visual permite probar el proceso mejorado. No escribe en Power Apps ni en el sistema real del cliente.</div>
   </section>
 </main>
 <div class="foot">DATA4 · REPORTING OPERATIVO · EXPERIENCIA DE AUDIENCIA</div>
@@ -391,6 +425,7 @@ button,input{font:inherit}
   var bmsDisplayCount=28;
   var obSelected=-1;
   var obTotalSignals=960;
+  var obAutoComplete=false;
   function obSignal(index){
     var n=Math.floor(index/12)+1;
     var s=String(n).padStart(3,'0');
@@ -442,10 +477,14 @@ button,input{font:inherit}
     document.querySelectorAll('.ob-signal').forEach(function(el){el.setAttribute('aria-pressed',String(Number(el.dataset.signal)===idx));});
   }
   function obUpdateProgress(){
-    var count=0;
     var entries=document.querySelectorAll('#obRows input[data-ob-index]');
+    var count=0;
     entries.forEach(function(el){if(el.value.trim())count++;});
-    document.getElementById('obProgress').textContent=count+' valores transcritos en las filas visibles';
+    if(stage==='results' && obAutoComplete){
+      document.getElementById('obProgress').textContent=obTotalSignals+' / '+obTotalSignals+' señales rellenadas automáticamente';
+    }else{
+      document.getElementById('obProgress').textContent=count+' valores introducidos manualmente';
+    }
   }
   function obAddRows(){
     var fragment=document.createDocumentFragment();
@@ -454,7 +493,7 @@ button,input{font:inherit}
       var item=obSignal(idx%obTotalSignals);
       var row=document.createElement('tr');
       var key='ob_row_'+idx;
-      var stored=getStored(key)||'';
+      var stored=obAutoComplete?String(item.value):(getStored(key)||'');
       row.className=stored?'ob-filled':'';
       row.innerHTML='<td>'+String(idx+2)+'</td><td>'+obEscape(item.name)+'</td><td>'+obEscape(item.unit)+'</td>'+
       '<td><input data-ob-index="'+idx+'" aria-label="Valor de '+obEscape(item.name)+'" inputmode="text" autocomplete="off" placeholder="Picar dato" value="'+obEscape(stored)+'"></td>'+
@@ -466,6 +505,7 @@ button,input{font:inherit}
     obUpdateProgress();
   }
   function obCheckEnd(){
+    if(obAutoComplete && obRowsLoaded>=obTotalSignals)return;
     var el=document.getElementById('obRowsScroll');
     if(el.scrollHeight-el.scrollTop-el.clientHeight<280)obAddRows();
   }
@@ -483,7 +523,7 @@ button,input{font:inherit}
       var el=e.target.closest('input[data-ob-index]');
       if(!el)return;
       var value=el.value;
-      putStored('ob_row_'+el.dataset.obIndex,value);
+      if(stage==='improve')putStored('ob_row_'+el.dataset.obIndex,value);
       var row=el.closest('tr');
       row.classList.toggle('ob-filled',!!value.trim());
       row.querySelector('.ob-state').textContent=value.trim()?'Introducido':'Pendiente';
@@ -495,14 +535,83 @@ button,input{font:inherit}
     obAddRows();
   }
 
+  function obSwitchMode(mode){
+    var automated=mode==='results';
+    document.getElementById('obAutoPanel').hidden=!automated;
+    document.getElementById('obStatusHint').textContent=automated?'● MODO AUTOMÁTICO':'● SIN AUTOMATIZAR';
+    document.getElementById('obModeKicker').textContent=automated?'TO BE · OPERATION BOOK AUTOMÁTICO':'AS IS · OPERATION BOOK MANUAL';
+    document.getElementById('obModeTitle').textContent=automated?'El mismo Excel. Ahora, un solo clic.':'Y ahora... rellena el Operation Book.';
+    document.getElementById('obModeIntro').innerHTML=automated?
+      'Este es el mismo BMS y el mismo Operation Book que acabas de rellenar a mano. Pulsa <b>RELLENAR TODO</b> para completar automáticamente sus <b>960 señales simuladas</b>.':
+      'Consulta las señales del <b>BMS</b>, localiza la fila correcta en Excel y <b>pica el valor manualmente</b>. Prueba a completar unas cuantas filas.';
+    document.getElementById('obMonitorHint').textContent=automated?
+      'El simulador automatizado coloca cada valor en su fila. No hace falta copiarlo a mano.':
+      'Copia manualmente este valor en la fila correspondiente de Excel. Nada se transfiere automáticamente.';
+    document.getElementById('obModeFooter').innerHTML=automated?
+      '<b>Resultado:</b> en esta simulación, la automatización rellena el Operation Book sin transcribir las señales una a una. Son valores de ejemplo; no se ha generado ni modificado ningún libro real.':
+      '<b>¿Ves el problema?</b> Esto es una simulación con valores de ejemplo. Un Operation Book exige consultar muchas señales y llevar cada dato a la celda correcta.';
+    // Never contaminate the previous manual exercise with automatic values.
+    obAutoComplete=false;
+    document.getElementById('obAutoResult').hidden=true;
+    document.querySelectorAll('#obRows input[data-ob-index]').forEach(function(input){
+      var v=getStored('ob_row_'+input.dataset.obIndex)||'';
+      input.value=v;input.readOnly=false;
+      var row=input.closest('tr');row.classList.toggle('ob-filled',!!v.trim());
+      row.querySelector('.ob-state').textContent=v.trim()?'Introducido':'Pendiente';
+    });
+    obUpdateProgress();
+  }
+  function obFillAutomatically(){
+    if(stage!=='results')return;
+    obAutoComplete=true;
+    while(obRowsLoaded<obTotalSignals)obAddRows();
+    document.querySelectorAll('#obRows input[data-ob-index]').forEach(function(input){
+      var idx=Number(input.dataset.obIndex),item=obSignal(idx%obTotalSignals);
+      input.value=String(item.value);input.readOnly=true;
+      var row=input.closest('tr');row.classList.add('ob-filled');
+      row.querySelector('.ob-state').textContent='✓ AUTO';
+    });
+    obUpdateProgress();
+    document.getElementById('obRowsHint').textContent='960 señales completadas · desplázate para comprobarlas';
+    var msg=document.getElementById('obAutoResult');msg.hidden=false;
+    msg.textContent='✓ 960 de 960 señales rellenadas en la demostración. Sin picar ni una sola celda manualmente.';
+    document.getElementById('obAutofillBtn').textContent='VOLVER A RELLENAR';
+  }
+  document.getElementById('obAutofillBtn').addEventListener('click',obFillAutomatically);
+  var paInputs=Array.prototype.slice.call(document.querySelectorAll('input[data-pa-meter]'));
+  var paBuilding=document.getElementById('paBuilding');
+  var paStatus=document.getElementById('paStatus');
+  paBuilding.value=getStored('paBuilding')||'DC01';
+  paBuilding.addEventListener('change',function(){
+    putStored('paBuilding',paBuilding.value);
+    paInputs.forEach(function(el){el.value=getStored('pa_'+paBuilding.value+'_'+el.dataset.paMeter)||'';});
+    paStatus.textContent='Edificio cambiado. Introduce las lecturas y guarda.';
+  });
+  paInputs.forEach(function(el){
+    el.value=getStored('pa_'+paBuilding.value+'_'+el.dataset.paMeter)||'';
+    el.addEventListener('input',function(){
+      putStored('pa_'+paBuilding.value+'_'+el.dataset.paMeter,el.value);
+      paStatus.textContent='Lecturas en edición · pulsa Guardar para confirmar';
+    });
+  });
+  document.getElementById('paSave').addEventListener('click',function(){
+    var values=paInputs.map(function(el){return el.value.trim();});
+    if(values.some(function(v){return !v;})){
+      paStatus.textContent='Introduce los tres valores antes de guardar.';
+      paStatus.style.color='#b7481c';return;
+    }
+    putStored('paSaved_'+paBuilding.value,JSON.stringify({values:values,updated:new Date().toISOString()}));
+    paStatus.style.color='#147f4e';
+    paStatus.textContent='✓ 3 de 3 lecturas guardadas en la demostración · '+paBuilding.value;
+  });
   var views={
     lobby:document.getElementById('waitView'),
     asis:document.getElementById('asisView'),
     improve:document.getElementById('improveView'),
-    control:document.getElementById('endView'),
-    results:document.getElementById('excelView')
+    control:document.getElementById('appView'),
+    results:document.getElementById('improveView')
   };
-  var labels={lobby:'EN ESPERA',asis:'AS IS · MANUAL',improve:'IMPROVE',control:'CONTROL',results:'AS IS · EXCEL'};
+  var labels={lobby:'EN ESPERA',asis:'AS IS - CONTADORES',improve:'AS IS - OPERATION BOOK',control:'TO BE - APP CONTADORES',results:'TO BE - EXCEL AUTOMÁTICO'};
   function applyPhase(p){
     var next=views[p]?p:'lobby';
     if(next===stage)return;
@@ -512,7 +621,7 @@ button,input{font:inherit}
     views[next].hidden=false;
     document.getElementById('phaseLabel').textContent=labels[next];
     if(next==='asis'){requestAnimationFrame(initCanvases);}
-    if(next==='improve'){obSetup();}
+    if(next==='improve'||next==='results'){obSetup();obSwitchMode(next);}
     window.scrollTo({top:0,behavior:'auto'});
   }
   async function pollPhase(){
