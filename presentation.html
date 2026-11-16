@@ -2897,6 +2897,29 @@
 .hero-questions strong{display:block;font-size:28px;letter-spacing:.09em}.hero-questions span{display:block;color:#c6cfda;font-size:14px;margin-top:5px}
 @media(max-width:700px){.hero-head{padding:22px 25px}.hero-head b{font-size:16px}.hero-head small{font-size:8px}.hero-main{padding:0 28px 35px}.hero-main h1{font-size:clamp(42px,9vw,74px)}.hero-main p{font-size:16px}.hero-closing .hero-main h1{font-size:clamp(75px,16vw,130px)}.hero-questions strong{font-size:20px}.hero-foot{padding:22px 25px 65px;font-size:9px}}
 @media(prefers-reduced-motion:no-preference){.hero-main{animation:heroIn .7s ease-out both}@keyframes heroIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}}
+
+/* Two live audience AS IS storytelling slides */
+.meter-story-slide{background:#F3F6FA;color:#14233B}
+.meter-story-body{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:center;gap:14px;padding:20px clamp(25px,5vw,90px) 34px}
+.meter-story-kicker{font-size:12px;font-weight:900;letter-spacing:.18em;color:#E95D00}
+.meter-story-body h2{font-size:clamp(32px,4vw,68px);font-weight:900;line-height:1.05;letter-spacing:-.055em;margin:0;color:#14233B}
+.meter-story-body h2 em{font-style:normal;color:#FF6600}
+.meter-story-body>p{font-size:clamp(13px,1.3vw,20px);color:#526177;line-height:1.4;max-width:1070px;margin:0 0 10px}
+.meter-story-body>p b{color:#182F4D}
+.meter-story-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;width:100%}
+.meter-story-card{min-width:0;padding:18px;background:#fff;border:1px solid #D6DFEA;border-top:4px solid #FF6600;border-radius:12px;box-shadow:0 9px 27px rgba(24,47,77,.06)}
+.meter-story-card span{display:block;font-weight:900;color:#D75A0A;letter-spacing:.09em;font-size:12px;margin-bottom:12px}
+.meter-story-card img{display:block;max-width:100%;height:clamp(150px,21vh,270px);width:100%;object-fit:contain}
+.meter-story-card div{margin-top:8px;font-size:12px;font-weight:800;color:#607187;text-align:center}
+.meter-story-instruction{margin-top:10px;display:flex;align-items:center;gap:14px;padding:18px 22px;background:#15243B;color:#fff;border-left:6px solid #FF6600;border-radius:10px}
+.meter-story-instruction b{color:#FF8E47;letter-spacing:.07em;font-size:13px;white-space:nowrap}
+.meter-story-instruction span{flex:1;color:#F1F4F8;font-size:16px}
+.meter-story-instruction strong{white-space:nowrap;color:#FF8E47;font-size:15px}
+.meter-notes-illustration{display:grid;place-items:center;padding:15px;border:1px solid #D5DDE8;border-radius:16px;background:#F6F7FA;min-height:0}
+.meter-notes-illustration img{width:100%;height:clamp(200px,36vh,350px);object-fit:contain}
+.meter-notes-footnote{font-size:11px;color:#8794A5}
+@media(max-width:850px){.meter-story-body{padding:20px 22px 45px}.meter-story-grid{gap:8px}.meter-story-card{padding:10px}.meter-story-card img{height:clamp(90px,15vh,170px)}.meter-story-card span{font-size:10px}.meter-story-instruction{padding:12px}.meter-story-instruction span{font-size:12px}}
+@media(max-width:600px){.meter-story-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.meter-story-card img{height:95px}.meter-story-card span{font-size:9px}.meter-story-card div{font-size:9px}.meter-story-instruction{flex-wrap:wrap}.meter-story-instruction strong{margin-left:auto}}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -2909,16 +2932,18 @@
 <div class="nav-dot active" onclick="goTo(0)" title="Inicio"></div>
 <div class="nav-dot" onclick="goTo(1)" title="Define"></div>
 <div class="nav-dot" onclick="goTo(2)" title="Measure"></div>
-<div class="nav-dot" onclick="goTo(3)" title="AS IS"></div>
-<div class="nav-dot" onclick="goTo(4)" title="Analyze"></div>
-<div class="nav-dot" onclick="goTo(5)" title="Improve"></div>
-<div class="nav-dot" onclick="goTo(6)" title="Contadores + App"></div>
-<div class="nav-dot" onclick="goTo(7)" title="TO BE"></div>
-<div class="nav-dot" onclick="goTo(8)" title="DC01"></div>
-<div class="nav-dot" onclick="goTo(9)" title="DC03 / DC02"></div>
-<div class="nav-dot" onclick="goTo(10)" title="Resultados"></div>
-<div class="nav-dot" onclick="goTo(11)" title="Control"></div>
-<div class="nav-dot" onclick="goTo(12)" title="Preguntas"></div>
+<div class="nav-dot" onclick="goTo(3)" title="AS IS · Flujo"></div>
+<div class="nav-dot" onclick="goTo(4)" title="Contadores · Escritura"></div>
+<div class="nav-dot" onclick="goTo(5)" title="Apuntes · Excel"></div>
+<div class="nav-dot" onclick="goTo(6)" title="Analyze"></div>
+<div class="nav-dot" onclick="goTo(7)" title="Improve"></div>
+<div class="nav-dot" onclick="goTo(8)" title="App Contadores"></div>
+<div class="nav-dot" onclick="goTo(9)" title="TO BE"></div>
+<div class="nav-dot" onclick="goTo(10)" title="DC01"></div>
+<div class="nav-dot" onclick="goTo(11)" title="DC03 / DC02"></div>
+<div class="nav-dot" onclick="goTo(12)" title="Resultados"></div>
+<div class="nav-dot" onclick="goTo(13)" title="Control"></div>
+<div class="nav-dot" onclick="goTo(14)" title="Preguntas"></div>
 </nav>
 
 <!-- ══════════════════════════════════════════════
@@ -3313,6 +3338,35 @@
   <span class="slide-num">04 / 13</span>
 </section>
 
+<section class="slide meter-story-slide" id="slide-asis-meters">
+  <header class="slide-header"><div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — LECTURA MANUAL DE CONTADORES</span></div><div class="hdr-badge">AS IS · 1/2</div></header>
+  <div class="meter-story-body">
+    <div class="meter-story-kicker">PRIMER PASO · CAPTURA EN CAMPO</div>
+    <h2>Lo primero era <em>leer y apuntar.</em></h2>
+    <p>Estos son los tres contadores de agua. Pide a los participantes que lean los valores y <b>los escriban a mano en sus móviles</b>, como si estuvieran tomando notas en campo.</p>
+    <div class="meter-story-grid">
+      <article class="meter-story-card"><span>CONTADOR 01 · AGUA</span><img src="assets/contador_1.svg" alt="Contador de agua 1, lectura 18.742 metros cúbicos"><div>Lectura del contador · m³</div></article>
+      <article class="meter-story-card"><span>CONTADOR 02 · AGUA</span><img src="assets/contador_2.svg" alt="Contador de agua 2, lectura 11.386 metros cúbicos"><div>Lectura del contador · m³</div></article>
+      <article class="meter-story-card"><span>CONTADOR 03 · AGUA</span><img src="assets/contador_3.svg" alt="Contador de agua 3, lectura 7.954 metros cúbicos"><div>Lectura del contador · m³</div></article>
+    </div>
+    <div class="meter-story-instruction"><b>ACTIVIDAD EN EL MÓVIL</b><span>Escribe las tres lecturas con el dedo. No pases todavía al Excel.</span><strong>01 / 02</strong></div>
+  </div>
+  <div class="slide-footer"></div><span class="slide-num">05 / 15</span>
+</section>
+
+<section class="slide meter-story-slide meter-notes-slide" id="slide-asis-notes">
+  <header class="slide-header"><div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — TRANSCRIPCIÓN MANUAL AL EXCEL</span></div><div class="hdr-badge">AS IS · 2/2</div></header>
+  <div class="meter-story-body">
+    <div class="meter-story-kicker">SEGUNDO PASO · DOBLE REGISTRO</div>
+    <h2>Y después, <em>volver a escribirlo.</em></h2>
+    <p>Una vez recogidas en papel, las anotaciones manuales tenían que pasarse de nuevo a una hoja Excel. <b>Repite la operación en tu móvil</b>, ahora usando el teclado.</p>
+    <div class="meter-notes-illustration"><img src="assets/lecturas_manuscritas.svg" alt="Tres anotaciones manuscritas aportadas como ejemplo de toma de lecturas de los contadores de agua"></div>
+    <div class="meter-story-instruction"><b>ACTIVIDAD EN EL MÓVIL</b><span>Ahora transcribe los tres apuntes manuscritos a la tabla Excel.</span><strong>02 / 02</strong></div>
+    <div class="meter-notes-footnote">Ejemplo visual de anotaciones manuscritas · no corresponde a una captura en tiempo real del BMS.</div>
+  </div>
+  <div class="slide-footer"></div><span class="slide-num">06 / 15</span>
+</section>
+
 <section class="slide dmaic-snapshot-slide" id="slide-3" data-dmaic-phase="analyze">
   <header class="slide-header">
     <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">Reducir el tiempo de Reporting Operativo Data4</span></div>
@@ -3399,7 +3453,7 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">05 / 13</span>
+  <span class="slide-num">07 / 15</span>
 </section>
 
 <section class="slide dmaic-snapshot-slide" id="slide-4" data-dmaic-phase="improve">
@@ -3519,7 +3573,7 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">06 / 13</span>
+  <span class="slide-num">08 / 15</span>
 </section>
 
 <section class="slide counter-app-slide" id="slide-5">
@@ -3620,7 +3674,7 @@
   </div>
 
   <div class="slide-footer"></div>
-  <span class="slide-num">07 / 13</span>
+  <span class="slide-num">09 / 15</span>
 </section>
 
 <section class="slide" id="slide-6">
@@ -3632,7 +3686,7 @@
     <div class="hdr-badge">IMPROVE</div>
   </header>
 
-  <button class="return-dmaic-btn" type="button" onclick="goTo(5)">← Volver a Improve</button>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(7)">← Volver a Improve</button>
 
   <div class="tobe-v2-body">
     <div class="tobe-v2-title">TO BE — Automatización real del Operation Book mensual</div>
@@ -3674,9 +3728,9 @@
     </div>
 
     <div class="app-tabs">
-      <button class="app-tab-btn" onclick="goTo(8)">Ver DC01</button>
-      <button class="app-tab-btn" onclick="goTo(9)">Ver DC03 / DC02</button>
-      <button class="app-tab-btn" onclick="goTo(6)">Ver App contadores</button>
+      <button class="app-tab-btn" onclick="goTo(10)">Ver DC01</button>
+      <button class="app-tab-btn" onclick="goTo(11)">Ver DC03 / DC02</button>
+      <button class="app-tab-btn" onclick="goTo(8)">Ver App contadores</button>
     </div>
 
     <div class="tobe-benefits">
@@ -3688,7 +3742,7 @@
   </div>
 
   <div class="slide-footer"></div>
-  <span class="slide-num">08 / 13</span>
+  <span class="slide-num">10 / 15</span>
 </section>
 
 <section class="slide" id="slide-7">
@@ -3696,18 +3750,18 @@
     <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">DEMO — Herramienta Operation Book DC01</span></div>
     <div class="hdr-badge">IMPROVE</div>
   </header>
-  <button class="return-dmaic-btn" type="button" onclick="goTo(8)">← Volver a Improve</button>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(10)">← Volver a Improve</button>
   <div class="tool-slide-body">
     <div class="tool-tabs">
-      <button class="tool-tab active" onclick="goTo(8)">DC01</button>
-      <button class="tool-tab" onclick="goTo(9)">DC03 / DC02</button>
-      <button class="tool-tab" onclick="goTo(6)">App contadores</button>
-      <button class="tool-tab" onclick="goTo(7)">TO BE</button>
+      <button class="tool-tab active" onclick="goTo(10)">DC01</button>
+      <button class="tool-tab" onclick="goTo(11)">DC03 / DC02</button>
+      <button class="tool-tab" onclick="goTo(8)">App contadores</button>
+      <button class="tool-tab" onclick="goTo(9)">TO BE</button>
     </div>
     <div class="tool-frame-wrap"><iframe class="tool-frame" src="tool_dc01_demo.html" title="Herramienta DC01"></iframe></div>
     <div class="tool-note">DC01: una única herramienta para las cuatro fases (DC01.1, DC01.2, DC01.3 y DC01.4), con inputs BMS/Data Export + Iberdrola y Operation Book del mes anterior.</div>
   </div>
-  <div class="slide-footer"></div><span class="slide-num">09 / 13</span>
+  <div class="slide-footer"></div><span class="slide-num">11 / 15</span>
 </section>
 
 <section class="slide" id="slide-8">
@@ -3715,18 +3769,18 @@
     <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">DEMO — Herramienta Operation Book DC03 / referencia DC02</span></div>
     <div class="hdr-badge">IMPROVE</div>
   </header>
-  <button class="return-dmaic-btn" type="button" onclick="goTo(8)">← Volver a Improve</button>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(10)">← Volver a Improve</button>
   <div class="tool-slide-body">
     <div class="tool-tabs">
-      <button class="tool-tab" onclick="goTo(8)">DC01</button>
-      <button class="tool-tab active" onclick="goTo(9)">DC03 / DC02</button>
-      <button class="tool-tab" onclick="goTo(6)">App contadores</button>
-      <button class="tool-tab" onclick="goTo(7)">TO BE</button>
+      <button class="tool-tab" onclick="goTo(10)">DC01</button>
+      <button class="tool-tab active" onclick="goTo(11)">DC03 / DC02</button>
+      <button class="tool-tab" onclick="goTo(8)">App contadores</button>
+      <button class="tool-tab" onclick="goTo(9)">TO BE</button>
     </div>
     <div class="tool-frame-wrap"><iframe class="tool-frame" src="tool_dc03_demo.html" title="Herramienta DC03"></iframe></div>
     <div class="tool-note">DC03 está entregado y en control. DC02 usa el mismo concepto de front y arquitectura, adaptado a su mapping. Resultado actual DC03: ~20 h → 30 min.</div>
   </div>
-  <div class="slide-footer"></div><span class="slide-num">10 / 13</span>
+  <div class="slide-footer"></div><span class="slide-num">12 / 15</span>
 </section>
 
 <section class="slide" id="slide-9">
@@ -3797,7 +3851,7 @@
   </div>
 
   <div class="slide-footer"></div>
-  <span class="slide-num">11 / 13</span>
+  <span class="slide-num">13 / 15</span>
 </section>
 
 <section class="slide dmaic-snapshot-slide" id="slide-10" data-dmaic-phase="control">
@@ -3946,13 +4000,13 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">12 / 13</span>
+  <span class="slide-num">14 / 15</span>
 </section>
 
 <section class="slide hero-new hero-closing" id="slide-outro">
   <div class="hero-deco"></div><div class="hero-head"><b>DATA<span>4</span> <i>×</i> SERVEO</b><small>GREEN BELT · CIERRE</small></div>
   <main class="hero-main"><div class="hero-eyebrow">EL SIGUIENTE PASO ES CONSOLIDAR</div><h1>GRACIAS<em>.</em></h1><p>De un proceso manual y repetitivo a herramientas entregadas. Ahora el foco es reducir incidencias, revisión y retrabajo.</p><div class="hero-questions"><strong>¿PREGUNTAS?</strong><span>Hablemos del proyecto, los resultados y los siguientes pasos.</span></div></main>
-  <footer class="hero-foot"><span>DATA4 · AUTOMATIZACIÓN DEL REPORTING OPERATIVO</span><span>13 / 13</span></footer>
+  <footer class="hero-foot"><span>DATA4 · AUTOMATIZACIÓN DEL REPORTING OPERATIVO</span><span>15 / 15</span></footer>
 </section>
 
 <script>
@@ -4219,7 +4273,7 @@
           <div class="arch-band dark">Validaciones + generación del Operation Book</div>
           <div class="phase-action-minimal improve-actions">
             <button class="slide-link-btn" type="button" onclick="goTo(3)">Ver resultados DC03</button>
-            <button class="slide-link-btn secondary" type="button" onclick="goTo(4)">Ver proceso TO BE</button>
+            <button class="slide-link-btn secondary" type="button" onclick="goTo(6)">Ver proceso TO BE</button>
           </div>
         </div>
         <div class="status-stack">
@@ -4331,7 +4385,12 @@
   let autoAudienceSync = true;
   let lastAudiencePhaseRequested = null;
 
-  const slideAudienceMap = {0:'lobby',1:'lobby',2:'lobby',3:'asis',4:'lobby',5:'improve',6:'improve',7:'improve',8:'improve',9:'improve',10:'improve',11:'improve',12:'control'};
+  const slideAudienceMap = {
+    0:'lobby',1:'lobby',2:'lobby',3:'lobby',
+    4:'asis',5:'results',6:'lobby',
+    7:'improve',8:'improve',9:'improve',10:'improve',11:'improve',12:'improve',
+    13:'control',14:'control'
+  };
   const dmaicAudienceMap = {
     measure:'asis',
     improve:'improve',
