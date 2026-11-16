@@ -2487,6 +2487,33 @@
   .improve-metric.green .big{color:var(--green)}
   .transition-note{background:rgba(255,102,0,.08);border:1px solid rgba(255,102,0,.35);padding:10px 14px;font-size:11px;line-height:1.4;margin-top:8px}
   .transition-note strong{color:var(--orange)}
+  .control-building-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin:5px 0 9px}
+  .control-building-card{background:#fff;border:1px solid var(--border);border-top:4px solid var(--orange);padding:10px;min-height:142px}
+  .control-building-card.dc03{border-top-color:#16a34a}
+  .control-building-card.app{border-top-color:#2563eb}
+  .control-building-head{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:5px}
+  .control-building-head b{font-size:16px;color:#111827}
+  .control-building-head span{font-size:8px;color:#667085;text-transform:uppercase;font-weight:800;letter-spacing:.7px}
+  .control-building-status{font-size:8px;font-weight:900;color:var(--orange);letter-spacing:.6px;margin-bottom:7px}
+  .control-building-card.dc03 .control-building-status{color:#15803d}
+  .control-building-card.app .control-building-status{color:#1d4ed8}
+  .control-building-card ul{margin:0;padding-left:15px;color:#667085}
+  .control-building-card li{font-size:8.5px;line-height:1.32;margin:3px 0}
+  .control-common-wrap{background:#f8fafc;border:1px solid var(--border);padding:8px 10px;margin-bottom:9px}
+  .control-common-title{font-size:9px;font-weight:900;color:var(--orange);letter-spacing:1px;text-transform:uppercase;margin-bottom:7px}
+  .control-common-kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}
+  .control-common-kpi{background:#fff;border:1px solid var(--border);padding:7px;text-align:center}
+  .control-common-kpi b{display:block;font-size:15px;color:#111827;line-height:1}
+  .control-common-kpi span{display:block;font-size:7.5px;color:#667085;margin-top:4px;line-height:1.15}
+  .control-bottom-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:8px}
+  .control-bottom-card{background:#fff;border:1px solid var(--border);padding:9px 10px;min-height:78px}
+  .control-bottom-card h4{font-size:9px;text-transform:uppercase;color:var(--orange);letter-spacing:.7px;margin-bottom:5px}
+  .control-bottom-card p{font-size:8.5px;line-height:1.3;color:#667085}
+  .control-multibuilding-banner{margin-top:0;padding:9px 12px}
+  .control-multibuilding-banner b{font-size:10px}
+  .control-multibuilding-banner span{font-size:8px}
+  @media(max-width:1100px){.control-building-grid{grid-template-columns:1fr 1fr}.control-common-kpis{grid-template-columns:repeat(3,1fr)}.control-bottom-grid{grid-template-columns:1fr}}
+
   .control-now-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}
   .control-now-card{background:#fff;border:1px solid var(--border);padding:14px;min-height:116px}
   .control-now-card h4{font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--orange);margin-bottom:8px}
@@ -3189,31 +3216,31 @@
         "badge": "CONTROL",
         "status": "Fase en curso · Controlar",
         "title": "Control · Controlar",
-        "summary": "DC03 ya está entregado y en seguimiento; la app de contadores está implementada y controlada.",
-        "objective": "Verificar que la mejora implantada se mantiene estable y que el proceso reduce tiempo, errores e intervención manual.",
-        "focus": "Seguimiento de ejecución DC03, incidencias, first-time-right, intervención manual y cumplimiento del plazo.",
+        "summary": "Plan de control común para DC01, DC02, DC03 y App Contadores, adaptado al nivel de madurez de cada solución.",
+        "objective": "Estabilizar el proceso completo y asegurar que la mejora se mantiene en todos los edificios con métricas comunes y trazables.",
+        "focus": "Tiempo de dedicación, First Time Right, incidencias, intervención manual, mappings pendientes y cumplimiento del SLA por edificio/fase.",
         "deliverables": [
-            "DC03 entregado: seguimiento mensual de ejecución y estabilidad de la herramienta.",
-            "App de contadores: creada, implementada, en uso operativo y completamente controlada.",
-            "Control de errores: incidencias detectadas, correcciones aplicadas y trazabilidad de cambios.",
-            "Control de SLA: verificar que el proceso permite mantener la entrega dentro de los 5 días laborables."
+            "DC01: control por fases sobre mappings, generación de los cuatro Operation Books, avisos y correcciones.",
+            "DC02: validación y estabilización de la herramienta antes de entrar en seguimiento recurrente.",
+            "DC03: herramienta entregada utilizada como referencia de funcionamiento y control mensual.",
+            "App Contadores: captura operativa controlada como fuente estructurada para el reporting."
         ],
         "kpis": [
             [
+                "DC01",
+                "4 fases"
+            ],
+            [
+                "DC02",
+                "validación"
+            ],
+            [
                 "DC03",
-                "en control"
+                "control"
             ],
             [
                 "App",
-                "contadores OK"
-            ],
-            [
-                "FTR",
-                "first-time-right"
-            ],
-            [
-                "≤5d",
-                "SLA"
+                "operativa"
             ]
         ]
     }
@@ -3325,45 +3352,77 @@
       </div>
       <div class="improve-focus-strip">Esfuerzo actual de revisión: <b>34 h 30 min/mes</b>. No se considera todavía el estado final del proceso.</div>`,
     control: `
-      <div class="visual-title"><span>Control · Estabilización y medición</span><span>EN CURSO</span></div>
-      <div class="control-now-grid">
-        <div class="control-now-card">
-          <h4>Qué estamos controlando ahora</h4>
+      <div class="visual-title"><span>Control · Plan de control multiedificio</span><span>EN CURSO</span></div>
+
+      <div class="control-building-grid">
+        <div class="control-building-card dc01">
+          <div class="control-building-head"><b>DC01</b><span>4 fases</span></div>
+          <div class="control-building-status">EN DESARROLLO / VALIDACIÓN</div>
           <ul>
-            <li>Horas dedicadas a revisión y corrección.</li>
-            <li>Errores e incidencias por ejecución.</li>
-            <li>Mappings y ajustes pendientes por edificio/fase.</li>
-            <li>Intervenciones manuales y retrabajo.</li>
-            <li>First Time Right y cumplimiento del SLA ≤5 días.</li>
+            <li>Mappings por DC01.1–DC01.4</li>
+            <li>Generación correcta de los 4 OB</li>
+            <li>Avisos, errores y retrabajo</li>
           </ul>
         </div>
-        <div class="control-now-card">
-          <h4>Por qué la revisión ha aumentado</h4>
-          <p>La revisión pasa de <b>9,75 h</b> a <b>34,50 h/mes</b> porque noviembre incluye validación intensiva, detección de fallos y estabilización de DC01/DC02/DC03.</p>
-          <p style="margin-top:7px"><b>Estas 34,5 h no representan el proceso definitivo.</b></p>
-        </div>
-        <div class="control-now-card">
-          <h4>Resultado actual</h4>
-          <p><b>89 h 03 min → 37 h 50 min/mes</b></p>
-          <p>Reducción provisional: <b>57,5%</b>.</p>
-          <p style="margin-top:7px">Extracción: <b>−91,1%</b><br>Compilación OB: <b>−98,7%</b></p>
-        </div>
-        <div class="control-now-card">
-          <h4>Qué mediremos en steady-state</h4>
+        <div class="control-building-card dc02">
+          <div class="control-building-head"><b>DC02</b><span>1 OB · 2 fases</span></div>
+          <div class="control-building-status">VALIDACIÓN</div>
           <ul>
-            <li>Dedicación total mensual real.</li>
-            <li>Tiempo de revisión estabilizado.</li>
-            <li>First Time Right.</li>
-            <li>Incidencias y severidad.</li>
-            <li>Ahorro económico anual.</li>
+            <li>Inputs y señales BMS</li>
+            <li>Actualización de hojas y fórmulas</li>
+            <li>Estabilidad antes de operación recurrente</li>
+          </ul>
+        </div>
+        <div class="control-building-card dc03">
+          <div class="control-building-head"><b>DC03</b><span>referencia</span></div>
+          <div class="control-building-status">ENTREGADO · EN CONTROL</div>
+          <ul>
+            <li>Ejecución mensual recurrente</li>
+            <li>Incidencias y First Time Right</li>
+            <li>Tiempo real y cumplimiento de SLA</li>
+          </ul>
+        </div>
+        <div class="control-building-card app">
+          <div class="control-building-head"><b>APP CONTADORES</b><span>captura</span></div>
+          <div class="control-building-status">OPERATIVA · CONTROLADA</div>
+          <ul>
+            <li>Calidad y completitud del dato</li>
+            <li>Trazabilidad de registros</li>
+            <li>Uso operativo estable</li>
           </ul>
         </div>
       </div>
-      <div class="december-banner">
-        <div><b>Diciembre · primera medición estable</b><br><span>Primer ciclo completo tras cerrar errores y mappings de la fase de implantación.</span></div>
-        <div style="text-align:right"><b>Objetivo</b><br><span>Validar el ahorro definitivo y convertirlo a € / año.</span></div>
+
+      <div class="control-common-wrap">
+        <div class="control-common-title">KPIs comunes de control</div>
+        <div class="control-common-kpis">
+          <div class="control-common-kpi"><b>Tiempo</b><span>Dedicación mensual por edificio</span></div>
+          <div class="control-common-kpi"><b>FTR</b><span>Correcto a la primera</span></div>
+          <div class="control-common-kpi"><b>Incidencias</b><span>Número y severidad</span></div>
+          <div class="control-common-kpi"><b>Manual</b><span>Intervenciones y retrabajo</span></div>
+          <div class="control-common-kpi"><b>≤5 días</b><span>Cumplimiento SLA</span></div>
+        </div>
       </div>
-      <div class="control-status-strip" style="margin-top:10px">Estado actual: Improve y Control avanzan en paralelo. Noviembre = estabilización · Diciembre = medición del proceso steady-state.</div>`
+
+      <div class="control-bottom-grid">
+        <div class="control-bottom-card">
+          <h4>Trabajo actual de estabilización</h4>
+          <p>La revisión intensiva se concentra en cerrar errores, mappings y validaciones de <b>DC01 y DC02</b>, mientras DC03 aporta una referencia ya operativa.</p>
+        </div>
+        <div class="control-bottom-card">
+          <h4>Medición común en diciembre</h4>
+          <p>Compararemos los edificios con el mismo criterio: <b>tiempo total, revisión, FTR, incidencias, intervención manual y SLA</b>.</p>
+        </div>
+        <div class="control-bottom-card">
+          <h4>Resultado esperado</h4>
+          <p>Pasar de herramientas individuales en distintos niveles de madurez a un <b>proceso de reporting controlado y comparable entre edificios</b>.</p>
+        </div>
+      </div>
+
+      <div class="december-banner control-multibuilding-banner">
+        <div><b>Diciembre · primera foto conjunta</b><br><span>Medición estable de DC01, DC02, DC03 y captura de contadores bajo un mismo plan de control.</span></div>
+        <div style="text-align:right"><b>Siguiente objetivo</b><br><span>Validar ahorro definitivo por edificio y consolidado.</span></div>
+      </div>`
   };
 
   function setDmaicPhase(phaseKey) {
