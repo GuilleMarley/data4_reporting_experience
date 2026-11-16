@@ -119,6 +119,55 @@
 
   /* DMAIC */
   .dmaic-col { padding-right:26px; display:flex; flex-direction:column; gap:7px; }
+
+  .dmaic-qr-card {
+    flex:1;
+    min-height:0;
+    margin-top:10px;
+    background:#FFFFFF;
+    border:1px solid var(--border);
+    border-top:4px solid var(--orange);
+    border-radius:12px;
+    padding:14px 16px 12px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    box-shadow:0 10px 26px rgba(16,24,40,.06);
+    overflow:hidden;
+  }
+  .dmaic-qr-title {
+    color:var(--orange);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:1.3px;
+    text-transform:uppercase;
+    margin-bottom:8px;
+  }
+  .dmaic-qr-card img {
+    display:block;
+    width:min(92%,330px);
+    height:auto;
+    max-height:calc(100% - 68px);
+    object-fit:contain;
+    background:#fff;
+  }
+  .dmaic-qr-copy {
+    margin-top:7px;
+    color:#344054;
+    font-size:10px;
+    font-weight:700;
+    line-height:1.25;
+  }
+  .dmaic-qr-url {
+    margin-top:3px;
+    color:#98A2B3;
+    font-size:7.5px;
+    line-height:1.1;
+    word-break:break-all;
+  }
+
   .d-row {
     display:flex; align-items:flex-start; gap:12px;
     padding:9px 12px; border-radius:3px;
@@ -2509,48 +2558,6 @@
   .live-status b{color:#111827}
   .live-url{font-size:9px;word-break:break-all;color:#667085;margin-top:7px}
 
-  .audience-qr-slot{
-    position:fixed;
-    left:18px;
-    bottom:112px;
-    z-index:9996;
-    width:118px;
-    height:132px;
-    background:rgba(255,255,255,.96);
-    border:1px dashed #98A2B3;
-    border-radius:14px;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    gap:6px;
-    color:#667085;
-    box-shadow:0 8px 22px rgba(16,24,40,.10);
-    backdrop-filter:blur(8px);
-  }
-  .audience-qr-slot .qr-box{
-    width:82px;
-    height:82px;
-    border:2px dashed #D0D5DD;
-    border-radius:8px;
-    background:#F8FAFC;
-  }
-  .audience-qr-slot b{
-    font-size:9px;
-    color:#111827;
-    letter-spacing:.8px;
-    text-transform:uppercase;
-  }
-  .audience-qr-slot span{
-    font-size:7.5px;
-    text-align:center;
-    line-height:1.15;
-    padding:0 6px;
-  }
-  @media(max-width:900px){
-    .audience-qr-slot{display:none}
-    .live-panel{left:18px;width:min(360px,calc(100vw - 36px))}
-  }
 
 
 
@@ -2670,6 +2677,13 @@
           <div class="d-name">Control</div>
           <div class="d-desc">DC03 entregado · control y seguimiento.</div>
         </div>
+      </div>
+
+      <div class="dmaic-qr-card">
+        <div class="dmaic-qr-title">Participa desde tu móvil</div>
+        <img src="audience_qr.svg" alt="QR para acceder a la experiencia de audiencia">
+        <div class="dmaic-qr-copy">Escanea el código para abrir la experiencia de audiencia</div>
+        <div class="dmaic-qr-url">guillemarley.github.io/data4_reporting_experience/audience.html</div>
       </div>
     </div>
 
@@ -3629,12 +3643,6 @@
     }catch(e){ console.error(e); }
   });
 </script>
-
-<div class="audience-qr-slot" id="audienceQrSlot" aria-label="Espacio reservado para QR de audiencia">
-  <div class="qr-box"></div>
-  <b>QR audiencia</b>
-  <span>Acceso a audience.html</span>
-</div>
 
 <button id="liveLauncher" class="live-launcher" type="button" onclick="toggleLivePanel()">LIVE</button>
 <div id="livePanel" class="live-panel" aria-live="polite">
