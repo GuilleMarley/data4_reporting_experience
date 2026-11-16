@@ -2925,6 +2925,46 @@
 .meter-notes-activate{border:1px solid #ff9f5c;background:#ff6600;color:#fff;border-radius:9px;padding:12px 17px;font-family:inherit;font-size:13px;font-weight:900;letter-spacing:.01em;cursor:pointer;white-space:nowrap;box-shadow:0 5px 15px rgba(255,102,0,.18)}
 .meter-notes-activate:hover{background:#e65c00}.meter-notes-activate:focus-visible{outline:3px solid #ffae70;outline-offset:3px}
 @media(max-width:780px){.meter-notes-activate{width:100%;white-space:normal}.meter-notes-slide .meter-story-instruction{flex-wrap:wrap}}
+
+/* BMS simulation slide: illustrative signals and operation-book workflow */
+.meter-bms-slide{background:#F3F6FA;color:#152438}
+.meter-bms-content{display:flex;flex-direction:column;flex:1;min-height:0;padding:clamp(10px,1.7vh,26px) clamp(22px,4vw,78px) 27px;gap:11px}
+.meter-bms-content h2{font-size:clamp(28px,3.4vw,55px);line-height:1.1;letter-spacing:-.045em;margin:0;color:#13253E}
+.meter-bms-content h2 em{color:#FF6600;font-style:normal}
+.meter-bms-content>p{font-size:clamp(12px,1.1vw,17px);color:#627184;margin:0 0 3px;line-height:1.35}
+.meter-bms-dashboard{background:#111F32;color:#D5E5F5;border:1px solid #223953;border-radius:13px;overflow:hidden;flex:1;min-height:220px;display:flex;flex-direction:column;box-shadow:0 16px 35px rgba(16,29,46,.16)}
+.meter-bms-top{height:43px;padding:12px 15px;background:#091627;display:flex;align-items:center;gap:15px;font-size:12px;letter-spacing:.06em}
+.meter-bms-dots{color:#FF6600;letter-spacing:4px}
+.meter-bms-online{font-size:9px;margin-left:auto;color:#53D891;font-weight:800}
+.meter-bms-main{display:grid;grid-template-columns:minmax(190px,.8fr) minmax(250px,1.8fr) minmax(150px,.7fr);min-height:0;flex:1}
+.meter-bms-tree,.meter-bms-signals,.meter-bms-side{padding:13px;min-width:0}
+.meter-bms-tree{background:#142840;border-right:1px solid #2A415C;overflow:hidden}
+.meter-bms-title{font-size:10px;color:#9EBAD5;font-weight:900;letter-spacing:.12em;border-bottom:1px solid #34445E;margin-bottom:10px;padding-bottom:11px;display:flex;justify-content:space-between;gap:5px}
+.meter-bms-title span{color:#FF9B5C;font-size:9px}
+.meter-bms-tree>div:not(.meter-bms-title){font-size:10px;font-weight:800;color:#C6D7EB;padding:8px 6px;border-bottom:1px solid #2D3E57}
+.meter-bms-tree .meter-bms-treechild{padding-left:18px!important;font-weight:600!important;color:#C6D7EB!important}
+.meter-bms-tree .indent{padding-left:32px!important;color:#93ABC6!important;font-size:9px!important}
+.meter-bms-tablehead,.meter-bms-signal{display:grid;grid-template-columns:1.7fr .6fr .48fr;align-items:center;gap:12px}
+.meter-bms-tablehead{font-weight:900;color:#91AAC5;font-size:9px;letter-spacing:.08em;padding:6px 10px 11px}
+.meter-bms-signal{font-size:11px;min-height:33px;padding:6px 10px;border-bottom:1px solid #31455E;color:#D8E4F4}
+.meter-bms-signal:nth-child(2n){background:#172B45}
+.meter-bms-signal b{color:#7FF5B0;text-align:right;white-space:nowrap}
+.meter-bms-signal i{font-style:normal;color:#AABCD4;text-align:right}
+.meter-bms-side{background:#142840;border-left:1px solid #2A415C;display:flex;flex-direction:column;justify-content:space-evenly;gap:8px}
+.meter-bms-kpi{padding:10px;background:#1C354F;border:1px solid #36516D;border-radius:8px}
+.meter-bms-kpi small{font-size:9px;color:#AAC2DB;letter-spacing:.09em}
+.meter-bms-kpi>b{display:block;color:#F3F8FF;font-size:26px;margin:5px 0}
+.meter-bms-kpi>b span{font-size:12px;color:#91AAC8;margin-left:3px}
+.meter-bms-bar{height:6px;background:#344960;border-radius:10px;overflow:hidden}
+.meter-bms-bar span{height:100%;display:block;background:#FF6600;border-radius:10px}
+.meter-bms-cta{display:flex;align-items:center;justify-content:space-between;gap:16px;background:#fff;border:1px solid #D5DDE6;border-left:5px solid #FF6600;border-radius:10px;padding:13px 16px}
+.meter-bms-cta>div{max-width:70%;min-width:0}
+.meter-bms-cta b{color:#152942;display:block;font-size:12px;letter-spacing:.07em}
+.meter-bms-cta span{color:#647488;font-size:11px;line-height:1.3;display:block;margin-top:5px}
+.meter-bms-start{background:#FF6600;color:white;border:0;border-radius:8px;padding:13px 15px;font-size:11px;font-family:inherit;font-weight:900;cursor:pointer;text-align:center;box-shadow:0 6px 18px rgba(255,102,0,.23)}
+.meter-bms-start:hover{background:#DE5900}
+@media(max-width:800px){.meter-bms-main{grid-template-columns:160px 1fr}.meter-bms-side{display:none}.meter-bms-content{gap:7px}.meter-bms-content h2{font-size:26px}.meter-bms-cta{flex-wrap:wrap}.meter-bms-cta>div{max-width:100%}.meter-bms-start{width:100%}.meter-bms-signal{font-size:9px}}
+@media(max-height:670px){.meter-bms-content{padding:8px 20px 17px}.meter-bms-main{max-height:360px}.meter-bms-tree>div:not(.meter-bms-title){padding:5px 4px}}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -2934,21 +2974,22 @@
 <body>
 
 <nav class="nav-dots" id="navDots">
-<div class="nav-dot active" onclick="goTo(0)" title="Inicio"></div>
-<div class="nav-dot" onclick="goTo(1)" title="Define"></div>
-<div class="nav-dot" onclick="goTo(2)" title="Measure"></div>
-<div class="nav-dot" onclick="goTo(3)" title="AS IS · Flujo"></div>
-<div class="nav-dot" onclick="goTo(4)" title="Contadores · Escritura"></div>
-<div class="nav-dot" onclick="goTo(5)" title="Apuntes · Excel"></div>
-<div class="nav-dot" onclick="goTo(6)" title="Analyze"></div>
-<div class="nav-dot" onclick="goTo(7)" title="Improve"></div>
-<div class="nav-dot" onclick="goTo(8)" title="App Contadores"></div>
-<div class="nav-dot" onclick="goTo(9)" title="TO BE"></div>
-<div class="nav-dot" onclick="goTo(10)" title="DC01"></div>
-<div class="nav-dot" onclick="goTo(11)" title="DC03 / DC02"></div>
-<div class="nav-dot" onclick="goTo(12)" title="Resultados"></div>
-<div class="nav-dot" onclick="goTo(13)" title="Control"></div>
-<div class="nav-dot" onclick="goTo(14)" title="Preguntas"></div>
+  <div class="nav-dot active" onclick="goTo(0)" title="Inicio"></div>
+  <div class="nav-dot" onclick="goTo(1)" title="Define"></div>
+  <div class="nav-dot" onclick="goTo(2)" title="Measure"></div>
+  <div class="nav-dot" onclick="goTo(3)" title="Analyze"></div>
+  <div class="nav-dot" onclick="goTo(4)" title="AS IS · Flujo"></div>
+  <div class="nav-dot" onclick="goTo(5)" title="Contadores · Escritura"></div>
+  <div class="nav-dot" onclick="goTo(6)" title="Apuntes manuscritos"></div>
+  <div class="nav-dot" onclick="goTo(7)" title="BMS · Operation Book"></div>
+  <div class="nav-dot" onclick="goTo(8)" title="Improve"></div>
+  <div class="nav-dot" onclick="goTo(9)" title="App Contadores"></div>
+  <div class="nav-dot" onclick="goTo(10)" title="TO BE"></div>
+  <div class="nav-dot" onclick="goTo(11)" title="DC01"></div>
+  <div class="nav-dot" onclick="goTo(12)" title="DC03 / DC02"></div>
+  <div class="nav-dot" onclick="goTo(13)" title="Resultados"></div>
+  <div class="nav-dot" onclick="goTo(14)" title="Control"></div>
+  <div class="nav-dot" onclick="goTo(15)" title="Preguntas"></div>
 </nav>
 
 <!-- ══════════════════════════════════════════════
@@ -2957,7 +2998,7 @@
 <section class="slide hero-new hero-opening" id="slide-intro">
   <div class="hero-deco"></div><div class="hero-head"><b>DATA<span>4</span> <i>×</i> SERVEO</b><small>LEAN SIX SIGMA · GREEN BELT</small></div>
   <main class="hero-main"><div class="hero-eyebrow">PROYECTO DE MEJORA OPERATIVA</div><h1>MENOS TIEMPO<br><em>REPORTANDO.</em><br>MÁS TIEMPO<br>APORTANDO.</h1><p>Digitalización y automatización del reporting operativo mensual de los centros de datos Data4.</p><div class="hero-tags"><span>DC01</span><span>DC02</span><span>DC03</span><span>APP CONTADORES</span></div></main>
-  <footer class="hero-foot"><span>DE LA CAPTURA MANUAL AL OPERATION BOOK AUTOMATIZADO</span><span>01 / 13</span></footer>
+  <footer class="hero-foot"><span>DE LA CAPTURA MANUAL AL OPERATION BOOK AUTOMATIZADO</span><span>01 / 16</span></footer>
 </section>
 <section class="slide dmaic-snapshot-slide" id="slide-0" data-dmaic-phase="define">
   <header class="slide-header">
@@ -3063,7 +3104,7 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">02 / 13</span>
+  <span class="slide-num">02 / 16</span>
 </section>
 
 <section class="slide dmaic-snapshot-slide" id="slide-1" data-dmaic-phase="measure">
@@ -3150,7 +3191,96 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">03 / 13</span>
+  <span class="slide-num">03 / 16</span>
+</section>
+
+<section class="slide dmaic-snapshot-slide" id="slide-3" data-dmaic-phase="analyze">
+  <header class="slide-header">
+    <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">Reducir el tiempo de Reporting Operativo Data4</span></div>
+    <div class="hdr-badge">ANALYZE</div>
+  </header>
+  <div class="s1-body">
+    <div class="dmaic-col dmaic-progress" aria-label="Progreso DMAIC"><div class="d-row dmaic-progress-row done">
+      <div class="d-letter">D</div>
+      <div class="d-info">
+        <div class="d-name">Define</div>
+        <div class="d-desc">Definir proyecto · SIPOC · alcance.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row done">
+      <div class="d-letter">M</div>
+      <div class="d-info">
+        <div class="d-name">Measure</div>
+        <div class="d-desc">Medir tiempos · personas · hojas · informes.</div>
+      </div>
+      <span class="dmaic-progress-mark">✓</span>
+    </div>
+<div class="d-row dmaic-progress-row active">
+      <div class="d-letter">A</div>
+      <div class="d-info">
+        <div class="d-name">Analyze</div>
+        <div class="d-desc">Analizar métricas · Ishikawa.</div>
+      </div>
+      <span class="dmaic-progress-mark current">ACTUAL</span>
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">I</div>
+      <div class="d-info">
+        <div class="d-name">Improve</div>
+        <div class="d-desc">TO BE · alcance de la mejora.</div>
+      </div>
+      
+    </div>
+<div class="d-row dmaic-progress-row future">
+      <div class="d-letter">C</div>
+      <div class="d-info">
+        <div class="d-name">Control</div>
+        <div class="d-desc">Plan de control multiedificio.</div>
+      </div>
+      
+    </div><div class="dmaic-qr-card">
+      <div class="dmaic-qr-title">Participa desde tu móvil</div>
+      <img src="audience_qr.svg" alt="QR para acceder a la experiencia de audiencia">
+      <div class="dmaic-qr-copy">Escanea el código para abrir la experiencia de audiencia</div>
+      <div class="dmaic-qr-url">guillemarley.github.io/data4_reporting_experience/audience.html</div>
+    </div>
+  </div>
+  <div class="vdivider"></div>
+    <div class="right-col dmaic-panel">
+    <div class="phase-hero">
+      <div class="phase-letter-big">A</div>
+      <div class="phase-hero-copy">
+        <div class="phase-eyebrow">Fase completada · Analizar</div>
+        <div class="phase-title">Analyze · Analizar</div>
+        <div class="phase-summary">Causas raíz del exceso de tiempo: manualidad, heterogeneidad de fuentes, mappings y retrabajo.</div>
+      </div>
+    </div>
+    <div class="phase-grid">
+      <div class="phase-card"><div class="phase-card-label">Objetivo</div><p>Explicar por qué el proceso supera las 80 h y qué causas debe atacar la herramienta.</p></div>
+      <div class="phase-card"><div class="phase-card-label">Foco operativo</div><p>Ishikawa actualizado: método, sistemas/fuentes, datos, mappings, personas, medición y SLA.</p></div>
+    </div>
+    <div class="phase-card phase-full">
+      <div class="phase-card-label">Datos de fase</div>
+      <ul class="phase-list"><li>Causa método: secuencia manual, copiar/pegar, revisión visual y recarga si hay errores.</li><li>Causa datos: exportaciones, PDFs, capturas/lecturas y estructuras de Excel heterogéneas.</li><li>Causa estandarización: cada edificio/fase requiere mappings específicos de señales, hojas y celdas.</li><li>Causa control: errores detectados tarde y poca trazabilidad automática antes de la herramienta.</li></ul>
+    </div>
+    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">Rework</div><div class="phase-kpi-lbl">bucle de error</div></div><div class="phase-kpi"><div class="phase-kpi-val">40+</div><div class="phase-kpi-lbl">hojas Excel</div></div><div class="phase-kpi"><div class="phase-kpi-val">3</div><div class="phase-kpi-lbl">edificios</div></div><div class="phase-kpi"><div class="phase-kpi-val">4</div><div class="phase-kpi-lbl">fases DC01</div></div></div>
+    <div class="phase-visual">
+      <div class="visual-title"><span>Analyze · Ishikawa</span><span>Causas raíz</span></div>
+      <div class="fishbone">
+        <div class="fishbone-line"></div>
+        <div class="fishbone-head">Tiempo de reporting &gt;80h</div>
+        <div class="bone top b1"><h4>Método</h4><p>Secuencia manual, copiar/pegar, revisión visual y recarga si hay errores.</p></div>
+        <div class="bone top b2"><h4>Fuentes</h4><p>BMS, Iberdrola, lecturas y plantillas sin flujo automatizado único.</p></div>
+        <div class="bone top b5"><h4>Personas</h4><p>Dependencia de perfiles expertos durante los primeros días del mes.</p></div>
+        <div class="bone bottom b3"><h4>Datos</h4><p>Exportaciones, PDFs, Excels y formatos distintos por edificio.</p></div>
+        <div class="bone bottom b4"><h4>Mappings</h4><p>DC01, DC02 y DC03 requieren señales, hojas y celdas específicas.</p></div>
+        <div class="bone bottom b6"><h4>Control</h4><p>Errores detectados tarde; retrabajo y poca trazabilidad automática.</p></div>
+      </div></div>
+  </div>
+  </div>
+  <div class="slide-footer"></div>
+  <span class="slide-num">04 / 16</span>
 </section>
 
 <section class="slide" id="slide-2">
@@ -3159,7 +3289,7 @@
       <div class="hdr-bar"></div>
       <span class="hdr-title">AS IS — Proceso Actual (Manual)</span>
     </div>
-    <div class="hdr-badge">MEASURE</div>
+    <div class="hdr-badge">MEASURE · AS IS</div>
   </header>
 <div class="s3-body">
     <div class="asis-wrap">
@@ -3337,7 +3467,7 @@
   </div>
 
   <div class="slide-footer"></div>
-  <span class="slide-num">04 / 13</span>
+  <span class="slide-num">05 / 16</span>
 </section>
 
 <section class="slide meter-story-slide" id="slide-asis-meters">
@@ -3353,7 +3483,7 @@
     </div>
     <div class="meter-story-instruction"><b>ACTIVIDAD EN EL MÓVIL</b><span>Escribe las tres lecturas con el dedo. No pases todavía al Excel.</span><strong>01 / 02</strong></div>
   </div>
-  <div class="slide-footer"></div><span class="slide-num">05 / 15</span>
+  <div class="slide-footer"></div><span class="slide-num">06 / 16</span>
 </section>
 
 <section class="slide meter-story-slide meter-notes-slide" id="slide-asis-notes">
@@ -3361,101 +3491,66 @@
   <div class="meter-story-body">
     <div class="meter-story-kicker">SEGUNDO PASO · DOBLE REGISTRO</div>
     <h2>Y después, <em>volver a escribirlo.</em></h2>
-    <p>Una vez recogidas en papel, las anotaciones manuales tenían que pasarse de nuevo a una hoja Excel. <b>Repite la operación en tu móvil</b>, ahora usando el teclado.</p>
+    <p>Una vez recogidas en papel, las anotaciones manuales tenían que pasarse de nuevo a una hoja Excel. <b>En la siguiente pantalla</b> los participantes transcribirán estos valores al Excel con el teclado.</p>
     <div class="meter-notes-illustration"><img src="assets/lecturas_manuscritas.svg" alt="Tres anotaciones manuscritas aportadas como ejemplo de toma de lecturas de los contadores de agua"></div>
-    <div class="meter-story-instruction"><b>ACTIVIDAD EN EL MÓVIL</b><span>Enseña primero estos apuntes difíciles de leer. Cuando indiques que comiencen, activa el Excel en los móviles.</span><button class="meter-notes-activate" type="button" onclick="setAudiencePhase('results')" title="Enviar la tabla Excel a los móviles de los participantes">Mostrar Excel en móviles</button></div>
+    <div class="meter-story-instruction"><b>ACTIVIDAD EN EL MÓVIL</b><span>Muestra estos apuntes difíciles de leer. Al avanzar a la siguiente diapositiva aparecerá el Excel en los móviles.</span></div>
     <div class="meter-notes-footnote">Ejemplo visual de anotaciones manuscritas · no corresponde a una captura en tiempo real del BMS.</div>
   </div>
-  <div class="slide-footer"></div><span class="slide-num">06 / 15</span>
+  <div class="slide-footer"></div><span class="slide-num">07 / 16</span>
 </section>
 
-<section class="slide dmaic-snapshot-slide" id="slide-3" data-dmaic-phase="analyze">
+<section class="slide meter-story-slide meter-bms-slide" id="slide-asis-bms">
   <header class="slide-header">
-    <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">Reducir el tiempo de Reporting Operativo Data4</span></div>
-    <div class="hdr-badge">ANALYZE</div>
+    <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — DEL BMS AL OPERATION BOOK</span></div>
+    <div class="hdr-badge">MEASURE · AS IS</div>
   </header>
-  <div class="s1-body">
-    <div class="dmaic-col dmaic-progress" aria-label="Progreso DMAIC"><div class="d-row dmaic-progress-row done">
-      <div class="d-letter">D</div>
-      <div class="d-info">
-        <div class="d-name">Define</div>
-        <div class="d-desc">Definir proyecto · SIPOC · alcance.</div>
+  <div class="meter-bms-content">
+    <div class="meter-story-kicker">TERCER PASO · BÚSQUEDA Y TRANSCRIPCIÓN MANUAL</div>
+    <h2>El dato estaba ahí. <em>Había que buscarlo.</em></h2>
+    <p>Tras apuntar los contadores, el equipo consultaba las señales del BMS una a una y las trasladaba al Operation Book. Aquí empieza el trabajo repetitivo de localización, copia y validación.</p>
+    <div class="meter-bms-dashboard">
+      <div class="meter-bms-top"><span class="meter-bms-dots">● ● ●</span><strong>BMS · BUILDING MANAGEMENT SYSTEM</strong><span class="meter-bms-online">● MONITORIZACIÓN EN DIRECTO · SIMULADA</span></div>
+      <div class="meter-bms-main">
+        <div class="meter-bms-tree">
+          <div class="meter-bms-title">ÁRBOL DE EQUIPOS <span>DC01</span></div>
+          <div>▾ &nbsp; ENERGÍA</div>
+          <div class="meter-bms-treechild">▾ &nbsp; UPS</div>
+          <div class="meter-bms-treechild indent">UPS A · INPUT / OUTPUT</div>
+          <div class="meter-bms-treechild indent">UPS B · BYPASS</div>
+          <div class="meter-bms-treechild indent">UPS C · LOAD</div>
+          <div class="meter-bms-treechild">▾ &nbsp; CONTADORES</div>
+          <div class="meter-bms-treechild indent">ENERGÍA ACTIVA · kWh</div>
+          <div class="meter-bms-treechild indent">AGUA · m³</div>
+          <div>▾ &nbsp; CLIMATIZACIÓN</div>
+          <div class="meter-bms-treechild">▾ &nbsp; SALAS DATA HALL</div>
+          <div class="meter-bms-treechild indent">TEMPERATURA · °C</div>
+          <div class="meter-bms-treechild indent">HUMEDAD · %HR</div>
+        </div>
+        <div class="meter-bms-signals">
+          <div class="meter-bms-title">SEÑALES DISPONIBLES <span>DATOS DE EJEMPLO</span></div>
+          <div class="meter-bms-tablehead"><span>ETIQUETA / PUNTO</span><span>VALOR</span><span>UNIDAD</span></div>
+          <div class="meter-bms-signal"><span>UPS A1 · INPUT VOLTAGE</span><b>400,2</b><i>V</i></div>
+          <div class="meter-bms-signal"><span>UPS B1 · OUTPUT ACTIVE POWER</span><b>154,8</b><i>kW</i></div>
+          <div class="meter-bms-signal"><span>UPS C1 · LOAD</span><b>67,4</b><i>%</i></div>
+          <div class="meter-bms-signal"><span>INTERRUPTOR TRA1 · ESTADO</span><b>CERRADO</b><i>estado</i></div>
+          <div class="meter-bms-signal"><span>ENERGY METER 01 · ACTIVE</span><b>1.381.052</b><i>kWh</i></div>
+          <div class="meter-bms-signal"><span>WATER METER 03 · READING</span><b>7.954</b><i>m³</i></div>
+          <div class="meter-bms-signal"><span>DC01.1 · ROOM TEMP 03</span><b>22,8</b><i>°C</i></div>
+          <div class="meter-bms-signal"><span>DC01.1 · REL HUM 05</span><b>47,2</b><i>%HR</i></div>
+        </div>
+        <div class="meter-bms-side">
+          <div class="meter-bms-kpi"><small>ENERGÍA · SAI</small><b>67,4<span>%</span></b><div class="meter-bms-bar"><span style="width:67.4%"></span></div></div>
+          <div class="meter-bms-kpi"><small>TEMPERATURA</small><b>22,8<span>°C</span></b><div class="meter-bms-bar"><span style="width:57%"></span></div></div>
+          <div class="meter-bms-kpi"><small>HUMEDAD</small><b>47,2<span>%</span></b><div class="meter-bms-bar"><span style="width:47.2%"></span></div></div>
+        </div>
       </div>
-      <span class="dmaic-progress-mark">✓</span>
     </div>
-<div class="d-row dmaic-progress-row done">
-      <div class="d-letter">M</div>
-      <div class="d-info">
-        <div class="d-name">Measure</div>
-        <div class="d-desc">Medir tiempos · personas · hojas · informes.</div>
-      </div>
-      <span class="dmaic-progress-mark">✓</span>
-    </div>
-<div class="d-row dmaic-progress-row active">
-      <div class="d-letter">A</div>
-      <div class="d-info">
-        <div class="d-name">Analyze</div>
-        <div class="d-desc">Analizar métricas · Ishikawa.</div>
-      </div>
-      <span class="dmaic-progress-mark current">ACTUAL</span>
-    </div>
-<div class="d-row dmaic-progress-row future">
-      <div class="d-letter">I</div>
-      <div class="d-info">
-        <div class="d-name">Improve</div>
-        <div class="d-desc">TO BE · alcance de la mejora.</div>
-      </div>
-      
-    </div>
-<div class="d-row dmaic-progress-row future">
-      <div class="d-letter">C</div>
-      <div class="d-info">
-        <div class="d-name">Control</div>
-        <div class="d-desc">Plan de control multiedificio.</div>
-      </div>
-      
-    </div><div class="dmaic-qr-card">
-      <div class="dmaic-qr-title">Participa desde tu móvil</div>
-      <img src="audience_qr.svg" alt="QR para acceder a la experiencia de audiencia">
-      <div class="dmaic-qr-copy">Escanea el código para abrir la experiencia de audiencia</div>
-      <div class="dmaic-qr-url">guillemarley.github.io/data4_reporting_experience/audience.html</div>
+    <div class="meter-bms-cta">
+      <div><b>DEL BMS AL EXCEL: EL TRABAJO QUE NO SE VE</b><span>Al llegar a esta diapositiva, los móviles muestran el Excel de las lecturas manuscritas. Cuando terminen, activa el siguiente ejercicio para rellenar un Operation Book con cientos de señales.</span></div>
+      <button type="button" class="meter-bms-start" onclick="setAudiencePhase('improve')">ACTIVAR OPERATION BOOK INFINITO EN MÓVILES</button>
     </div>
   </div>
-  <div class="vdivider"></div>
-    <div class="right-col dmaic-panel">
-    <div class="phase-hero">
-      <div class="phase-letter-big">A</div>
-      <div class="phase-hero-copy">
-        <div class="phase-eyebrow">Fase completada · Analizar</div>
-        <div class="phase-title">Analyze · Analizar</div>
-        <div class="phase-summary">Causas raíz del exceso de tiempo: manualidad, heterogeneidad de fuentes, mappings y retrabajo.</div>
-      </div>
-    </div>
-    <div class="phase-grid">
-      <div class="phase-card"><div class="phase-card-label">Objetivo</div><p>Explicar por qué el proceso supera las 80 h y qué causas debe atacar la herramienta.</p></div>
-      <div class="phase-card"><div class="phase-card-label">Foco operativo</div><p>Ishikawa actualizado: método, sistemas/fuentes, datos, mappings, personas, medición y SLA.</p></div>
-    </div>
-    <div class="phase-card phase-full">
-      <div class="phase-card-label">Datos de fase</div>
-      <ul class="phase-list"><li>Causa método: secuencia manual, copiar/pegar, revisión visual y recarga si hay errores.</li><li>Causa datos: exportaciones, PDFs, capturas/lecturas y estructuras de Excel heterogéneas.</li><li>Causa estandarización: cada edificio/fase requiere mappings específicos de señales, hojas y celdas.</li><li>Causa control: errores detectados tarde y poca trazabilidad automática antes de la herramienta.</li></ul>
-    </div>
-    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">Rework</div><div class="phase-kpi-lbl">bucle de error</div></div><div class="phase-kpi"><div class="phase-kpi-val">40+</div><div class="phase-kpi-lbl">hojas Excel</div></div><div class="phase-kpi"><div class="phase-kpi-val">3</div><div class="phase-kpi-lbl">edificios</div></div><div class="phase-kpi"><div class="phase-kpi-val">4</div><div class="phase-kpi-lbl">fases DC01</div></div></div>
-    <div class="phase-visual">
-      <div class="visual-title"><span>Analyze · Ishikawa</span><span>Causas raíz</span></div>
-      <div class="fishbone">
-        <div class="fishbone-line"></div>
-        <div class="fishbone-head">Tiempo de reporting &gt;80h</div>
-        <div class="bone top b1"><h4>Método</h4><p>Secuencia manual, copiar/pegar, revisión visual y recarga si hay errores.</p></div>
-        <div class="bone top b2"><h4>Fuentes</h4><p>BMS, Iberdrola, lecturas y plantillas sin flujo automatizado único.</p></div>
-        <div class="bone top b5"><h4>Personas</h4><p>Dependencia de perfiles expertos durante los primeros días del mes.</p></div>
-        <div class="bone bottom b3"><h4>Datos</h4><p>Exportaciones, PDFs, Excels y formatos distintos por edificio.</p></div>
-        <div class="bone bottom b4"><h4>Mappings</h4><p>DC01, DC02 y DC03 requieren señales, hojas y celdas específicas.</p></div>
-        <div class="bone bottom b6"><h4>Control</h4><p>Errores detectados tarde; retrabajo y poca trazabilidad automática.</p></div>
-      </div></div>
-  </div>
-  </div>
-  <div class="slide-footer"></div>
-  <span class="slide-num">07 / 15</span>
+  <div class="slide-footer"></div><span class="slide-num">08 / 16</span>
 </section>
 
 <section class="slide dmaic-snapshot-slide" id="slide-4" data-dmaic-phase="improve">
@@ -3575,7 +3670,7 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">08 / 15</span>
+  <span class="slide-num">09 / 16</span>
 </section>
 
 <section class="slide counter-app-slide" id="slide-5">
@@ -3676,7 +3771,7 @@
   </div>
 
   <div class="slide-footer"></div>
-  <span class="slide-num">09 / 15</span>
+  <span class="slide-num">10 / 16</span>
 </section>
 
 <section class="slide" id="slide-6">
@@ -3688,7 +3783,7 @@
     <div class="hdr-badge">IMPROVE</div>
   </header>
 
-  <button class="return-dmaic-btn" type="button" onclick="goTo(7)">← Volver a Improve</button>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(8)">← Volver a Improve</button>
 
   <div class="tobe-v2-body">
     <div class="tobe-v2-title">TO BE — Automatización real del Operation Book mensual</div>
@@ -3730,9 +3825,9 @@
     </div>
 
     <div class="app-tabs">
-      <button class="app-tab-btn" onclick="goTo(10)">Ver DC01</button>
-      <button class="app-tab-btn" onclick="goTo(11)">Ver DC03 / DC02</button>
-      <button class="app-tab-btn" onclick="goTo(8)">Ver App contadores</button>
+      <button class="app-tab-btn" onclick="goTo(11)">Ver DC01</button>
+      <button class="app-tab-btn" onclick="goTo(12)">Ver DC03 / DC02</button>
+      <button class="app-tab-btn" onclick="goTo(9)">Ver App contadores</button>
     </div>
 
     <div class="tobe-benefits">
@@ -3744,7 +3839,7 @@
   </div>
 
   <div class="slide-footer"></div>
-  <span class="slide-num">10 / 15</span>
+  <span class="slide-num">11 / 16</span>
 </section>
 
 <section class="slide" id="slide-7">
@@ -3752,18 +3847,18 @@
     <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">DEMO — Herramienta Operation Book DC01</span></div>
     <div class="hdr-badge">IMPROVE</div>
   </header>
-  <button class="return-dmaic-btn" type="button" onclick="goTo(10)">← Volver a Improve</button>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(8)">← Volver a Improve</button>
   <div class="tool-slide-body">
     <div class="tool-tabs">
-      <button class="tool-tab active" onclick="goTo(10)">DC01</button>
-      <button class="tool-tab" onclick="goTo(11)">DC03 / DC02</button>
-      <button class="tool-tab" onclick="goTo(8)">App contadores</button>
-      <button class="tool-tab" onclick="goTo(9)">TO BE</button>
+      <button class="tool-tab active" onclick="goTo(11)">DC01</button>
+      <button class="tool-tab" onclick="goTo(12)">DC03 / DC02</button>
+      <button class="tool-tab" onclick="goTo(9)">App contadores</button>
+      <button class="tool-tab" onclick="goTo(10)">TO BE</button>
     </div>
     <div class="tool-frame-wrap"><iframe class="tool-frame" src="tool_dc01_demo.html" title="Herramienta DC01"></iframe></div>
     <div class="tool-note">DC01: una única herramienta para las cuatro fases (DC01.1, DC01.2, DC01.3 y DC01.4), con inputs BMS/Data Export + Iberdrola y Operation Book del mes anterior.</div>
   </div>
-  <div class="slide-footer"></div><span class="slide-num">11 / 15</span>
+  <div class="slide-footer"></div><span class="slide-num">12 / 16</span>
 </section>
 
 <section class="slide" id="slide-8">
@@ -3771,18 +3866,18 @@
     <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">DEMO — Herramienta Operation Book DC03 / referencia DC02</span></div>
     <div class="hdr-badge">IMPROVE</div>
   </header>
-  <button class="return-dmaic-btn" type="button" onclick="goTo(10)">← Volver a Improve</button>
+  <button class="return-dmaic-btn" type="button" onclick="goTo(8)">← Volver a Improve</button>
   <div class="tool-slide-body">
     <div class="tool-tabs">
-      <button class="tool-tab" onclick="goTo(10)">DC01</button>
-      <button class="tool-tab active" onclick="goTo(11)">DC03 / DC02</button>
-      <button class="tool-tab" onclick="goTo(8)">App contadores</button>
-      <button class="tool-tab" onclick="goTo(9)">TO BE</button>
+      <button class="tool-tab" onclick="goTo(11)">DC01</button>
+      <button class="tool-tab active" onclick="goTo(12)">DC03 / DC02</button>
+      <button class="tool-tab" onclick="goTo(9)">App contadores</button>
+      <button class="tool-tab" onclick="goTo(10)">TO BE</button>
     </div>
     <div class="tool-frame-wrap"><iframe class="tool-frame" src="tool_dc03_demo.html" title="Herramienta DC03"></iframe></div>
     <div class="tool-note">DC03 está entregado y en control. DC02 usa el mismo concepto de front y arquitectura, adaptado a su mapping. Resultado actual DC03: ~20 h → 30 min.</div>
   </div>
-  <div class="slide-footer"></div><span class="slide-num">12 / 15</span>
+  <div class="slide-footer"></div><span class="slide-num">13 / 16</span>
 </section>
 
 <section class="slide" id="slide-9">
@@ -3853,7 +3948,7 @@
   </div>
 
   <div class="slide-footer"></div>
-  <span class="slide-num">13 / 15</span>
+  <span class="slide-num">14 / 16</span>
 </section>
 
 <section class="slide dmaic-snapshot-slide" id="slide-10" data-dmaic-phase="control">
@@ -4002,7 +4097,7 @@
   </div>
   </div>
   <div class="slide-footer"></div>
-  <span class="slide-num">14 / 15</span>
+  <span class="slide-num">15 / 16</span>
 </section>
 
 <section class="slide hero-new hero-closing" id="slide-outro">
@@ -4389,9 +4484,9 @@
 
   const slideAudienceMap = {
     0:'lobby',1:'lobby',2:'lobby',3:'lobby',
-    4:'asis',5:'asis',6:null,
-    7:'improve',8:'improve',9:'improve',10:'improve',11:'improve',12:'improve',
-    13:'control',14:'control'
+    4:'asis',5:null,6:null,7:'results',
+    8:'improve',9:'improve',10:'improve',11:'improve',12:'improve',13:'improve',
+    14:'control',15:'control'
   };
   const dmaicAudienceMap = {
     measure:'lobby',
