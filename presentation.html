@@ -35,9 +35,23 @@
 
   /* ── NAV DOTS ───────────────────────────────── */
   .nav-dots {
-    position: fixed; right:20px; top:50%;
-    transform:translateY(-50%); z-index:200;
-    display:flex; flex-direction:column; gap:10px;
+    position:fixed;
+    left:18px;
+    right:auto;
+    top:auto;
+    bottom:18px;
+    transform:none;
+    z-index:9997;
+    display:flex;
+    flex-direction:row;
+    gap:9px;
+    align-items:center;
+    padding:8px 10px;
+    background:rgba(255,255,255,.94);
+    border:1px solid #D0D5DD;
+    border-radius:999px;
+    box-shadow:0 8px 22px rgba(16,24,40,.12);
+    backdrop-filter:blur(8px);
   }
   .nav-dot {
     width:9px; height:9px; border-radius:50%;
@@ -2451,19 +2465,38 @@
 
   /* ── LIVE AUDIENCE CONTROL ───────────────────── */
   .live-launcher{
-    position:fixed; right:18px; bottom:18px; z-index:9999;
-    border:0; border-radius:999px; padding:11px 16px;
-    background:#111827; color:#fff; font-family:'Outfit',sans-serif;
-    font-weight:900; letter-spacing:.8px; cursor:pointer;
-    box-shadow:0 10px 28px rgba(0,0,0,.25);
+    position:fixed;
+    left:18px;
+    right:auto;
+    bottom:62px;
+    z-index:9999;
+    border:0;
+    border-radius:999px;
+    padding:10px 14px;
+    background:#111827;
+    color:#fff;
+    font-family:'Outfit',sans-serif;
+    font-weight:900;
+    letter-spacing:.8px;
+    cursor:pointer;
+    box-shadow:0 10px 28px rgba(0,0,0,.22);
   }
   .live-launcher::before{content:'●';color:#22C55E;margin-right:7px}
   .live-panel{
-    position:fixed; right:18px; bottom:66px; z-index:9999;
-    width:min(360px,calc(100vw - 36px));
-    background:#fff; color:#111827; border:1px solid #D0D5DD;
-    border-radius:16px; padding:14px; box-shadow:0 20px 50px rgba(0,0,0,.28);
-    display:none; font-family:'Outfit',sans-serif;
+    position:fixed;
+    left:150px;
+    right:auto;
+    bottom:62px;
+    z-index:9999;
+    width:min(360px,calc(100vw - 180px));
+    background:#fff;
+    color:#111827;
+    border:1px solid #D0D5DD;
+    border-radius:16px;
+    padding:14px;
+    box-shadow:0 20px 50px rgba(0,0,0,.24);
+    display:none;
+    font-family:'Outfit',sans-serif;
   }
   .live-panel.open{display:block}
   .live-panel h4{margin:0 0 3px;font-size:14px;font-weight:900;color:#111827}
@@ -2475,6 +2508,50 @@
   .live-status{font-size:10px;line-height:1.35;background:#F8FAFC;border:1px solid #EAECF0;padding:8px;border-radius:8px}
   .live-status b{color:#111827}
   .live-url{font-size:9px;word-break:break-all;color:#667085;margin-top:7px}
+
+  .audience-qr-slot{
+    position:fixed;
+    left:18px;
+    bottom:112px;
+    z-index:9996;
+    width:118px;
+    height:132px;
+    background:rgba(255,255,255,.96);
+    border:1px dashed #98A2B3;
+    border-radius:14px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+    color:#667085;
+    box-shadow:0 8px 22px rgba(16,24,40,.10);
+    backdrop-filter:blur(8px);
+  }
+  .audience-qr-slot .qr-box{
+    width:82px;
+    height:82px;
+    border:2px dashed #D0D5DD;
+    border-radius:8px;
+    background:#F8FAFC;
+  }
+  .audience-qr-slot b{
+    font-size:9px;
+    color:#111827;
+    letter-spacing:.8px;
+    text-transform:uppercase;
+  }
+  .audience-qr-slot span{
+    font-size:7.5px;
+    text-align:center;
+    line-height:1.15;
+    padding:0 6px;
+  }
+  @media(max-width:900px){
+    .audience-qr-slot{display:none}
+    .live-panel{left:18px;width:min(360px,calc(100vw - 36px))}
+  }
+
 
 
 
@@ -2552,14 +2629,14 @@
       <div class="hdr-bar"></div>
       <span class="hdr-title">Reducir el tiempo de Reporting Operativo Data4</span>
     </div>
-    <div class="hdr-badge" id="dmaicHeaderBadge">IMPROVE</div>
+    <div class="hdr-badge" id="dmaicHeaderBadge">DEFINE</div>
   </header>
 
   <div class="s1-body">
 
     <!-- DMAIC INTERACTIVO -->
     <div class="dmaic-col" id="dmaicNav" aria-label="Navegación DMAIC">
-      <div class="d-row inactive dmaic-phase" data-phase="define" role="button" tabindex="0" aria-label="Ver fase Define">
+      <div class="d-row active dmaic-phase" data-phase="define" role="button" tabindex="0" aria-label="Ver fase Define" aria-current="step">
         <div class="d-letter">D</div>
         <div class="d-info">
           <div class="d-name">Define</div>
@@ -2580,19 +2657,18 @@
           <div class="d-desc">Analizar métricas · Ishikawa.</div>
         </div>
       </div>
-      <div class="d-row active dmaic-phase" data-phase="improve" role="button" tabindex="0" aria-label="Ver fase Improve" aria-current="step">
+      <div class="d-row inactive dmaic-phase" data-phase="improve" role="button" tabindex="0" aria-label="Ver fase Improve">
         <div class="d-letter">I</div>
         <div class="d-info">
           <div class="d-name">Improve</div>
           <div class="d-desc">TO BE · alcance de la mejora.</div>
         </div>
-        <div class="tag-curso">EN CURSO</div>
       </div>
       <div class="d-row inactive dmaic-phase" data-phase="control" role="button" tabindex="0" aria-label="Ver fase Control">
         <div class="d-letter">C</div>
         <div class="d-info">
           <div class="d-name">Control</div>
-          <div class="d-desc">DC03 entregado · control en curso.</div>
+          <div class="d-desc">DC03 entregado · control y seguimiento.</div>
         </div>
       </div>
     </div>
@@ -2602,11 +2678,11 @@
     <!-- PANEL DINÁMICO DMAIC -->
     <div class="right-col dmaic-panel" id="dmaicPanel" aria-live="polite">
       <div class="phase-hero">
-        <div class="phase-letter-big" id="phaseLetter">I</div>
+        <div class="phase-letter-big" id="phaseLetter">D</div>
         <div class="phase-hero-copy">
-          <div class="phase-eyebrow" id="phaseStatus">Fase actual · En curso</div>
-          <div class="phase-title" id="phaseTitle">Improve · Mejorar</div>
-          <div class="phase-summary" id="phaseSummary">Automatización conectores · estandarización DC01/DC02/DC03 · validaciones automáticas.</div>
+          <div class="phase-eyebrow" id="phaseStatus">Fase completada · Definir</div>
+          <div class="phase-title" id="phaseTitle">Define · Definir</div>
+          <div class="phase-summary" id="phaseSummary">Definición del problema, alcance del proyecto, SIPOC, participantes y objetivos.</div>
         </div>
       </div>
 
@@ -3181,7 +3257,7 @@
     "improve": {
         "letter": "I",
         "badge": "IMPROVE",
-        "status": "Fase en curso · Mejorar",
+        "status": "Fase · Mejorar",
         "title": "Improve · Mejorar",
         "summary": "Construcción de la solución real: herramientas Python, mappings por edificio/fase y validaciones.",
         "objective": "Implantar un proceso TO BE que automatice la actualización mensual de los Operation Books y reduzca el trabajo manual.",
@@ -3214,7 +3290,7 @@
     "control": {
         "letter": "C",
         "badge": "CONTROL",
-        "status": "Fase en curso · Controlar",
+        "status": "Fase · Controlar",
         "title": "Control · Controlar",
         "summary": "Plan de control común para DC01, DC02, DC03 y App Contadores, adaptado al nivel de madurez de cada solución.",
         "objective": "Estabilizar el proceso completo y asegurar que la mejora se mantiene en todos los edificios con métricas comunes y trazables.",
@@ -3352,7 +3428,7 @@
       </div>
       <div class="improve-focus-strip">Esfuerzo actual de revisión: <b>34 h 30 min/mes</b>. No se considera todavía el estado final del proceso.</div>`,
     control: `
-      <div class="visual-title"><span>Control · Plan de control multiedificio</span><span>EN CURSO</span></div>
+      <div class="visual-title"><span>Control · Plan de control multiedificio</span><span>SEGUIMIENTO</span></div>
 
       <div class="control-building-grid">
         <div class="control-building-card dc01">
@@ -3472,7 +3548,7 @@
       }
     });
   });
-  setDmaicPhase('improve');
+  setDmaicPhase('define');
 
 </script>
 
@@ -3553,6 +3629,12 @@
     }catch(e){ console.error(e); }
   });
 </script>
+
+<div class="audience-qr-slot" id="audienceQrSlot" aria-label="Espacio reservado para QR de audiencia">
+  <div class="qr-box"></div>
+  <b>QR audiencia</b>
+  <span>Acceso a audience.html</span>
+</div>
 
 <button id="liveLauncher" class="live-launcher" type="button" onclick="toggleLivePanel()">LIVE</button>
 <div id="livePanel" class="live-panel" aria-live="polite">
