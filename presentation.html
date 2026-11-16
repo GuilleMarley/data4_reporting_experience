@@ -4439,7 +4439,7 @@
       const ctl=s.responses.filter(x=>x.phase==='control').map(x=>Number(x.answer)).filter(Number.isFinite);
       const avg=ctl.length?(ctl.reduce((a,b)=>a+b,0)/ctl.length).toFixed(1):'—';
       lastAudiencePhaseRequested=phase;
-      const phaseNames={lobby:'ESPERA',asis:'ANTES',improve:'DESPUÉS',control:'CONTROL',results:'RESULTADOS'};
+      const phaseNames={lobby:'ESPERA',asis:'ANTES',improve:'DESPUÉS',control:'CONTROL',results:'EXCEL MANUAL'};
       const launcher=document.getElementById('liveLauncher');
       if(launcher) launcher.textContent='LIVE · '+(phaseNames[phase]||String(phase).toUpperCase());
       box.innerHTML='<b>Fase audiencia:</b> '+(phaseNames[phase]||String(phase).toUpperCase())+
@@ -4469,7 +4469,7 @@
     <button class="live-btn" onclick="setAudiencePhase('asis')">AS IS</button>
     <button class="live-btn primary" onclick="setAudiencePhase('improve')">Improve</button>
     <button class="live-btn" onclick="setAudiencePhase('control')">Control</button>
-    <button class="live-btn" onclick="setAudiencePhase('results')">Resultados</button>
+    <button class="live-btn" onclick="setAudiencePhase('results')">Excel manual</button>
     <button class="live-btn" onclick="refreshLiveStats()">Actualizar</button>
   </div>
   <div id="liveStatusBox" class="live-status">Conectando con Supabase…</div>
