@@ -2867,6 +2867,17 @@
     font-size:8px;
     margin-top:3px;
   }
+
+  .results-assumption-note{
+    margin-top:8px;
+    padding:7px 10px;
+    border:1px solid #D0D5DD;
+    border-radius:8px;
+    background:#F8FAFC;
+    color:#667085;
+    font-size:8px;
+    line-height:1.35;
+  }
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -2885,7 +2896,7 @@
   <div class="nav-dot" onclick="goTo(6)" title="TO BE"></div>
   <div class="nav-dot" onclick="goTo(7)" title="DC01"></div>
   <div class="nav-dot" onclick="goTo(8)" title="DC03 / DC02"></div>
-  <div class="nav-dot" onclick="goTo(9)" title="Resultados DC03"></div>
+  <div class="nav-dot" onclick="goTo(9)" title="Resultados"></div>
   <div class="nav-dot" onclick="goTo(10)" title="Control"></div>
 </nav>
 
@@ -2961,7 +2972,7 @@
       <div class="phase-card-label">Datos de fase</div>
       <ul class="phase-list"><li>Problema: reporting mensual manual, dependiente de perfiles clave y con riesgo de penalización.</li><li>Objetivo: reducción esperada del 70-80% del esfuerzo manual manteniendo la entrega en ≤5 días laborables.</li><li>Alcance IN: Operation Books DC01, DC02 y DC03, inputs BMS/Iberdrola, mappings y validaciones automáticas.</li><li>Alcance OUT: otros CPDs, modificación de sistemas origen y subida final a plataformas del cliente.</li></ul>
     </div>
-    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">88,6h</div><div class="phase-kpi-lbl">baseline mensual</div></div><div class="phase-kpi"><div class="phase-kpi-val">70-80%</div><div class="phase-kpi-lbl">reducción objetivo</div></div><div class="phase-kpi"><div class="phase-kpi-val">≤5d</div><div class="phase-kpi-lbl">plazo contractual</div></div><div class="phase-kpi"><div class="phase-kpi-val">0</div><div class="phase-kpi-lbl">penalizaciones objetivo</div></div></div>
+    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">89 h 03 min</div><div class="phase-kpi-lbl">baseline mensual</div></div><div class="phase-kpi"><div class="phase-kpi-val">70-80%</div><div class="phase-kpi-lbl">reducción objetivo</div></div><div class="phase-kpi"><div class="phase-kpi-val">≤5d</div><div class="phase-kpi-lbl">plazo contractual</div></div><div class="phase-kpi"><div class="phase-kpi-val">0</div><div class="phase-kpi-lbl">penalizaciones objetivo</div></div></div>
     <div class="phase-visual">
       <div class="visual-title"><span>Define · Proyecto completo</span><span>SIPOC + alcance</span></div>
       <div class="define-dashboard">
@@ -3058,26 +3069,26 @@
       <div class="phase-hero-copy">
         <div class="phase-eyebrow">Fase completada · Medir</div>
         <div class="phase-title">Measure · Medir</div>
-        <div class="phase-summary">Cuantificación del AS IS: horas por bloque de trabajo y concentración de pérdidas de tiempo.</div>
+        <div class="phase-summary">Cuantificación del AS IS con los tiempos reales registrados en OldTime para DC01, DC02 y DC03.</div>
       </div>
     </div>
     <div class="phase-grid">
-      <div class="phase-card"><div class="phase-card-label">Objetivo</div><p>Establecer una línea base objetiva para priorizar la automatización donde más tiempo consume el proceso.</p></div>
-      <div class="phase-card"><div class="phase-card-label">Foco operativo</div><p>Pareto de horas: montaje de Operation Book, extracción, informes y picado manual de datos.</p></div>
+      <div class="phase-card"><div class="phase-card-label">Objetivo</div><p>Establecer una línea base objetiva y localizar dónde se concentra el esfuerzo manual antes de automatizar.</p></div>
+      <div class="phase-card"><div class="phase-card-label">Foco operativo</div><p>Pareto de horas: compilar Operation Book, extracción de datos, revisión de fallos y entrega.</p></div>
     </div>
     <div class="phase-card phase-full">
       <div class="phase-card-label">Datos de fase</div>
-      <ul class="phase-list"><li>Baseline Abril 2026: 88,6 h mensuales medidas entre DC01, DC02 y DC03.</li><li>El montaje del Operation Book concentra 43,0 h, el mayor cuello de botella individual.</li><li>La extracción de datos añade 27,4 h y explica gran parte del esfuerzo previo a la carga.</li><li>Operation Book + extracción concentran aproximadamente el 80% del esfuerzo manual medido.</li></ul>
+      <ul class="phase-list"><li>Baseline registrado: <b>89 h 03 min/mes</b> entre DC01, DC02 y DC03.</li><li>Compilar el Operation Book concentra <b>52 h/mes</b>, el 58,4% del esfuerzo total.</li><li>La extracción de datos añade <b>27 h 03 min/mes</b>, un 30,4% adicional.</li><li>Operation Book + extracción suman <b>79 h 03 min</b>, el 88,8% del esfuerzo mensual medido.</li></ul>
     </div>
-    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">88,6h</div><div class="phase-kpi-lbl">total medido</div></div><div class="phase-kpi"><div class="phase-kpi-val">43,0h</div><div class="phase-kpi-lbl">Operation Book</div></div><div class="phase-kpi"><div class="phase-kpi-val">27,4h</div><div class="phase-kpi-lbl">extracción</div></div><div class="phase-kpi"><div class="phase-kpi-val">79,5%</div><div class="phase-kpi-lbl">Top 2 bloques</div></div></div>
+    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">89 h 03 min</div><div class="phase-kpi-lbl">baseline mensual</div></div><div class="phase-kpi"><div class="phase-kpi-val">52 h</div><div class="phase-kpi-lbl">Operation Book</div></div><div class="phase-kpi"><div class="phase-kpi-val">27 h 03 min</div><div class="phase-kpi-lbl">extracción</div></div><div class="phase-kpi"><div class="phase-kpi-val">88,8%</div><div class="phase-kpi-lbl">Top 2 bloques</div></div></div>
     <div class="phase-visual">
-      <div class="visual-title"><span>Measure · Pareto de horas</span><span>Baseline 88,6 h</span></div>
+      <div class="visual-title"><span>Measure · Pareto de horas</span><span>Baseline 89 h 03 min</span></div>
       <div class="mini-pareto">
-        <div class="pareto-row"><span class="pareto-label">Operation Book</span><div class="pareto-track"><div class="pareto-fill" style="width:100%"></div></div><span class="pareto-hours">43,0h</span><span class="pareto-cum">48,5%</span></div>
-        <div class="pareto-row"><span class="pareto-label">Extracción</span><div class="pareto-track"><div class="pareto-fill" style="width:64%"></div></div><span class="pareto-hours">27,4h</span><span class="pareto-cum">79,5%</span></div>
-        <div class="pareto-row"><span class="pareto-label">Informes</span><div class="pareto-track"><div class="pareto-fill" style="width:24%"></div></div><span class="pareto-hours">10,5h</span><span class="pareto-cum">91,4%</span></div>
-        <div class="pareto-row"><span class="pareto-label">Picado datos</span><div class="pareto-track"><div class="pareto-fill" style="width:18%"></div></div><span class="pareto-hours">7,8h</span><span class="pareto-cum">100%</span></div>
-        <div class="pareto-note"><strong>Insight clave:</strong> Operation Book + extracción concentran 70,4 h, aproximadamente el 79,5% del esfuerzo mensual medido.</div>
+        <div class="pareto-row"><span class="pareto-label">Operation Book</span><div class="pareto-track"><div class="pareto-fill" style="width:100%"></div></div><span class="pareto-hours">52 h</span><span class="pareto-cum">58,4%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Extracción</span><div class="pareto-track"><div class="pareto-fill" style="width:52%"></div></div><span class="pareto-hours">27 h 03</span><span class="pareto-cum">88,8%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Revisión fallos</span><div class="pareto-track"><div class="pareto-fill" style="width:19%"></div></div><span class="pareto-hours">9 h 45</span><span class="pareto-cum">99,7%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Entrega</span><div class="pareto-track"><div class="pareto-fill" style="width:2%"></div></div><span class="pareto-hours">15 min</span><span class="pareto-cum">100%</span></div>
+        <div class="pareto-note"><strong>Insight clave:</strong> la mejora debe atacar primero compilación + extracción: juntas representan <b>79 h 03 min</b>, el <b>88,8%</b> del baseline.</div>
       </div>
       </div>
   </div>
@@ -3696,69 +3707,66 @@
   <header class="slide-header">
     <div class="hdr-left">
       <div class="hdr-bar"></div>
-      <span class="hdr-title">RESULTADO REAL — DC03 ENTREGADO Y EN CONTROL</span>
+      <span class="hdr-title">RESULTADOS — IMPACTO ACTUAL MEDIDO</span>
     </div>
-    <div class="hdr-badge">CONTROL</div>
+    <div class="hdr-badge">RESULTADOS</div>
   </header>
-
-  <button class="return-dmaic-btn" type="button" onclick="goTo(4)">← Volver a Improve</button>
 
   <div class="results-slide-body">
     <div class="results-hero">
       <div>
-        <div class="results-kicker">Resultado medido tras la mejora</div>
-        <h2>DC03: de ~20 h a 30 min por Operation Book</h2>
-        <p>La herramienta ya permite generar el Operation Book de DC03 en una ejecución controlada, con validaciones y avisos de revisión antes de la entrega.</p>
+        <div class="results-kicker">Comparativa real · OldTime vs NewTime</div>
+        <h2>89 h 03 min → 37 h 50 min al mes</h2>
+        <p>La automatización ya elimina casi todo el esfuerzo de extracción y compilación. El ahorro total todavía está penalizado por la revisión intensiva de fallos durante las primeras ejecuciones.</p>
       </div>
       <div class="results-big-kpis">
-        <div><b>30 min</b><span>ejecución actual</span></div>
-        <div><b>−97,5%</b><span>mejora real</span></div>
-        <div><b>1 día</b><span>plazo entrega</span></div>
+        <div><b>51 h 13 min</b><span>capacidad liberada / mes</span></div>
+        <div><b>−57,5%</b><span>reducción total actual</span></div>
+        <div><b>34 h 30 min</b><span>revisión actual / mes</span></div>
       </div>
     </div>
 
     <div class="results-large-table">
       <div class="results-large-head">
-        <div>Objetivo del proyecto / KPI</div>
-        <div>Tiempos antes</div>
-        <div>Tiempos después de la mejora</div>
-        <div>% real de mejora / check objetivo</div>
+        <div>KPI medido</div>
+        <div>Antes</div>
+        <div>Ahora</div>
+        <div>Resultado actual</div>
       </div>
       <div class="results-large-row">
-        <div><b>Dedicación mensual · DC03</b><span>Tiempo invertido antes para generar el Operation Book del edificio.</span></div>
-        <div>≈ 20 h</div>
-        <div class="after">30 min</div>
-        <div class="improvement">✓ −97,5%</div>
+        <div><b>Dedicación mensual total</b><span>DC01 −55,2% · DC02 −50,2% · DC03 −70,9%.</span></div>
+        <div>89 h 03 min</div>
+        <div class="after">37 h 50 min</div>
+        <div class="improvement">−57,5%</div>
       </div>
       <div class="results-large-row">
-        <div><b>Plazo de generación / entrega · DC03</b><span>Capacidad de completar el ciclo dentro del compromiso operativo.</span></div>
-        <div>Ventana ≤ 5 días laborables</div>
-        <div class="after">1 día</div>
-        <div class="improvement">✓ objetivo superado</div>
+        <div><b>Extracción de datos</b><span>Descarga y preparación de datos origen.</span></div>
+        <div>27 h 03 min</div>
+        <div class="after">2 h 25 min</div>
+        <div class="improvement">−91,1%</div>
       </div>
       <div class="results-large-row">
-        <div><b>Reducción del esfuerzo manual</b><span>Objetivo del proyecto: reducción esperada del 70–80%.</span></div>
-        <div>Proceso manual con revisión visual</div>
-        <div class="after">Automatizado + revisión final</div>
-        <div class="improvement">✓ supera 70–80%</div>
-      </div>
-      <div class="results-large-row">
-        <div><b>Control de errores y avisos</b><span>La herramienta no solo carga datos: también ayuda a controlar la calidad antes de entregar.</span></div>
-        <div>Errores detectados tarde y retrabajo manual</div>
-        <div class="after">Control automático + avisos de revisión</div>
-        <div class="improvement">✓ trazabilidad y control</div>
+        <div><b>Compilar Operation Book</b><span>Actualización y construcción de los libros mensuales.</span></div>
+        <div>52 h</div>
+        <div class="after">40 min</div>
+        <div class="improvement">−98,7%</div>
       </div>
       <div class="results-large-row pending">
-        <div><b>Ahorro económico</b><span>Conversión de horas ahorradas a €.</span></div>
-        <div>Coste manual no cerrado</div>
-        <div class="after">Horas ahorradas ya medidas en DC03</div>
-        <div class="improvement">Pendiente costes/hora personal</div>
+        <div><b>Revisión de fallos</b><span>Las primeras ejecuciones requieren corregir errores, mappings, fórmulas y casos no contemplados.</span></div>
+        <div>9 h 45 min</div>
+        <div class="after">34 h 30 min</div>
+        <div class="improvement">+253,8% · estabilización</div>
+      </div>
+      <div class="results-large-row">
+        <div><b>Valor anualizado de capacidad</b><span>Costes de personal del Excel; Gestor tratado como Ingeniero.</span></div>
+        <div>Coste anual por perfil</div>
+        <div class="after">≈ 15,5–18,0 k€/año</div>
+        <div class="improvement">estimación de capacidad</div>
       </div>
     </div>
 
-    <div class="results-slide-actions">
-      <button class="app-tab-btn" onclick="goTo(8)">Ver proceso TO BE</button>
-      <button class="app-tab-btn" onclick="goTo(8)">Ver herramienta DC03 / DC02</button>
+    <div class="results-assumption-note">
+      Cálculo económico: 51 h 13 min/mes liberadas por perfil, anualizadas con <b>1.760 h laborales/año</b>. Es valor de capacidad liberada, no ahorro directo de caja.
     </div>
   </div>
 
@@ -3825,52 +3833,52 @@
       <div class="phase-hero-copy">
         <div class="phase-eyebrow">Fase · Controlar</div>
         <div class="phase-title">Control · Controlar</div>
-        <div class="phase-summary">Plan de control común para DC01, DC02, DC03 y App Contadores, adaptado al nivel de madurez de cada solución.</div>
+        <div class="phase-summary">Todas las soluciones están entregadas. El foco actual es estabilizar las primeras ejecuciones y reducir el tiempo dedicado a revisar y corregir fallos.</div>
       </div>
     </div>
     <div class="phase-grid">
-      <div class="phase-card"><div class="phase-card-label">Objetivo</div><p>Estabilizar el proceso completo y asegurar que la mejora se mantiene en todos los edificios con métricas comunes y trazables.</p></div>
-      <div class="phase-card"><div class="phase-card-label">Foco operativo</div><p>Tiempo de dedicación, First Time Right, incidencias, intervención manual, mappings pendientes y cumplimiento del SLA por edificio/fase.</p></div>
+      <div class="phase-card"><div class="phase-card-label">Objetivo</div><p>Consolidar el funcionamiento de DC01, DC02, DC03 y App Contadores hasta alcanzar un proceso recurrente con menos incidencias y menor revisión manual.</p></div>
+      <div class="phase-card"><div class="phase-card-label">Foco operativo</div><p>Incidencias, First Time Right, tiempo de revisión, corrección de mappings/fórmulas y cumplimiento del SLA en cada ejecución.</p></div>
     </div>
     <div class="phase-card phase-full">
       <div class="phase-card-label">Datos de fase</div>
-      <ul class="phase-list"><li>DC01: control por fases sobre mappings, generación de los cuatro Operation Books, avisos y correcciones.</li><li>DC02: validación y estabilización de la herramienta antes de entrar en seguimiento recurrente.</li><li>DC03: herramienta entregada utilizada como referencia de funcionamiento y control mensual.</li><li>App Contadores: captura operativa controlada como fuente estructurada para el reporting.</li></ul>
+      <ul class="phase-list"><li><b>DC01:</b> herramienta entregada; corrección de fallos detectados en las primeras ejecuciones de sus 4 Operation Books.</li><li><b>DC02:</b> herramienta entregada; estabilización de señales, fórmulas y casos particulares del único OB con 2 fases.</li><li><b>DC03:</b> herramienta entregada; seguimiento de incidencias y uso como referencia de ejecución recurrente.</li><li><b>App Contadores:</b> entregada y operativa; control de calidad, completitud y trazabilidad del dato.</li></ul>
     </div>
-    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">DC01</div><div class="phase-kpi-lbl">4 fases</div></div><div class="phase-kpi"><div class="phase-kpi-val">DC02</div><div class="phase-kpi-lbl">validación</div></div><div class="phase-kpi"><div class="phase-kpi-val">DC03</div><div class="phase-kpi-lbl">control</div></div><div class="phase-kpi"><div class="phase-kpi-val">App</div><div class="phase-kpi-lbl">operativa</div></div></div>
+    <div class="phase-kpis"><div class="phase-kpi"><div class="phase-kpi-val">4/4</div><div class="phase-kpi-lbl">soluciones entregadas</div></div><div class="phase-kpi"><div class="phase-kpi-val">34 h 30 min</div><div class="phase-kpi-lbl">revisión actual / mes</div></div><div class="phase-kpi"><div class="phase-kpi-val">−57,5%</div><div class="phase-kpi-lbl">reducción total actual</div></div><div class="phase-kpi"><div class="phase-kpi-val">≤5d</div><div class="phase-kpi-lbl">SLA a mantener</div></div></div>
     <div class="phase-visual">
-      <div class="visual-title"><span>Control · Plan de control multiedificio</span><span>SEGUIMIENTO</span></div>
+      <div class="visual-title"><span>Control · Estabilización tras la entrega</span><span>PRIMERAS EJECUCIONES</span></div>
 
       <div class="control-building-grid">
         <div class="control-building-card dc01">
           <div class="control-building-head"><b>DC01</b><span>4 fases</span></div>
-          <div class="control-building-status">EN DESARROLLO / VALIDACIÓN</div>
+          <div class="control-building-status">ENTREGADA · ESTABILIZACIÓN</div>
           <ul>
-            <li>Mappings por DC01.1–DC01.4</li>
-            <li>Generación correcta de los 4 OB</li>
-            <li>Avisos, errores y retrabajo</li>
+            <li>Corregir fallos de los 4 OB</li>
+            <li>Cerrar mappings, fórmulas y gráficos</li>
+            <li>Reducir retrabajo por ejecución</li>
           </ul>
         </div>
         <div class="control-building-card dc02">
           <div class="control-building-head"><b>DC02</b><span>1 OB · 2 fases</span></div>
-          <div class="control-building-status">VALIDACIÓN</div>
+          <div class="control-building-status">ENTREGADA · ESTABILIZACIÓN</div>
           <ul>
-            <li>Inputs y señales BMS</li>
-            <li>Actualización de hojas y fórmulas</li>
-            <li>Estabilidad antes de operación recurrente</li>
+            <li>Corregir señales y casos particulares</li>
+            <li>Validar hojas y fórmulas recurrentes</li>
+            <li>Aumentar First Time Right</li>
           </ul>
         </div>
         <div class="control-building-card dc03">
           <div class="control-building-head"><b>DC03</b><span>referencia</span></div>
-          <div class="control-building-status">ENTREGADO · EN CONTROL</div>
+          <div class="control-building-status">ENTREGADA · SEGUIMIENTO</div>
           <ul>
-            <li>Ejecución mensual recurrente</li>
-            <li>Incidencias y First Time Right</li>
-            <li>Tiempo real y cumplimiento de SLA</li>
+            <li>Monitorizar incidencias reales</li>
+            <li>Tiempo de revisión y FTR</li>
+            <li>Cumplimiento del SLA</li>
           </ul>
         </div>
         <div class="control-building-card app">
           <div class="control-building-head"><b>APP CONTADORES</b><span>captura</span></div>
-          <div class="control-building-status">OPERATIVA · CONTROLADA</div>
+          <div class="control-building-status">ENTREGADA · OPERATIVA</div>
           <ul>
             <li>Calidad y completitud del dato</li>
             <li>Trazabilidad de registros</li>
@@ -3880,34 +3888,34 @@
       </div>
 
       <div class="control-common-wrap">
-        <div class="control-common-title">KPIs comunes de control</div>
+        <div class="control-common-title">KPIs de estabilización</div>
         <div class="control-common-kpis">
-          <div class="control-common-kpi"><b>Tiempo</b><span>Dedicación mensual por edificio</span></div>
+          <div class="control-common-kpi"><b>34 h 30</b><span>Revisión actual / mes</span></div>
           <div class="control-common-kpi"><b>FTR</b><span>Correcto a la primera</span></div>
           <div class="control-common-kpi"><b>Incidencias</b><span>Número y severidad</span></div>
-          <div class="control-common-kpi"><b>Manual</b><span>Intervenciones y retrabajo</span></div>
+          <div class="control-common-kpi"><b>Manual</b><span>Retrabajo por ejecución</span></div>
           <div class="control-common-kpi"><b>≤5 días</b><span>Cumplimiento SLA</span></div>
         </div>
       </div>
 
       <div class="control-bottom-grid">
         <div class="control-bottom-card">
-          <h4>Trabajo actual de estabilización</h4>
-          <p>La revisión intensiva se concentra en cerrar errores, mappings y validaciones de <b>DC01 y DC02</b>, mientras DC03 aporta una referencia ya operativa.</p>
+          <h4>Por qué el ahorro todavía es 57,5%</h4>
+          <p>Extracción y compilación ya caen <b>91,1% y 98,7%</b>, pero las primeras ejecuciones concentran <b>34 h 30 min/mes</b> de revisión y corrección.</p>
         </div>
         <div class="control-bottom-card">
-          <h4>Medición común en diciembre</h4>
-          <p>Compararemos los edificios con el mismo criterio: <b>tiempo total, revisión, FTR, incidencias, intervención manual y SLA</b>.</p>
+          <h4>Trabajo actual</h4>
+          <p>Cerrar errores, mappings, fórmulas, señales y excepciones detectadas en uso real para que cada nueva ejecución requiera menos intervención.</p>
         </div>
         <div class="control-bottom-card">
-          <h4>Resultado esperado</h4>
-          <p>Pasar de herramientas individuales en distintos niveles de madurez a un <b>proceso de reporting controlado y comparable entre edificios</b>.</p>
+          <h4>Objetivo de steady-state</h4>
+          <p>Reducir progresivamente la revisión, aumentar el FTR y acercar la reducción total al potencial ya demostrado por las tareas automatizadas.</p>
         </div>
       </div>
 
       <div class="december-banner control-multibuilding-banner">
-        <div><b>Diciembre · primera foto conjunta</b><br><span>Medición estable de DC01, DC02, DC03 y captura de contadores bajo un mismo plan de control.</span></div>
-        <div style="text-align:right"><b>Siguiente objetivo</b><br><span>Validar ahorro definitivo por edificio y consolidado.</span></div>
+        <div><b>Diciembre · validar la siguiente foto estable</b><br><span>Comparar tiempo total, revisión, FTR, incidencias y SLA tras nuevas ejecuciones de las herramientas ya entregadas.</span></div>
+        <div style="text-align:right"><b>Siguiente objetivo</b><br><span>Convertir la reducción técnica en ahorro recurrente y estable.</span></div>
       </div></div>
   </div>
   </div>
@@ -3961,7 +3969,7 @@
         ],
         "kpis": [
             [
-                "88,6h",
+                "89 h 03 min",
                 "baseline mensual"
             ],
             [
@@ -3983,32 +3991,20 @@
         "badge": "MEASURE",
         "status": "Fase completada · Medir",
         "title": "Measure · Medir",
-        "summary": "Cuantificación del AS IS: horas por bloque de trabajo y concentración de pérdidas de tiempo.",
-        "objective": "Establecer una línea base objetiva para priorizar la automatización donde más tiempo consume el proceso.",
-        "focus": "Pareto de horas: montaje de Operation Book, extracción, informes y picado manual de datos.",
+        "summary": "Cuantificación del AS IS con los tiempos reales registrados en OldTime para DC01, DC02 y DC03.",
+        "objective": "Establecer una línea base objetiva y localizar dónde se concentra el esfuerzo manual antes de automatizar.",
+        "focus": "Pareto de horas: compilar Operation Book, extracción de datos, revisión de fallos y entrega.",
         "deliverables": [
-            "Baseline Abril 2026: 88,6 h mensuales medidas entre DC01, DC02 y DC03.",
-            "El montaje del Operation Book concentra 43,0 h, el mayor cuello de botella individual.",
-            "La extracción de datos añade 27,4 h y explica gran parte del esfuerzo previo a la carga.",
-            "Operation Book + extracción concentran aproximadamente el 80% del esfuerzo manual medido."
+            "Baseline registrado: 89 h 03 min/mes entre DC01, DC02 y DC03.",
+            "Compilar el Operation Book concentra 52 h/mes, el 58,4% del esfuerzo total.",
+            "La extracción de datos añade 27 h 03 min/mes, un 30,4% adicional.",
+            "Operation Book + extracción suman 79 h 03 min, el 88,8% del esfuerzo mensual medido."
         ],
         "kpis": [
-            [
-                "88,6h",
-                "total medido"
-            ],
-            [
-                "43,0h",
-                "Operation Book"
-            ],
-            [
-                "27,4h",
-                "extracción"
-            ],
-            [
-                "79,5%",
-                "Top 2 bloques"
-            ]
+            ["89 h 03 min","baseline mensual"],
+            ["52 h","Operation Book"],
+            ["27 h 03 min","extracción"],
+            ["88,8%","Top 2 bloques"]
         ]
     },
     "analyze": {
@@ -4082,32 +4078,20 @@
         "badge": "CONTROL",
         "status": "Fase · Controlar",
         "title": "Control · Controlar",
-        "summary": "Plan de control común para DC01, DC02, DC03 y App Contadores, adaptado al nivel de madurez de cada solución.",
-        "objective": "Estabilizar el proceso completo y asegurar que la mejora se mantiene en todos los edificios con métricas comunes y trazables.",
-        "focus": "Tiempo de dedicación, First Time Right, incidencias, intervención manual, mappings pendientes y cumplimiento del SLA por edificio/fase.",
+        "summary": "Todas las soluciones están entregadas. El foco actual es estabilizar las primeras ejecuciones y reducir el tiempo dedicado a revisar y corregir fallos.",
+        "objective": "Consolidar el funcionamiento de DC01, DC02, DC03 y App Contadores hasta alcanzar un proceso recurrente con menos incidencias y menor revisión manual.",
+        "focus": "Incidencias, First Time Right, tiempo de revisión, corrección de mappings/fórmulas y cumplimiento del SLA en cada ejecución.",
         "deliverables": [
-            "DC01: control por fases sobre mappings, generación de los cuatro Operation Books, avisos y correcciones.",
-            "DC02: validación y estabilización de la herramienta antes de entrar en seguimiento recurrente.",
-            "DC03: herramienta entregada utilizada como referencia de funcionamiento y control mensual.",
-            "App Contadores: captura operativa controlada como fuente estructurada para el reporting."
+            "DC01: herramienta entregada; corrección de fallos detectados en las primeras ejecuciones de sus 4 Operation Books.",
+            "DC02: herramienta entregada; estabilización de señales, fórmulas y casos particulares del único OB con 2 fases.",
+            "DC03: herramienta entregada; seguimiento de incidencias y uso como referencia de ejecución recurrente.",
+            "App Contadores: entregada y operativa; control de calidad, completitud y trazabilidad del dato."
         ],
         "kpis": [
-            [
-                "DC01",
-                "4 fases"
-            ],
-            [
-                "DC02",
-                "validación"
-            ],
-            [
-                "DC03",
-                "control"
-            ],
-            [
-                "App",
-                "operativa"
-            ]
+            ["4/4","soluciones entregadas"],
+            ["34 h 30 min","revisión actual / mes"],
+            ["−57,5%","reducción total actual"],
+            ["≤5d","SLA a mantener"]
         ]
     }
 };
@@ -4148,16 +4132,13 @@
         </div>
       </div>`,
     measure: `
-      <div class="visual-title"><span>Measure · Pareto de horas</span><span>Baseline 88,6 h</span></div>
+      <div class="visual-title"><span>Measure · Pareto de horas</span><span>Baseline 89 h 03 min</span></div>
       <div class="mini-pareto">
-        <div class="pareto-row"><span class="pareto-label">Operation Book</span><div class="pareto-track"><div class="pareto-fill" style="width:100%"></div></div><span class="pareto-hours">43,0h</span><span class="pareto-cum">48,5%</span></div>
-        <div class="pareto-row"><span class="pareto-label">Extracción</span><div class="pareto-track"><div class="pareto-fill" style="width:64%"></div></div><span class="pareto-hours">27,4h</span><span class="pareto-cum">79,5%</span></div>
-        <div class="pareto-row"><span class="pareto-label">Informes</span><div class="pareto-track"><div class="pareto-fill" style="width:24%"></div></div><span class="pareto-hours">10,5h</span><span class="pareto-cum">91,4%</span></div>
-        <div class="pareto-row"><span class="pareto-label">Picado datos</span><div class="pareto-track"><div class="pareto-fill" style="width:18%"></div></div><span class="pareto-hours">7,8h</span><span class="pareto-cum">100%</span></div>
-        <div class="pareto-note"><strong>Insight clave:</strong> Operation Book + extracción concentran 70,4 h, aproximadamente el 79,5% del esfuerzo mensual medido.</div>
-      </div>
-      <div class="phase-action-minimal">
-        <button class="slide-link-btn" type="button" onclick="goTo(1)">Ver flujo AS IS</button>
+        <div class="pareto-row"><span class="pareto-label">Operation Book</span><div class="pareto-track"><div class="pareto-fill" style="width:100%"></div></div><span class="pareto-hours">52 h</span><span class="pareto-cum">58,4%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Extracción</span><div class="pareto-track"><div class="pareto-fill" style="width:52%"></div></div><span class="pareto-hours">27 h 03</span><span class="pareto-cum">88,8%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Revisión fallos</span><div class="pareto-track"><div class="pareto-fill" style="width:19%"></div></div><span class="pareto-hours">9 h 45</span><span class="pareto-cum">99,7%</span></div>
+        <div class="pareto-row"><span class="pareto-label">Entrega</span><div class="pareto-track"><div class="pareto-fill" style="width:2%"></div></div><span class="pareto-hours">15 min</span><span class="pareto-cum">100%</span></div>
+        <div class="pareto-note"><strong>Insight clave:</strong> la mejora debe atacar primero compilación + extracción: juntas representan <b>79 h 03 min</b>, el <b>88,8%</b> del baseline.</div>
       </div>`,
     analyze: `
       <div class="visual-title"><span>Analyze · Ishikawa</span><span>Causas raíz</span></div>
@@ -4218,76 +4199,47 @@
       </div>
       <div class="improve-focus-strip">Esfuerzo actual de revisión: <b>34 h 30 min/mes</b>. No se considera todavía el estado final del proceso.</div>`,
     control: `
-      <div class="visual-title"><span>Control · Plan de control multiedificio</span><span>SEGUIMIENTO</span></div>
-
+      <div class="visual-title"><span>Control · Estabilización tras la entrega</span><span>PRIMERAS EJECUCIONES</span></div>
       <div class="control-building-grid">
         <div class="control-building-card dc01">
           <div class="control-building-head"><b>DC01</b><span>4 fases</span></div>
-          <div class="control-building-status">EN DESARROLLO / VALIDACIÓN</div>
-          <ul>
-            <li>Mappings por DC01.1–DC01.4</li>
-            <li>Generación correcta de los 4 OB</li>
-            <li>Avisos, errores y retrabajo</li>
-          </ul>
+          <div class="control-building-status">ENTREGADA · ESTABILIZACIÓN</div>
+          <ul><li>Corregir fallos de los 4 OB</li><li>Cerrar mappings, fórmulas y gráficos</li><li>Reducir retrabajo por ejecución</li></ul>
         </div>
         <div class="control-building-card dc02">
           <div class="control-building-head"><b>DC02</b><span>1 OB · 2 fases</span></div>
-          <div class="control-building-status">VALIDACIÓN</div>
-          <ul>
-            <li>Inputs y señales BMS</li>
-            <li>Actualización de hojas y fórmulas</li>
-            <li>Estabilidad antes de operación recurrente</li>
-          </ul>
+          <div class="control-building-status">ENTREGADA · ESTABILIZACIÓN</div>
+          <ul><li>Corregir señales y casos particulares</li><li>Validar hojas y fórmulas recurrentes</li><li>Aumentar First Time Right</li></ul>
         </div>
         <div class="control-building-card dc03">
           <div class="control-building-head"><b>DC03</b><span>referencia</span></div>
-          <div class="control-building-status">ENTREGADO · EN CONTROL</div>
-          <ul>
-            <li>Ejecución mensual recurrente</li>
-            <li>Incidencias y First Time Right</li>
-            <li>Tiempo real y cumplimiento de SLA</li>
-          </ul>
+          <div class="control-building-status">ENTREGADA · SEGUIMIENTO</div>
+          <ul><li>Monitorizar incidencias reales</li><li>Tiempo de revisión y FTR</li><li>Cumplimiento del SLA</li></ul>
         </div>
         <div class="control-building-card app">
           <div class="control-building-head"><b>APP CONTADORES</b><span>captura</span></div>
-          <div class="control-building-status">OPERATIVA · CONTROLADA</div>
-          <ul>
-            <li>Calidad y completitud del dato</li>
-            <li>Trazabilidad de registros</li>
-            <li>Uso operativo estable</li>
-          </ul>
+          <div class="control-building-status">ENTREGADA · OPERATIVA</div>
+          <ul><li>Calidad y completitud del dato</li><li>Trazabilidad de registros</li><li>Uso operativo estable</li></ul>
         </div>
       </div>
-
       <div class="control-common-wrap">
-        <div class="control-common-title">KPIs comunes de control</div>
+        <div class="control-common-title">KPIs de estabilización</div>
         <div class="control-common-kpis">
-          <div class="control-common-kpi"><b>Tiempo</b><span>Dedicación mensual por edificio</span></div>
+          <div class="control-common-kpi"><b>34 h 30</b><span>Revisión actual / mes</span></div>
           <div class="control-common-kpi"><b>FTR</b><span>Correcto a la primera</span></div>
           <div class="control-common-kpi"><b>Incidencias</b><span>Número y severidad</span></div>
-          <div class="control-common-kpi"><b>Manual</b><span>Intervenciones y retrabajo</span></div>
+          <div class="control-common-kpi"><b>Manual</b><span>Retrabajo por ejecución</span></div>
           <div class="control-common-kpi"><b>≤5 días</b><span>Cumplimiento SLA</span></div>
         </div>
       </div>
-
       <div class="control-bottom-grid">
-        <div class="control-bottom-card">
-          <h4>Trabajo actual de estabilización</h4>
-          <p>La revisión intensiva se concentra en cerrar errores, mappings y validaciones de <b>DC01 y DC02</b>, mientras DC03 aporta una referencia ya operativa.</p>
-        </div>
-        <div class="control-bottom-card">
-          <h4>Medición común en diciembre</h4>
-          <p>Compararemos los edificios con el mismo criterio: <b>tiempo total, revisión, FTR, incidencias, intervención manual y SLA</b>.</p>
-        </div>
-        <div class="control-bottom-card">
-          <h4>Resultado esperado</h4>
-          <p>Pasar de herramientas individuales en distintos niveles de madurez a un <b>proceso de reporting controlado y comparable entre edificios</b>.</p>
-        </div>
+        <div class="control-bottom-card"><h4>Por qué el ahorro todavía es 57,5%</h4><p>Extracción y compilación ya caen <b>91,1% y 98,7%</b>, pero las primeras ejecuciones concentran <b>34 h 30 min/mes</b> de revisión y corrección.</p></div>
+        <div class="control-bottom-card"><h4>Trabajo actual</h4><p>Cerrar errores, mappings, fórmulas, señales y excepciones detectadas en uso real para que cada nueva ejecución requiera menos intervención.</p></div>
+        <div class="control-bottom-card"><h4>Objetivo de steady-state</h4><p>Reducir progresivamente la revisión, aumentar el FTR y acercar la reducción total al potencial ya demostrado por las tareas automatizadas.</p></div>
       </div>
-
       <div class="december-banner control-multibuilding-banner">
-        <div><b>Diciembre · primera foto conjunta</b><br><span>Medición estable de DC01, DC02, DC03 y captura de contadores bajo un mismo plan de control.</span></div>
-        <div style="text-align:right"><b>Siguiente objetivo</b><br><span>Validar ahorro definitivo por edificio y consolidado.</span></div>
+        <div><b>Diciembre · validar la siguiente foto estable</b><br><span>Comparar tiempo total, revisión, FTR, incidencias y SLA tras nuevas ejecuciones de las herramientas ya entregadas.</span></div>
+        <div style="text-align:right"><b>Siguiente objetivo</b><br><span>Convertir la reducción técnica en ahorro recurrente y estable.</span></div>
       </div>`
   };
 
