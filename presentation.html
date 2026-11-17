@@ -2965,6 +2965,24 @@
 .meter-bms-start:hover{background:#DE5900}
 @media(max-width:800px){.meter-bms-main{grid-template-columns:160px 1fr}.meter-bms-side{display:none}.meter-bms-content{gap:7px}.meter-bms-content h2{font-size:26px}.meter-bms-cta{flex-wrap:wrap}.meter-bms-cta>div{max-width:100%}.meter-bms-start{width:100%}.meter-bms-signal{font-size:9px}}
 @media(max-height:670px){.meter-bms-content{padding:8px 20px 17px}.meter-bms-main{max-height:360px}.meter-bms-tree>div:not(.meter-bms-title){padding:5px 4px}}
+
+/* Power Apps presentation: compact meter row and two reference screenshots */
+.counter-app-real-slide .counter-app-body{gap:9px;padding:12px 28px 11px}
+.counter-app-real-slide .counter-app-heading h2{font-size:clamp(17px,1.7vw,25px)}
+.counter-app-real-slide .counter-app-grid{grid-template-columns:minmax(0,0.9fr) minmax(0,1.1fr);gap:12px;min-height:0}
+.counter-app-real-slide .counter-app-left,.counter-app-real-slide .counter-app-right{padding:10px;overflow:hidden}
+.counter-app-real-slide .water-meter-grid{gap:4px;grid-template-columns:repeat(3,minmax(0,1fr))}
+.counter-app-real-slide .water-meter-card{padding:5px;border-radius:7px}
+.counter-app-real-slide .water-meter-label{font-size:8px}
+.counter-app-real-slide .water-meter-card img{height:clamp(95px,20vh,180px)}
+.counter-app-real-slide .water-meter-value{font-size:14px}
+.counter-app-real-slide .real-app-screens{display:grid;grid-template-columns:1fr 1fr;gap:8px;flex:1;min-height:0;align-items:stretch}
+.counter-app-real-slide .real-app-screens figure{margin:0;min-width:0;min-height:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#f7f8fa;border:1px solid #e3e6ed;border-radius:9px;padding:5px}
+.counter-app-real-slide .real-app-screens img{display:block;width:100%;height:100%;max-height:clamp(250px,47vh,530px);object-fit:contain}
+.counter-app-real-slide .real-app-screens figcaption{font-size:9px;letter-spacing:.1em;font-weight:900;color:#e65d00;padding-top:4px}
+.counter-app-real-slide .counter-after-flow{margin-top:12px}
+.counter-app-real-slide .counter-app-impact{padding:8px 0}
+@media(max-width:850px){.counter-app-real-slide .counter-app-grid{grid-template-columns:1fr 1.1fr}.counter-app-real-slide .real-app-screens{gap:4px}.counter-app-real-slide .water-meter-card img{height:100px}.counter-app-real-slide .counter-app-impact{font-size:11px}}
 </style>
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -3741,105 +3759,41 @@
   <span class="slide-num">10 / 16</span>
 </section>
 
-<section class="slide counter-app-slide" id="slide-5">
+<section class="slide counter-app-slide counter-app-real-slide" id="slide-5">
   <header class="slide-header">
-    <div class="hdr-left">
-      <div class="hdr-bar"></div>
-      <span class="hdr-title">NUEVOS CONTADORES — REGISTRO DIRECTO EN LA APP</span>
-    </div>
-    <div class="hdr-badge">IMPROVE</div>
+    <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">NUEVOS CONTADORES — REGISTRO DIRECTO EN POWER APPS</span></div>
+    <div class="hdr-badge">IMPROVE · TO BE</div>
   </header>
-
   <div class="counter-app-body">
     <div class="counter-app-heading">
-      <div>
-        <div class="counter-app-kicker">De captura repetida a registro único</div>
-        <h2>El técnico sigue leyendo el contador. Lo que cambia es lo que ocurre después.</h2>
-      </div>
-      <div class="counter-app-pill">MISMO DATO · MENOS PASOS</div>
+      <div><div class="counter-app-kicker">Mismos contadores · nuevo proceso</div><h2>La lectura se registra directamente en la aplicación.</h2></div>
+      <div class="counter-app-pill">SIN PAPEL · SIN DOBLE TRANSCRIPCIÓN</div>
     </div>
-
     <div class="counter-app-grid">
       <div class="counter-app-left">
-        <div class="counter-app-section-title">1 · Lectura en campo</div>
+        <div class="counter-app-section-title">1 · Los tres contadores de campo</div>
         <div class="water-meter-grid">
-          <div class="water-meter-card">
-            <div class="water-meter-label">Contador agua 1</div>
-            <img src="assets/contador_1.svg" alt="Contador de agua 1">
-            <div class="water-meter-value">18.742 <span>m³</span></div>
-          </div>
-          <div class="water-meter-card">
-            <div class="water-meter-label">Contador agua 2</div>
-            <img src="assets/contador_2.svg" alt="Contador de agua 2">
-            <div class="water-meter-value">11.386 <span>m³</span></div>
-          </div>
-          <div class="water-meter-card">
-            <div class="water-meter-label">Contador agua 3</div>
-            <img src="assets/contador_3.svg" alt="Contador de agua 3">
-            <div class="water-meter-value">7.954 <span>m³</span></div>
-          </div>
+          <div class="water-meter-card"><div class="water-meter-label">Contador agua 1</div><img src="assets/contador_1.svg" alt="Contador de agua 1"><div class="water-meter-value">18.742 <span>m³</span></div></div>
+          <div class="water-meter-card"><div class="water-meter-label">Contador agua 2</div><img src="assets/contador_2.svg" alt="Contador de agua 2"><div class="water-meter-value">11.386 <span>m³</span></div></div>
+          <div class="water-meter-card"><div class="water-meter-label">Contador agua 3</div><img src="assets/contador_3.svg" alt="Contador de agua 3"><div class="water-meter-value">7.954 <span>m³</span></div></div>
         </div>
-
-        <div class="counter-before-flow">
-          <div><b>ANTES</b><span>Contador</span></div>
-          <div class="counter-flow-arrow">→</div>
-          <div><span>Papel</span></div>
-          <div class="counter-flow-arrow">→</div>
-          <div><span>Excel</span></div>
-          <div class="counter-flow-arrow">→</div>
-          <div><span>Operation Book</span></div>
-        </div>
-      </div>
-
-      <div class="counter-app-right">
-        <div class="counter-app-section-title">2 · Registro directo en App Contadores</div>
-        <div class="app-copy-shell">
-          <div class="app-copy-top">
-            <div class="app-copy-brand">Serveo <span>Data4</span></div>
-            <div class="app-copy-status">REGISTRO DE CONTADORES</div>
-          </div>
-
-          <div class="app-copy-card">
-            <div class="app-copy-row">
-              <label>Edificio</label>
-              <div class="app-copy-field">DC01 <span>⌄</span></div>
-            </div>
-            <div class="app-copy-row">
-              <label>Tipo de contador</label>
-              <div class="app-copy-field">Agua <span>⌄</span></div>
-            </div>
-            <div class="app-copy-row">
-              <label>Contador</label>
-              <div class="app-copy-field">Contador agua 1 <span>⌄</span></div>
-            </div>
-            <div class="app-copy-row">
-              <label>Lectura</label>
-              <div class="app-copy-input"><b>18.742</b><span>m³</span></div>
-            </div>
-            <button class="app-copy-save" type="button">Guardar registro</button>
-            <div class="app-copy-confirm">✓ Dato capturado una vez y preparado para reporting</div>
-          </div>
-        </div>
-
         <div class="counter-after-flow">
-          <div><b>AHORA</b><span>Contador</span></div>
-          <div class="counter-flow-arrow">→</div>
-          <div class="after-highlight"><span>App Contadores</span></div>
-          <div class="counter-flow-arrow">→</div>
-          <div><span>Dato estructurado</span></div>
+          <div><b>AHORA</b><span>Lectura</span></div><div class="counter-flow-arrow">→</div>
+          <div class="after-highlight"><span>Power Apps</span></div><div class="counter-flow-arrow">→</div>
+          <div><span>Dato registrado</span></div>
+        </div>
+      </div>
+      <div class="counter-app-right">
+        <div class="counter-app-section-title">2 · App real · Inicio y Nuevo registro</div>
+        <div class="real-app-screens">
+          <figure><img src="assets/powerapp_inicio.svg" alt="Reproducción visual de la captura real: pantalla de inicio Registro de contadores de Serveo"><figcaption>INICIO</figcaption></figure>
+          <figure><img src="assets/powerapp_registro.svg" alt="Reproducción visual de la captura real: formulario Nuevo registro, edificio DC01, tipo Agua y lista de contadores"><figcaption>NUEVO REGISTRO</figcaption></figure>
         </div>
       </div>
     </div>
-
-    <div class="counter-app-impact">
-      <div><b>1 lectura</b><span>en campo</span></div>
-      <div><b>1 registro</b><span>en la app</span></div>
-      <div><b>0 transcripciones</b><span>posteriores del mismo dato</span></div>
-    </div>
+    <div class="counter-app-impact"><div><b>1 lectura</b><span>en campo</span></div><div><b>1 registro</b><span>en Power Apps</span></div><div><b>0 transcripciones</b><span>adicionales</span></div></div>
   </div>
-
-  <div class="slide-footer"></div>
-  <span class="slide-num">11 / 16</span>
+  <div class="slide-footer"></div><span class="slide-num">11 / 16</span>
 </section>
 
 <section class="slide" id="slide-7">
