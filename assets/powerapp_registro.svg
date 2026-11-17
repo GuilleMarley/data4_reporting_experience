@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 422 648" role="img" aria-label="Captura reproducida Nuevo registro Power Apps Serveo">
+<defs><pattern id="dots" width="30" height="30" patternUnits="userSpaceOnUse"><circle cx="9" cy="9" r="1.7" fill="#E3E3E3"/></pattern></defs><rect width="422" height="648" fill="#fafafa"/><rect width="422" height="648" fill="url(#dots)"/>
+<rect x="70" y="32" width="322" height="570" fill="white" stroke="#e1e1e1"/>
+<path d="M94 69 L110 51 L127 69 M98 65 V81 H108 V70 H117 V81 H124 V65" fill="none" stroke="#ff5900" stroke-width="2.5"/>
+<text x="154" y="57" fill="#fa5e08" font-size="11" font-family="Arial" font-weight="700">SERVEO · REGISTRO OPERATIVO</text>
+<text x="156" y="82" fill="#3e4d61" font-size="21" font-family="Arial" font-weight="700">Nuevo registro</text>
+<rect x="83" y="90" width="295" height="461" fill="#f0eeee"/>
+<g font-family="Arial">
+<text x="86" y="111" font-weight="700" font-size="15">Fecha :</text><text x="89" y="139" font-size="15" fill="#3e4b63">17 noviembre 2026</text>
+<text x="86" y="169" font-weight="700" font-size="15">Edificio :</text>
+<rect x="83" y="177" width="296" height="33" fill="white" stroke="#999999"/><text x="89" y="199" font-size="15" fill="#47576f">DC01</text>
+<rect x="354" y="179" width="24" height="30" fill="#ff5900"/><path d="M360 190l7 7 7-7" stroke="white" stroke-width="2" fill="none"/>
+<text x="86" y="238" font-weight="700" font-size="15">Tipo de contador :</text>
+<rect x="83" y="246" width="296" height="33" fill="white" stroke="#999999"/><text x="89" y="268" font-size="15" fill="#47576f">Agua</text>
+<rect x="354" y="248" width="24" height="30" fill="#ff5900"/><path d="M360 259l7 7 7-7" stroke="white" stroke-width="2" fill="none"/>
+<text x="231" y="299" text-anchor="middle" font-size="11">Contadores a rellenar: 12</text>
+<text x="95" y="334" font-size="15">Humectadores POP-A (m3)</text>
+<rect x="94" y="343" width="271" height="33" fill="white" stroke="#ff8e64"/><text x="100" y="366" font-size="15" fill="#8390a0">Valor de contador</text>
+<text x="95" y="402" font-size="15">Humectador POP-B (m3)</text>
+<rect x="94" y="412" width="271" height="33" fill="white" stroke="#ff8e64"/><text x="100" y="434" font-size="15" fill="#8390a0">Valor de contador</text>
+<text x="95" y="471" font-size="15">Sala Watermist (m3)</text>
+<rect x="94" y="481" width="271" height="33" fill="white" stroke="#ff8e64"/><text x="100" y="503" font-size="15" fill="#8390a0">Valor de contador</text>
+<text x="95" y="533" font-size="15">Puerta de baños frente a POP-A</text>
+</g>
+<rect x="83" y="558" width="295" height="36" rx="20" fill="#ff5900"/>
+<text x="230" y="581" text-anchor="middle" font-size="13" font-family="Arial" fill="white" font-weight="700">Guardar registros</text>
+</svg>
