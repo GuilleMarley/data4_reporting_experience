@@ -3521,7 +3521,7 @@
 </section>
 
 <section class="slide meter-story-slide" id="slide-asis-meters">
-  <header class="slide-header"><div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — LECTURA MANUAL DE CONTADORES</span></div><div class="hdr-badge">MEASURE · AS IS</div></header>
+  <header class="slide-header"><div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — LECTURA MANUAL DE CONTADORES</span></div><div class="hdr-badge">ANALYZE · AS IS</div></header>
   <div class="meter-story-body">
     <div class="meter-story-kicker">PRIMER PASO · CAPTURA EN CAMPO</div>
     <h2>Lo primero era <em>leer y apuntar.</em></h2>
@@ -3537,7 +3537,7 @@
 </section>
 
 <section class="slide meter-story-slide meter-notes-slide" id="slide-asis-notes">
-  <header class="slide-header"><div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — TRANSCRIPCIÓN MANUAL AL EXCEL</span></div><div class="hdr-badge">MEASURE · AS IS</div></header>
+  <header class="slide-header"><div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — TRANSCRIPCIÓN MANUAL AL EXCEL</span></div><div class="hdr-badge">ANALYZE · AS IS</div></header>
   <div class="meter-story-body">
     <div class="meter-story-kicker">SEGUNDO PASO · DOBLE REGISTRO</div>
     <h2>Y después, <em>volver a escribirlo.</em></h2>
@@ -3552,7 +3552,7 @@
 <section class="slide meter-story-slide meter-bms-slide" id="slide-asis-bms">
   <header class="slide-header">
     <div class="hdr-left"><div class="hdr-bar"></div><span class="hdr-title">AS IS — DEL BMS AL OPERATION BOOK</span></div>
-    <div class="hdr-badge">MEASURE · AS IS</div>
+    <div class="hdr-badge">ANALYZE · AS IS</div>
   </header>
   <div class="meter-bms-content">
     <div class="meter-story-kicker">TERCER PASO · BÚSQUEDA Y TRANSCRIPCIÓN MANUAL</div>
@@ -4500,7 +4500,7 @@
 
   const slideAudienceMap = {
     0:'lobby',1:'lobby',2:'lobby',
-    3:'asis',4:null,5:'asis',6:'asis',
+    3:'lobby',4:'lobby',5:'asis',6:'asis',
     7:'improve',8:'improve',9:'improve',
     10:'control',11:'results',12:'results',
     13:'results',14:null,15:null
@@ -4552,7 +4552,7 @@
       const ctl=s.responses.filter(x=>x.phase==='control').map(x=>Number(x.answer)).filter(Number.isFinite);
       const avg=ctl.length?(ctl.reduce((a,b)=>a+b,0)/ctl.length).toFixed(1):'—';
       lastAudiencePhaseRequested=phase;
-      const phaseNames={lobby:'ESPERA',asis:'ANTES',improve:'DESPUÉS',control:'CONTROL',results:'EXCEL MANUAL'};
+      const phaseNames={lobby:'ESPERA',asis:'AS IS · CONTADORES',improve:'AS IS · OPERATION BOOK',control:'APP CONTADORES',results:'EXCEL AUTOMÁTICO'};
       const launcher=document.getElementById('liveLauncher');
       if(launcher) launcher.textContent='LIVE · '+(phaseNames[phase]||String(phase).toUpperCase());
       box.innerHTML='<b>Fase audiencia:</b> '+(phaseNames[phase]||String(phase).toUpperCase())+
