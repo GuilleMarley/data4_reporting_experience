@@ -179,6 +179,44 @@ button,input{font:inherit}
 .pa-actions button{border:0;background:#ff6600;color:#fff;padding:15px 22px;font-weight:900;border-radius:10px;cursor:pointer;font-size:12px}
 .pa-actions span{font-size:12px;color:#65768c;flex:1;line-height:1.4}
 @media(max-width:720px){.pa-meters{grid-template-columns:1fr}.pa-meter{display:grid;grid-template-columns:105px 1fr;column-gap:12px;align-items:center}.pa-meter>div{grid-column:1/-1}.pa-meter img{height:86px}.pa-meter label{min-width:0}.pa-choices{gap:9px}.pa-bar{padding:16px}.pa-bar b{font-size:20px}.pa-badge{font-size:9px}.pa-top{font-size:9px;padding:13px}.pa-top-brand{font-size:16px}.ob-auto-panel{flex-direction:column;align-items:stretch}.ob-auto-panel button{width:100%}}
+
+/* Visual reconstruction of the two supplied Power Apps screens */
+.powerapps-dual{display:grid;grid-template-columns:minmax(240px,.84fr) minmax(300px,1.16fr);gap:18px;align-items:stretch;max-width:960px;margin:23px auto;background-color:#fafafa;background-image:radial-gradient(#d6dae0 .8px,transparent .8px);background-size:29px 29px;padding:20px;border-radius:14px;border:1px solid #e3e8ee}
+.powerapp-card{background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.13);border:1px solid #e5e5e5;padding:18px;min-width:0}
+.pa-home-panel{display:flex;flex-direction:column;min-height:540px;padding:22px 20px}
+.powerapp-home-heading{display:flex;align-items:center;gap:16px;font-size:10px;font-weight:900;color:#f50;white-space:nowrap}
+.powerapp-exit{border-radius:99px;border:1px solid #47566d;background:#ff5500;color:#fff;font-size:10px;padding:5px 15px}
+.powerapp-home-upper h2{color:#404a61;font-size:23px;line-height:1.1;margin:15px 0 10px;letter-spacing:-.02em;font-weight:800}
+.powerapp-home-upper p{font-size:12px;color:#465067;line-height:1.4;margin:0 0 15px}
+.powerapp-connection{font-size:10px;background:#eaf8f3;color:#35485d;padding:10px;text-align:center}
+.powerapp-home-actions{margin:auto 0;display:flex;flex-direction:column;gap:8px;padding:30px 8px 20px}
+.powerapp-home-actions p{color:#44536a;text-align:center;font-size:10px;margin:0 0 12px}
+.powerapp-home-actions button{width:100%;border-radius:999px;min-height:43px;font-weight:700;font-size:12px;cursor:pointer}
+.powerapp-orange-btn{border:1px solid #32516d;color:#fff;background:#ff5100}
+.powerapp-outline-btn{border:1px solid #687080;color:#293951;background:#fff}
+.powerapp-muted-btn{border:1px solid #687080;color:#293951;background:#eee}
+.powerapp-hint{font-size:10px;color:#78869a;text-align:center;min-height:25px;line-height:1.4;margin-top:7px}
+.powerapp-bottom-caption{font-size:9px;letter-spacing:.11em;color:#aeb6c0;text-align:center}
+.pa-register-panel{padding:15px 15px 13px;background:#fff;display:flex;flex-direction:column;min-height:540px;scroll-margin-top:90px}
+.powerapp-registration-heading{display:flex;align-items:center;gap:13px;padding:0 5px 4px}
+.powerapp-house{color:#ff5300;flex-shrink:0}
+.powerapp-brand-line{font-size:10px;font-weight:700;color:#ff5300}
+.powerapp-registration-heading h2{font-size:21px;font-weight:900;color:#424c61;margin:4px 0 0}
+.powerapp-form-row{background:#f0efee;display:flex;flex-direction:column;padding:6px 3px 6px;margin:0}
+.powerapp-form-row>label{font-size:14px;font-weight:900;color:#050505;margin:1px 0 7px}
+.powerapp-date{font-size:15px;color:#344460;padding:5px}
+.powerapp-form-row select{appearance:none;width:100%;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='25' height='25' viewBox='0 0 25 25'%3E%3Cpath fill='%23ff5300' d='M0 0h25v25H0z'/%3E%3Cpath d='m5 9 7.5 8L20 9' stroke='white' stroke-width='2.4' fill='none'/%3E%3C/svg%3E") no-repeat right center;background-size:27px 100%;border:1px solid #b3b3b3;border-radius:0;padding:8px 37px 8px 7px;color:#34445a;font-size:14px;height:37px}
+.powerapp-count{background:#f0efee;text-align:center;font-size:10px;padding:10px 0 6px;color:#171717}
+.powerapp-meter-scroll{overflow-y:auto;min-height:0;max-height:265px;flex:1;background:#f0efee;padding:4px 10px;scrollbar-color:#b9b9b9 #f2f2f2;scrollbar-width:thin}
+.powerapp-meter-label{display:block;font-size:14px;color:#111;line-height:1.25;margin-bottom:11px}
+.powerapp-meter-label>span{display:block;padding:1px 3px 5px;overflow-wrap:break-word}
+.powerapp-meter-label input{display:block;width:100%;min-width:0;border:1px solid #ff9b7d;background:#fff;padding:8px 7px;border-radius:0;font-size:15px;font-weight:400;color:#293950;height:36px}
+.powerapp-meter-label input::placeholder{color:#727b8c}
+.powerapp-meter-label input:focus{outline:2px solid rgba(255,102,0,.25);border-color:#ff5300}
+.powerapp-save{background:#ff5300;border:0;color:#fff;font-size:12px;font-weight:900;border-radius:100px;padding:13px;margin-top:9px;cursor:pointer;width:100%}
+.powerapp-save-message{font-size:10px;color:#647083;line-height:1.35;min-height:21px;text-align:center;margin-top:7px}
+.powerapp-highlight{box-shadow:0 0 0 3px rgba(255,83,0,.4),0 2px 14px rgba(255,83,0,.15)}
+@media(max-width:720px){.powerapps-dual{grid-template-columns:1fr;padding:12px;gap:12px}.pa-home-panel{min-height:310px}.powerapp-home-actions{padding:25px 0 7px;margin:15px 0}.pa-register-panel{min-height:570px}.powerapp-meter-scroll{max-height:305px}.powerapp-card{padding:15px}}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="config.js"></script>
@@ -321,24 +359,42 @@ button,input{font:inherit}
 
   <section id="appView" class="stage" hidden>
     <div class="kicker">TO BE · APP CONTADORES</div>
-    <h1 class="title">La misma lectura. Un solo registro.</h1>
-    <p class="intro">Introduce las tres lecturas directamente en esta <b>simulación de Power Apps</b>. No hace falta apuntarlas en papel ni volver a copiarlas a Excel.</p>
-    <div class="pa-shell">
-      <div class="pa-top"><span class="pa-top-brand">Serveo <b>Data4</b></span><span>REGISTRO DE CONTADORES</span></div>
-      <div class="pa-bar"><div><b>App Contadores</b><small>Captura estructurada · demostración interactiva</small></div><span class="pa-badge">REGISTRO DIRECTO</span></div>
-      <div class="pa-choices">
-        <label>Edificio<select id="paBuilding"><option>DC01</option><option>DC02</option><option>DC03</option></select></label>
-        <label>Tipo de contador<select id="paType"><option>Agua</option></select></label>
-      </div>
-      <div class="pa-instructions">Lee cada contador y escribe su valor aquí. Puedes guardar los tres registros con un único toque.</div>
-      <div class="pa-meters">
-        <div class="pa-meter"><div><b>Contador agua 1</b><span>m³</span></div><img src="assets/contador_1.svg" alt="Contador de agua 1"><label>Lectura <input data-pa-meter="1" inputmode="decimal" type="text" autocomplete="off" placeholder="Escribe la lectura" aria-label="Lectura del contador de agua 1"></label></div>
-        <div class="pa-meter"><div><b>Contador agua 2</b><span>m³</span></div><img src="assets/contador_2.svg" alt="Contador de agua 2"><label>Lectura <input data-pa-meter="2" inputmode="decimal" type="text" autocomplete="off" placeholder="Escribe la lectura" aria-label="Lectura del contador de agua 2"></label></div>
-        <div class="pa-meter"><div><b>Contador agua 3</b><span>m³</span></div><img src="assets/contador_3.svg" alt="Contador de agua 3"><label>Lectura <input data-pa-meter="3" inputmode="decimal" type="text" autocomplete="off" placeholder="Escribe la lectura" aria-label="Lectura del contador de agua 3"></label></div>
-      </div>
-      <div class="pa-actions"><button type="button" id="paSave">GUARDAR LAS TRES LECTURAS</button><span id="paStatus" role="status" aria-live="polite">Los registros se guardan únicamente en este navegador de demostración.</span></div>
+    <h1 class="title">Registro de contadores · una sola vez.</h1>
+    <p class="intro">Una reproducción interactiva del flujo de Power Apps de Serveo. <b>Inicio y nuevo registro se ven a la vez</b>; selecciona edificio y tipo, introduce las lecturas y guárdalas en esta demostración.</p>
+    <div class="powerapps-dual">
+      <article class="powerapp-card pa-home-panel" aria-label="Pantalla de inicio de Registro de contadores">
+        <div class="powerapp-home-upper">
+          <div class="powerapp-home-heading"><span class="powerapp-exit">EXIT</span><span>SERVEO · OPERACIONES</span></div>
+          <h2>Registro de contadores</h2>
+          <p>Alta de lecturas, adjuntos y sincronización operativa.</p>
+          <div class="powerapp-connection">Modo demostración · Pendientes: <strong id="paPending">0</strong></div>
+        </div>
+        <div class="powerapp-home-actions">
+          <p>Selecciona una acción para continuar</p>
+          <button type="button" class="powerapp-orange-btn" id="paNewRecord">Nuevo registro</button>
+          <button type="button" class="powerapp-outline-btn" id="paAttach">Adjuntar imagen</button>
+          <input id="paAttachment" type="file" accept="image/*" hidden aria-label="Seleccionar imagen local">
+          <button type="button" class="powerapp-muted-btn" id="paSync">Sincronizar pendientes</button>
+          <div class="powerapp-hint" id="paHomeMessage" role="status" aria-live="polite">Demostración local: no se conecta a SharePoint.</div>
+        </div>
+        <div class="powerapp-bottom-caption">SERVEO · REGISTRO OPERATIVO</div>
+      </article>
+
+      <article class="powerapp-card pa-register-panel" id="paRegisterPanel" aria-label="Pantalla de nuevo registro">
+        <div class="powerapp-registration-heading">
+          <div class="powerapp-house" aria-hidden="true"><svg viewBox="0 0 48 48" width="43" height="43" fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21 L24 4 L43 21 M10 18 V40 H21 V28 H29 V40 H38 V18"/></svg></div>
+          <div><div class="powerapp-brand-line">SERVEO · REGISTRO OPERATIVO</div><h2>Nuevo registro</h2></div>
+        </div>
+        <div class="powerapp-form-row"><label>Fecha :</label><div class="powerapp-date" id="paDate"></div></div>
+        <div class="powerapp-form-row"><label for="paBuilding">Edificio :</label><select id="paBuilding"><option value="DC01">DC01</option><option value="DC02">DC02</option><option value="DC03">DC03</option></select></div>
+        <div class="powerapp-form-row"><label for="paType">Tipo de contador :</label><select id="paType"><option value="Agua">Agua</option><option value="Electricidad">Electricidad (demo)</option><option value="Gasoil">Gasoil (demo)</option></select></div>
+        <div class="powerapp-count" id="paCount">Contadores a rellenar: 12</div>
+        <div class="powerapp-meter-scroll" id="paMeterList" aria-label="Contadores del edificio y tipo seleccionados"></div>
+        <button id="paSave" class="powerapp-save" type="button">Guardar registros</button>
+        <div class="powerapp-save-message" id="paStatus" role="status" aria-live="polite">Los datos se guardan solo en este navegador.</div>
+      </article>
     </div>
-    <div class="ob-footer"><b>Un dato, un registro:</b> esta copia visual permite probar el proceso mejorado. No escribe en Power Apps ni en el sistema real del cliente.</div>
+    <div class="ob-footer"><b>Comparación con el AS IS:</b> antes, papel y Excel. Ahora, un único formulario por edificio y tipo. Esta es una reproducción de demostración: los contadores no confirmados están marcados como ejemplos y no se envían datos al sistema real.</div>
   </section>
 </main>
 <div class="foot">DATA4 · REPORTING OPERATIVO · EXPERIENCIA DE AUDIENCIA</div>
@@ -578,32 +634,91 @@ button,input{font:inherit}
     document.getElementById('obAutofillBtn').textContent='VOLVER A RELLENAR';
   }
   document.getElementById('obAutofillBtn').addEventListener('click',obFillAutomatically);
-  var paInputs=Array.prototype.slice.call(document.querySelectorAll('input[data-pa-meter]'));
+  // Power Apps-style two-pane demo. Only the four names visible in the user-supplied screenshot are sourced as real labels.
+  var paActualWater=[
+    "Humectadores POP-A (m3)",
+    "Humectador POP-B (m3)",
+    "Sala Watermist (m3)",
+    "Puerta de baños frente a POP-A (m3)"
+  ];
+  var paCatalogue={
+    DC01:{Agua:paActualWater.concat(Array.from({length:8},function(_,i){return 'Contador de agua '+String(i+5).padStart(2,'0')+' · ejemplo';}))},
+    DC02:{},DC03:{}
+  };
+  function paListFor(building,type){
+    if(paCatalogue[building]&&paCatalogue[building][type])return paCatalogue[building][type];
+    var count=type==='Agua'?8:6;
+    return Array.from({length:count},function(_,i){return 'Contador '+type.toLowerCase()+' '+String(i+1).padStart(2,'0')+' · ejemplo';});
+  }
   var paBuilding=document.getElementById('paBuilding');
+  var paType=document.getElementById('paType');
+  var paList=document.getElementById('paMeterList');
   var paStatus=document.getElementById('paStatus');
+  var paHomeMessage=document.getElementById('paHomeMessage');
+  var paSaveButton=document.getElementById('paSave');
   paBuilding.value=getStored('paBuilding')||'DC01';
+  paType.value=getStored('paType')||'Agua';
+  document.getElementById('paDate').textContent=new Intl.DateTimeFormat('es-ES',{day:'numeric',month:'long',year:'numeric'}).format(new Date());
+  function paKey(idx){return 'powerapp_v2_'+paBuilding.value+'_'+paType.value+'_'+idx;}
+  function paRefreshPending(){
+    var raw=getStored('paSaved_'+paBuilding.value+'_'+paType.value);
+    document.getElementById('paPending').textContent=raw?'0':'0';
+  }
+  function paEscape(s){return String(s).replace(/[&<>"']/g,function(ch){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch];});}
+  function paRender(){
+    var names=paListFor(paBuilding.value,paType.value);
+    document.getElementById('paCount').textContent='Contadores a rellenar: '+names.length;
+    paList.innerHTML=names.map(function(name,i){
+      var value=getStored(paKey(i))||'';
+      return '<label class="powerapp-meter-label"><span>'+paEscape(name)+'</span><input data-pa-index="'+i+'" type="text" inputmode="decimal" autocomplete="off" placeholder="Valor de contador" aria-label="'+paEscape(name)+'" value="'+paEscape(value)+'"></label>';
+    }).join('');
+    paStatus.style.color='#5c6777';
+    paStatus.textContent='Completa las lecturas y pulsa Guardar registros.';
+    paRefreshPending();
+  }
   paBuilding.addEventListener('change',function(){
-    putStored('paBuilding',paBuilding.value);
-    paInputs.forEach(function(el){el.value=getStored('pa_'+paBuilding.value+'_'+el.dataset.paMeter)||'';});
-    paStatus.textContent='Edificio cambiado. Introduce las lecturas y guarda.';
+    putStored('paBuilding',paBuilding.value);paRender();
   });
-  paInputs.forEach(function(el){
-    el.value=getStored('pa_'+paBuilding.value+'_'+el.dataset.paMeter)||'';
-    el.addEventListener('input',function(){
-      putStored('pa_'+paBuilding.value+'_'+el.dataset.paMeter,el.value);
-      paStatus.textContent='Lecturas en edición · pulsa Guardar para confirmar';
-    });
+  paType.addEventListener('change',function(){
+    putStored('paType',paType.value);paRender();
   });
-  document.getElementById('paSave').addEventListener('click',function(){
-    var values=paInputs.map(function(el){return el.value.trim();});
-    if(values.some(function(v){return !v;})){
-      paStatus.textContent='Introduce los tres valores antes de guardar.';
-      paStatus.style.color='#b7481c';return;
+  paList.addEventListener('input',function(e){
+    var field=e.target.closest('input[data-pa-index]');
+    if(!field)return;
+    putStored(paKey(Number(field.dataset.paIndex)),field.value);
+    paStatus.textContent='Registro en edición · pulsa Guardar registros';
+    paStatus.style.color='#5c6777';
+  });
+  paSaveButton.addEventListener('click',function(){
+    var names=paListFor(paBuilding.value,paType.value);
+    var values=Array.from(paList.querySelectorAll('input[data-pa-index]')).map(function(el){return el.value.trim();});
+    var completed=values.filter(Boolean).length;
+    if(completed===0){
+      paStatus.textContent='Introduce al menos una lectura antes de guardar.';
+      paStatus.style.color='#b24b24';return;
     }
-    putStored('paSaved_'+paBuilding.value,JSON.stringify({values:values,updated:new Date().toISOString()}));
-    paStatus.style.color='#147f4e';
-    paStatus.textContent='✓ 3 de 3 lecturas guardadas en la demostración · '+paBuilding.value;
+    putStored('paSaved_'+paBuilding.value+'_'+paType.value,JSON.stringify({building:paBuilding.value,type:paType.value,entries:names.map(function(name,i){return {name:name,value:values[i]};}),saved_at:new Date().toISOString()}));
+    paStatus.style.color='#13764c';
+    paStatus.textContent='✓ '+completed+' de '+names.length+' lecturas guardadas localmente · '+paBuilding.value;
+    paHomeMessage.textContent='Registro guardado en el navegador de demostración. Sin conexión con SharePoint.';
+    paRefreshPending();
   });
+  document.getElementById('paNewRecord').addEventListener('click',function(){
+    var target=document.getElementById('paRegisterPanel');
+    target.classList.add('powerapp-highlight');
+    target.scrollIntoView({behavior:'smooth',block:'start'});
+    var field=paList.querySelector('input');if(field)field.focus({preventScroll:true});
+    setTimeout(function(){target.classList.remove('powerapp-highlight');},1600);
+  });
+  document.getElementById('paAttach').addEventListener('click',function(){document.getElementById('paAttachment').click();});
+  document.getElementById('paAttachment').addEventListener('change',function(){
+    var file=this.files&&this.files[0];
+    if(file)paHomeMessage.textContent='Imagen seleccionada: '+file.name+' · no enviada (demo local).';
+  });
+  document.getElementById('paSync').addEventListener('click',function(){
+    paHomeMessage.textContent='La sincronización con SharePoint no está habilitada en esta demostración.';
+  });
+  paRender();
   var views={
     lobby:document.getElementById('waitView'),
     asis:document.getElementById('asisView'),
