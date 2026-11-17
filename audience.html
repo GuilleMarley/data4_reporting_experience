@@ -388,13 +388,13 @@ button,input{font:inherit}
         <div class="powerapp-form-row"><label>Fecha :</label><div class="powerapp-date" id="paDate"></div></div>
         <div class="powerapp-form-row"><label for="paBuilding">Edificio :</label><select id="paBuilding"><option value="DC01">DC01</option><option value="DC02">DC02</option><option value="DC03">DC03</option></select></div>
         <div class="powerapp-form-row"><label for="paType">Tipo de contador :</label><select id="paType"><option value="Agua">Agua</option><option value="Electricidad">Electricidad (demo)</option><option value="Gasoil">Gasoil (demo)</option></select></div>
-        <div class="powerapp-count" id="paCount">Contadores a rellenar: 12</div>
+        <div class="powerapp-count" id="paCount">Contadores a rellenar: 3</div>
         <div class="powerapp-meter-scroll" id="paMeterList" aria-label="Contadores del edificio y tipo seleccionados"></div>
         <button id="paSave" class="powerapp-save" type="button">Guardar registros</button>
         <div class="powerapp-save-message" id="paStatus" role="status" aria-live="polite">Los datos se guardan solo en este navegador.</div>
       </article>
     </div>
-    <div class="ob-footer"><b>Comparación con el AS IS:</b> antes, papel y Excel. Ahora, un único formulario por edificio y tipo. Esta es una reproducción de demostración: los contadores no confirmados están marcados como ejemplos y no se envían datos al sistema real.</div>
+    <div class="ob-footer"><b>Comparación con el AS IS:</b> antes, papel y Excel. Ahora, un único formulario por edificio y tipo. Esta es una reproducción de demostración con únicamente tres contadores de ejemplo: Contador 1, Contador 2 y Contador 3. No se envían datos al sistema real.</div>
   </section>
 </main>
 <div class="foot">DATA4 · REPORTING OPERATIVO · EXPERIENCIA DE AUDIENCIA</div>
@@ -635,20 +635,10 @@ button,input{font:inherit}
   }
   document.getElementById('obAutofillBtn').addEventListener('click',obFillAutomatically);
   // Power Apps-style two-pane demo. Only the four names visible in the user-supplied screenshot are sourced as real labels.
-  var paActualWater=[
-    "Humectadores POP-A (m3)",
-    "Humectador POP-B (m3)",
-    "Sala Watermist (m3)",
-    "Puerta de baños frente a POP-A (m3)"
-  ];
-  var paCatalogue={
-    DC01:{Agua:paActualWater.concat(Array.from({length:8},function(_,i){return 'Contador de agua '+String(i+5).padStart(2,'0')+' · ejemplo';}))},
-    DC02:{},DC03:{}
-  };
+  // Three demo counters only, independent of building/type.
+  // The original DC01 equipment catalog is intentionally not used in Audience.
   function paListFor(building,type){
-    if(paCatalogue[building]&&paCatalogue[building][type])return paCatalogue[building][type];
-    var count=type==='Agua'?8:6;
-    return Array.from({length:count},function(_,i){return 'Contador '+type.toLowerCase()+' '+String(i+1).padStart(2,'0')+' · ejemplo';});
+    return ['Contador 1','Contador 2','Contador 3'];
   }
   var paBuilding=document.getElementById('paBuilding');
   var paType=document.getElementById('paType');
@@ -659,7 +649,7 @@ button,input{font:inherit}
   paBuilding.value=getStored('paBuilding')||'DC01';
   paType.value=getStored('paType')||'Agua';
   document.getElementById('paDate').textContent=new Intl.DateTimeFormat('es-ES',{day:'numeric',month:'long',year:'numeric'}).format(new Date());
-  function paKey(idx){return 'powerapp_v2_'+paBuilding.value+'_'+paType.value+'_'+idx;}
+  function paKey(idx){return 'powerapp_v3_'+paBuilding.value+'_'+paType.value+'_'+idx;}
   function paRefreshPending(){
     var raw=getStored('paSaved_'+paBuilding.value+'_'+paType.value);
     document.getElementById('paPending').textContent=raw?'0':'0';
