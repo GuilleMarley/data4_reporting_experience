@@ -1,0 +1,40 @@
+name: Export Data4 HTML to visual PowerPoint
+on:
+  push:
+    branches: [ppt-exact-visual-export]
+    paths:
+      - tools/export_presentation.py
+      - .github/workflows/export_visual_pptx.yml
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install rendering dependencies
+        run: |
+          python -m pip install python-pptx pillow playwright
+          python -m playwright install --with-deps chromium
+      - name: Capture presentation and audience HTML
+        run: python tools/export_presentation.py
+      - name: Upload PowerPoint
+        uses: actions/upload-artifact@v4
+        with:
+          name: Data4-HTML-exact-visual-PowerPoint
+          path: exports/Data4_HTML_replica_visual.pptx
+          retention-days: 30
+      - name: Commit PowerPoint to export branch
+        run: |
+          git config user.name "Data4 Export"
+          git config user.email "actions@users.noreply.github.com"
+          git add exports/Data4_HTML_replica_visual.pptx
+          git commit -m "Export visual PowerPoint from current HTML" || exit 0
+          git push
